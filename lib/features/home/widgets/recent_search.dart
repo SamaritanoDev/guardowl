@@ -3,8 +3,8 @@ import 'package:guardowl/constants/enviroments_my_theme.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/share/my_search.dart';
 
-class RecentSearch extends StatelessWidget {
-  const RecentSearch({super.key});
+class HeaderSearch extends StatelessWidget {
+  const HeaderSearch({super.key});
 
   @override
   Widget build(BuildContext context) {

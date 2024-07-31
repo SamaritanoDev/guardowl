@@ -11,7 +11,7 @@ class MaterialTheme {
       primary: Color(0xff555FD2),
       surfaceTint: Color(0xff555FD2),
       onPrimary: Color(0xffffffff),
-      primaryContainer: Color(0xffebecfa),
+      primaryContainer: Color(0xffebecfa), //colorPurpleOpacity
       onPrimaryContainer: Color(0xff201047),
       secondary: Color(0xff4CE4B1),
       onSecondary: Color(0xffffffff),
