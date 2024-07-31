@@ -9,12 +9,9 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     const singInStyleButton = ButtonStyle(
       minimumSize: WidgetStatePropertyAll(Size(300, 50)),
     );
-    final linkStyle = textTheme.titleSmall?.copyWith(
-        decoration: TextDecoration.underline, color: colorScheme.primary);
 
     return Scaffold(
       backgroundColor: colorScheme.onPrimary,
@@ -27,13 +24,7 @@ class LoginView extends StatelessWidget {
           ),
           //Form
           const _FormEmailPassword(),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(right: paddingBorder),
-              child: Text("Forgot Password?", style: linkStyle),
-            ),
-          ),
+          const _RecoverPassword(),
           const SizedBox(height: 30),
           FilledButton(
             style: singInStyleButton,
@@ -41,7 +32,46 @@ class LoginView extends StatelessWidget {
             child: const Text('Continue'),
           ),
           const SizedBox(height: 50),
+          const _LineOtherSocial(),
+          const SizedBox(height: 35),
+          //butons of social
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _ButtonSocialNetwork(MdiIcons.google),
+              const SizedBox(width: 20),
+              _ButtonSocialNetwork(MdiIcons.apple),
+            ],
+          )
         ],
+      ),
+    );
+  }
+}
+
+class _RecoverPassword extends StatelessWidget {
+  const _RecoverPassword();
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final linkStyle = textTheme.titleSmall?.copyWith(
+      decoration: TextDecoration.underline,
+      decorationColor: colorScheme.primary,
+      color: colorScheme.primary,
+    );
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: () {},
+        onHover: (value) => linkStyle,
+        style: const ButtonStyle(r
+          
+            overlayColor: WidgetStatePropertyAll(Colors.transparent)),
+        child: Padding(
+          padding: EdgeInsets.only(right: paddingBorder),
+          child: Text("Forgot Password?", style: linkStyle),
+        ),
       ),
     );
   }
