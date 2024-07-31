@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/config/config.dart';
+import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/discovery/discovery_view.dart';
 import 'package:guardowl/features/home/home_view.dart';
 import 'package:guardowl/features/share/share.dart';
@@ -41,7 +42,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    Color colorPurpleOpacity = const Color.fromARGB(20, 85, 96, 210);
     final textTheme = Theme.of(context).textTheme;
 
     final NavigationBarThemeData navigationBarThemeData =
@@ -56,7 +56,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         tooltip: ' I’m your route assistant',
         onPressed: () {},
         shape: const CircleBorder(),
-        elevation: 0,
+        elevation: 3,
         splashColor: colorPurpleOpacity,
         child: const ButtonAssistant(),
       ),
