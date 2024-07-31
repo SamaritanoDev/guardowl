@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:guardowl/constants/constants.dart';
 import 'package:guardowl/features/authentication/widgets/text_field_custom.dart';
 import 'package:guardowl/features/home/widgets/search_widgets.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -14,7 +13,6 @@ class LoginView extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: colorScheme.onPrimary,
       body: Column(
         children: [
           const MyBackground(
@@ -35,12 +33,12 @@ class LoginView extends StatelessWidget {
           const _LineOtherSocial(),
           const SizedBox(height: 35),
           //butons of social
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _ButtonSocialNetwork(MdiIcons.google),
-              const SizedBox(width: 30),
-              _ButtonSocialNetwork(MdiIcons.apple),
+              _ButtonSocialNetwork(iconGoogle),
+              SizedBox(width: 30),
+              _ButtonSocialNetwork(iconApple),
             ],
           )
         ],
@@ -74,19 +72,20 @@ class _RecoverPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final linkStyle = textTheme.titleSmall?.copyWith(
       decoration: TextDecoration.underline,
-      decorationColor: colorScheme.primary,
-      color: colorScheme.primary,
+      decorationColor: color.primary,
+      color: color.primary,
     );
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {},
-        onHover: (value) => linkStyle,
         style: const ButtonStyle(
-            overlayColor: WidgetStatePropertyAll(Colors.transparent)),
+          overlayColor: WidgetStatePropertyAll(Colors.transparent),
+        ),
         child: Padding(
           padding: EdgeInsets.only(right: paddingBorder),
           child: Text("Forgot Password?", style: linkStyle),
@@ -97,23 +96,29 @@ class _RecoverPassword extends StatelessWidget {
 }
 
 class _ButtonSocialNetwork extends StatelessWidget {
-  final IconData icon;
-  const _ButtonSocialNetwork(this.icon);
+  final String iconPath;
+  const _ButtonSocialNetwork(this.iconPath);
 
   @override
   Widget build(BuildContext context) {
+     final color = Theme.of(context).colorScheme;
+
     return IconButton.filled(
       style: ButtonStyle(
         minimumSize: const WidgetStatePropertyAll(Size(50, 50)),
         side: WidgetStatePropertyAll(
-          BorderSide(width: 2, color: colorScheme.primary),
+          BorderSide(width: 2, color: color.primary),
         ),
         backgroundColor: WidgetStatePropertyAll(
-          colorScheme.secondary,
+          color.primaryContainer,
         ),
       ),
       onPressed: () {},
-      icon: Icon(icon, color: colorScheme.primary),
+      icon: Image.asset(
+        iconPath,
+        width: 27,
+        height: 27,
+      ),
     );
   }
 }
@@ -123,13 +128,14 @@ class _HeaderSingIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final titleSingInStyle = textTheme.headlineLarge?.copyWith(
       fontWeight: FontWeight.bold,
-      color: colorScheme.onPrimary,
+      color: color.onPrimary,
     );
     final subtitleSingInStyle = textTheme.bodyMedium?.copyWith(
-      color: colorScheme.onPrimary,
+      color: color.onPrimary,
     );
 
     return Column(
@@ -137,7 +143,7 @@ class _HeaderSingIn extends StatelessWidget {
       children: [
         Text('Sing In', style: titleSingInStyle),
         const SizedBox(height: 10),
-        Text('Hi ! Welcome back, you have been missed.',
+        Text('Hi! Welcome back, you have been missed.',
             style: subtitleSingInStyle),
         const SizedBox(height: 5),
         Image.asset(logoOwlPng, width: 60, height: 75),
@@ -151,9 +157,10 @@ class _LineOtherSocial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final subtitleSocialStyle = textTheme.bodyMedium?.copyWith(
-      color: colorScheme.primary,
+      color:color.primary,
     );
 
     return Row(

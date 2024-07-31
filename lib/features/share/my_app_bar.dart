@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/config/config.dart';
 import 'package:guardowl/constants/enviroments_assets.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 
@@ -8,6 +7,8 @@ class MyAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.only(
         left: paddingAppBar,
@@ -15,7 +16,7 @@ class MyAppBar extends StatelessWidget {
         bottom: 17,
       ),
       height: sizeHeightAppBar,
-      color: colorScheme.primary,
+      color: color.primary,
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -54,12 +55,14 @@ class _NotificationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {},
       child: Icon(
         Icons.notifications_none_outlined,
         size: sizeIconsAppBar,
-        color: colorScheme.onPrimary,
+        color: color.onPrimary,
       ),
     );
   }
@@ -70,19 +73,9 @@ class _TitleAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(
-          logoOwlPng,
-          width: 28.65,
-          height: 33,
-        ),
-        const SizedBox(width: 12.58),
-        Image.asset(
-          logoGuardOwlPng,
-          height: sizeIconsAppBar,
-        )
-      ],
+    return Image.asset(
+      logoGuardOwlPng,
+      height: sizeIconsAppBar,
     );
   }
 }

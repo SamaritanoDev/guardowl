@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/config/config.dart';
 import 'package:guardowl/features/discovery/discovery_view.dart';
 import 'package:guardowl/features/home/home_view.dart';
 import 'package:guardowl/features/share/share.dart';
@@ -43,11 +42,12 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final color = Theme.of(context).colorScheme;
 
     final NavigationBarThemeData navigationBarThemeData =
         NavigationBarThemeData(
       labelTextStyle: WidgetStateProperty.all(
-          textTheme.labelSmall?.copyWith(color: colorScheme.primary)),
+          textTheme.labelSmall?.copyWith(color: color.primary)),
     );
 
     return Scaffold(
@@ -57,20 +57,17 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         onPressed: () {},
         shape: const CircleBorder(),
         elevation: 3,
-        splashColor: colorPurpleOpacity,
+        splashColor: color.primaryContainer,
         child: const ButtonAssistant(),
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: navigationBarThemeData,
         child: NavigationBar(
             height: 74,
-            indicatorShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(7.6),
-            ),
-            overlayColor: WidgetStatePropertyAll(colorPurpleOpacity),
-            indicatorColor: colorPurpleOpacity,
+            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+            indicatorColor: Colors.transparent,
             elevation: 2,
-            backgroundColor: colorScheme.primaryContainer,
+            backgroundColor: color.primaryContainer,
             onDestinationSelected: (int index) {
               setState(() {
                 currentPage = _destinationViews[index];
@@ -100,10 +97,12 @@ class _NavigationDestinationCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     final resources = page.resources;
     return NavigationDestination(
-      selectedIcon: Icon(resources.selectedIcon, color: colorScheme.primary),
-      icon: Icon(resources.icon, color: colorScheme.outlineVariant),
+      selectedIcon: Icon(resources.selectedIcon, color: color.primary),
+      icon: Icon(resources.icon, color: color.surfaceTint),
       label: resources.label,
     );
   }
