@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 
 class MyBackground extends StatelessWidget {
   final Widget child;
+  final double height;
   const MyBackground({
     super.key,
     required this.child,
+    required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final width = media.size.width;
-    return SizedBox(
-      width: width,
-      height: 270,
-      child: CustomPaint(
-        painter: _CurvePainter(context),
-        child: child,
-      ),
+    return CustomPaint(
+      painter: _CurvePainter(context, height),
+      child: child,
     );
   }
 }
 
 class _CurvePainter extends CustomPainter {
   final BuildContext context;
+  final double height;
 
-  _CurvePainter(this.context);
+  _CurvePainter(
+    this.context,
+    this.height,
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -41,7 +41,7 @@ class _CurvePainter extends CustomPainter {
       ..lineTo(0, size.height * 0.8)
       ..quadraticBezierTo(
         size.width * 0.5,
-        size.height * 1,
+        size.height * height,
         size.width,
         size.height * 0.8,
       )

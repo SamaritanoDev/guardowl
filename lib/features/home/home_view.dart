@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardowl/constants/constants.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/home/widgets/search_widgets.dart';
 import 'package:guardowl/features/share/share.dart';
@@ -13,13 +14,18 @@ class HomeView extends StatelessWidget {
         preferredSize: Size(double.infinity, sizeHeightAppBar),
         child: MyAppBar(),
       ),
+      
       body: ListView(
-        children: const [
-          MyBackground(
-            child: HeaderSearch(),
+        children: [
+          SizedBox(
+            height: 270,
+            child: MyBackground(
+              height: heightMyBackgroung,
+              child: const HeaderSearch(),
+            ),
           ),
-          MostVisitedCenters(),
-          LocationMarkerData(),
+          const MostVisitedCenters(),
+          const LocationMarkerData(),
         ],
       ),
     );

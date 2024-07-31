@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/constants/constants.dart';
+import 'package:guardowl/constants/enviroments_globals.dart';
 import 'package:guardowl/features/authentication/widgets/text_field_custom.dart';
 import 'package:guardowl/features/home/widgets/search_widgets.dart';
 
@@ -15,21 +16,22 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const MyBackground(
-            child: Center(
+          MyBackground(
+            height: heightMyBackgroung,
+            child: const Center(
               child: _HeaderSingIn(),
             ),
           ),
           //Form
           const _FormEmailPassword(),
           const _RecoverPassword(),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           FilledButton(
             style: singInStyleButton,
             onPressed: () {},
             child: const Text('Continue'),
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 40),
           const _LineOtherSocial(),
           const SizedBox(height: 35),
           //butons of social
@@ -40,7 +42,7 @@ class LoginView extends StatelessWidget {
               SizedBox(width: 30),
               _ButtonSocialNetwork(iconApple),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -101,7 +103,7 @@ class _ButtonSocialNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final color = Theme.of(context).colorScheme;
+    final color = Theme.of(context).colorScheme;
 
     return IconButton.filled(
       style: ButtonStyle(
@@ -128,7 +130,7 @@ class _HeaderSingIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final color = Theme.of(context).colorScheme;
+    final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final titleSingInStyle = textTheme.headlineLarge?.copyWith(
       fontWeight: FontWeight.bold,
@@ -157,10 +159,10 @@ class _LineOtherSocial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final color = Theme.of(context).colorScheme;
+    final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final subtitleSocialStyle = textTheme.bodyMedium?.copyWith(
-      color:color.primary,
+      color: color.primary,
     );
 
     return Row(
