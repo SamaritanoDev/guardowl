@@ -11,6 +11,12 @@ class MostVisitedCenters extends StatelessWidget {
     final media = MediaQuery.of(context);
     final width = media.size.width;
     final textTheme = Theme.of(context).textTheme;
+    final textTitleLargePrimary = textTheme.titleLarge?.copyWith(
+      color: colorScheme.primary,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -18,10 +24,7 @@ class MostVisitedCenters extends StatelessWidget {
           padding: const EdgeInsets.only(left: paddingAppBar),
           child: Text(
             "Most visited tourist centers",
-            style: textTheme.titleLarge?.copyWith(
-              fontSize: 18,
-              color: colorScheme.primary,
-            ),
+            style: textTitleLargePrimary,
           ),
         ),
         const SizedBox(height: 6),

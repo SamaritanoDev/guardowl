@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardowl/config/config.dart';
 import 'package:guardowl/constants/enviroments_my_theme.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 
@@ -10,21 +11,25 @@ class LocationMarkerData extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final media = MediaQuery.of(context);
     final width = media.size.width;
+    final textTitleLargeAlert = textTheme.titleLarge?.copyWith(
+      color: colorScheme.primary,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 15.13),
         Padding(
-          padding: const EdgeInsets.only(right: paddingAppBar),
+          padding: const EdgeInsets.symmetric(horizontal: paddingAppBar),
           child: Text(
-            "See All",
-            style: textTheme.bodyMedium,
+            "Avoid transiting through these areas",
+            style: textTitleLargeAlert,
           ),
         ),
-        Container(
+        SizedBox(
           width: width,
-          padding: const EdgeInsets.symmetric(horizontal: paddingAppBar),
           child: const Column(
             children: [
               _ListTileLocationMarker(
@@ -69,19 +74,20 @@ class _ListTileLocationMarker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final textBodySmallGray =
-        textTheme.bodySmall?.copyWith(color: colorScheme.outline);
+    final textBodySmallError =
+        textTheme.bodySmall?.copyWith(color: colorScheme.tertiary);
 
     return ListTile(
-      leading: const CustomCard(
+      leading: CustomCard(
         child: Icon(
           Icons.location_on,
+          color: colorScheme.tertiary,
         ),
       ),
       iconColor: colorScheme.primary,
       title: Text(namePlace, style: textTheme.titleMedium),
-      subtitle: Text(nameLocation, style: textBodySmallGray),
-      trailing: Text(distanceToLocation, style: textBodySmallGray),
+      subtitle: Text(nameLocation, style: textBodySmallError),
+      trailing: Text(distanceToLocation, style: textBodySmallError),
     );
   }
 }
@@ -95,14 +101,12 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Color colorPurpleOpacity = const Color.fromARGB(20, 85, 96, 210);
-    Color colorPurpleOpacity = const Color(0xffebecfa);
     return SizedBox(
       width: widthHeightMiniCardPurple,
       height: widthHeightMiniCardPurple,
       child: Card(
         elevation: 0,
-        color: colorPurpleOpacity,
+        color: colorScheme.tertiaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.6),
         ),

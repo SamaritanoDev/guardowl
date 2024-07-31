@@ -16,7 +16,6 @@ class HomeView extends StatelessWidget {
         child: MyAppBar(),
       ),
       body: ListView(
-        // alignment: Alignment.center,
         children: const [
           MyBackground(
             child: RecentSearch(),
