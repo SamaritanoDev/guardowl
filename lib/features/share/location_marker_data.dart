@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/config/config.dart';
-import 'package:guardowl/constants/enviroments_my_theme.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 
 class LocationMarkerData extends StatelessWidget {
@@ -8,11 +6,13 @@ class LocationMarkerData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     final textTheme = Theme.of(context).textTheme;
     final media = MediaQuery.of(context);
     final width = media.size.width;
     final textTitleLargeAlert = textTheme.titleLarge?.copyWith(
-      color: colorScheme.primary,
+      color: color.primary,
       fontSize: 18,
       fontWeight: FontWeight.bold,
     );
@@ -73,18 +73,19 @@ class _ListTileLocationMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final textBodySmallError =
-        textTheme.bodySmall?.copyWith(color: colorScheme.tertiary);
+        textTheme.bodySmall?.copyWith(color: color.tertiary);
 
     return ListTile(
       leading: CustomCard(
         child: Icon(
           Icons.location_on,
-          color: colorScheme.tertiary,
+          color: color.tertiary,
         ),
       ),
-      iconColor: colorScheme.primary,
+      iconColor: color.primary,
       title: Text(namePlace, style: textTheme.titleMedium),
       subtitle: Text(nameLocation, style: textBodySmallError),
       trailing: Text(distanceToLocation, style: textBodySmallError),
@@ -101,12 +102,14 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return SizedBox(
       width: widthHeightMiniCardPurple,
       height: widthHeightMiniCardPurple,
       child: Card(
         elevation: 0,
-        color: colorScheme.tertiaryContainer,
+        color: color.tertiaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.6),
         ),

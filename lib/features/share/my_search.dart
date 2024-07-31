@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/config/config.dart';
 import 'package:guardowl/constants/enviroments_globals.dart';
-import 'package:guardowl/constants/enviroments_my_theme.dart';
 
 class MySearch extends StatefulWidget {
   const MySearch({super.key});
@@ -12,25 +10,27 @@ class MySearch extends StatefulWidget {
 
 class _MySearchState extends State<MySearch> {
   final TextEditingController _serachController = TextEditingController();
-  TextStyle hintTextstyle = TextStyle(
-    color: colorScheme.surfaceDim,
-  );
-  TextStyle inputTextstyle = TextStyle(
-    color: colorScheme.scrim,
-    fontSize: 14,
-  );
-
-  RoundedRectangleBorder boderRaiudSearch = RoundedRectangleBorder(
-    borderRadius: borderRadiusCircularInput,
-  );
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    TextStyle hintTextstyle = TextStyle(
+      color: color.surfaceTint,
+    );
+    TextStyle inputTextstyle = TextStyle(
+      color: color.scrim,
+      fontSize: 14,
+    );
+
+    RoundedRectangleBorder boderRaiudSearch = RoundedRectangleBorder(
+      borderRadius: borderRadiusCircularInput,
+    );
+
     return SearchBar(
       hintText: 'Find my next destination...',
       controller: _serachController,
       shape: WidgetStateProperty.all(boderRaiudSearch),
-      backgroundColor: WidgetStatePropertyAll(colorScheme.onPrimary),
+      backgroundColor: WidgetStatePropertyAll(color.onPrimary),
       elevation: const WidgetStatePropertyAll(0.0),
       hintStyle: WidgetStatePropertyAll(hintTextstyle),
       textStyle: WidgetStatePropertyAll(inputTextstyle),
@@ -38,7 +38,7 @@ class _MySearchState extends State<MySearch> {
         onPressed: () {},
         icon: Icon(
           Icons.search,
-          color: colorScheme.primary,
+          color: color.primary,
         ),
       ),
     );

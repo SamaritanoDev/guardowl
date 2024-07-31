@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:guardowl/config/config.dart';
 
 TextTheme createTextTheme(
     BuildContext context, String bodyFontString, String displayFontString) {
@@ -10,13 +9,15 @@ TextTheme createTextTheme(
   TextTheme displayTextTheme =
       GoogleFonts.getTextTheme(displayFontString, baseTextTheme);
 
+       final color = Theme.of(context).colorScheme;
+
   TextTheme textTheme = displayTextTheme.copyWith(
     //size: 24, Regular, color: morado
     headlineSmall:
-        bodyTextTheme.headlineSmall?.copyWith(color: colorScheme.primary),
+        bodyTextTheme.headlineSmall?.copyWith(color: color.primary),
     //size: 22, medium
     titleLarge:
-        displayTextTheme.titleLarge?.copyWith(color: colorScheme.primary),
+        displayTextTheme.titleLarge?.copyWith(color: color.primary),
     //size: 16, regular
     bodyLarge: bodyTextTheme.bodyLarge,
     //size: 14, regular para textos

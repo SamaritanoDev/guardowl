@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/constants/enviroments_my_theme.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/home/widgets/my_card_image.dart';
 
@@ -8,11 +7,12 @@ class MostVisitedCenters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final color = Theme.of(context).colorScheme;
     final media = MediaQuery.of(context);
     final width = media.size.width;
     final textTheme = Theme.of(context).textTheme;
     final textTitleLargePrimary = textTheme.titleLarge?.copyWith(
-      color: colorScheme.primary,
+      color: color.primary,
       fontSize: 18,
       fontWeight: FontWeight.bold,
     );

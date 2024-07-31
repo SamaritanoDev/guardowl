@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/constants/enviroments_my_theme.dart';
 
 class MyCardImage extends StatelessWidget {
   final String urlImage;
@@ -15,6 +14,7 @@ class MyCardImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+     final color = Theme.of(context).colorScheme;
     return Card(
       clipBehavior: Clip.hardEdge,
       child: Center(
@@ -36,7 +36,7 @@ class MyCardImage extends StatelessWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.favorite_outline_outlined,
-                  color: colorScheme.tertiary,
+                  color: color.tertiary,
                   size: 30,
                 ),
               ),
@@ -53,13 +53,13 @@ class MyCardImage extends StatelessWidget {
                         titleCategory,
                         style: textTheme.titleLarge?.copyWith(
                           fontSize: 18,
-                          color: colorScheme.onPrimary,
+                          color: color.onPrimary,
                         ),
                       ),
                       Text(
                         countVisit,
                         style: textTheme.bodySmall?.copyWith(
-                          color: colorScheme.onPrimary,
+                          color: color.onPrimary,
                         ),
                       ),
                     ],

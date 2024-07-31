@@ -25,3 +25,5 @@ flutter:
     - assets/logos/guardowl_.svg
     - assets/logos/logo_guardowl.png
     - assets/icons/appbar/menu.png
+    #logos social network
+    - assets/icons/authentication/
