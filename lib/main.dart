@@ -20,8 +20,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'GuardOwl',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: const LoginView(),
-      // home: const CustomNavigationBar(),
+      home: const CustomNavigationBar(),
     );
   }
 }

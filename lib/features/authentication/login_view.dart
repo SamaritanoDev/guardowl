@@ -39,10 +39,30 @@ class LoginView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _ButtonSocialNetwork(MdiIcons.google),
-              const SizedBox(width: 20),
+              const SizedBox(width: 30),
               _ButtonSocialNetwork(MdiIcons.apple),
             ],
           )
+        ],
+      ),
+    );
+  }
+}
+
+class _FormEmailPassword extends StatelessWidget {
+  const _FormEmailPassword();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(paddingBorder),
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 10),
+          TextFieldCustom(labelTextField: 'Email'),
+          SizedBox(height: 21),
+          TextFieldCustom(labelTextField: 'Password'),
         ],
       ),
     );
@@ -65,8 +85,7 @@ class _RecoverPassword extends StatelessWidget {
       child: TextButton(
         onPressed: () {},
         onHover: (value) => linkStyle,
-        style: const ButtonStyle(r
-          
+        style: const ButtonStyle(
             overlayColor: WidgetStatePropertyAll(Colors.transparent)),
         child: Padding(
           padding: EdgeInsets.only(right: paddingBorder),
@@ -123,26 +142,6 @@ class _HeaderSingIn extends StatelessWidget {
         const SizedBox(height: 5),
         Image.asset(logoOwlPng, width: 60, height: 75),
       ],
-    );
-  }
-}
-
-class _FormEmailPassword extends StatelessWidget {
-  const _FormEmailPassword();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(paddingBorder),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 10),
-          TextFieldCustom(labelTextField: 'Email'),
-          SizedBox(height: 21),
-          TextFieldCustom(labelTextField: 'Password'),
-        ],
-      ),
     );
   }
 }
