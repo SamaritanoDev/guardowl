@@ -18,7 +18,7 @@ class HomeView extends StatelessWidget {
       body: ListView(
         children: const [
           MyBackground(
-            child: RecentSearch(),
+            child: HeaderSearch(),
           ),
           MostVisitedCenters(),
           LocationMarkerData(),

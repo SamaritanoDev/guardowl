@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/config/config.dart';
-import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/discovery/discovery_view.dart';
 import 'package:guardowl/features/home/home_view.dart';
 import 'package:guardowl/features/share/share.dart';
+import '../../constants/enviroments_globals.dart';
 
 enum _Pages { home, discovery }
 

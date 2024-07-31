@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/config/config.dart';
+import 'package:guardowl/features/authentication/login_view.dart';
 import 'package:guardowl/features/share/custom_navigation_bar.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'GuardOwl',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       home: const CustomNavigationBar(),
     );

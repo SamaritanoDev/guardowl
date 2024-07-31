@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/config/config.dart';
+import 'package:guardowl/constants/enviroments_globals.dart';
 import 'package:guardowl/constants/enviroments_my_theme.dart';
 
 class MySearch extends StatefulWidget {
@@ -20,7 +21,7 @@ class _MySearchState extends State<MySearch> {
   );
 
   RoundedRectangleBorder boderRaiudSearch = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(6),
+    borderRadius: borderRadiusCircularInput,
   );
 
   @override
