@@ -14,7 +14,7 @@ class MyCardImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-     final color = Theme.of(context).colorScheme;
+    final color = Theme.of(context).colorScheme;
     return Card(
       clipBehavior: Clip.hardEdge,
       child: Center(
@@ -53,13 +53,13 @@ class MyCardImage extends StatelessWidget {
                         titleCategory,
                         style: textTheme.titleLarge?.copyWith(
                           fontSize: 18,
-                          color: color.onPrimary,
+                          color: color.primaryContainer,
                         ),
                       ),
                       Text(
                         countVisit,
                         style: textTheme.bodySmall?.copyWith(
-                          color: color.onPrimary,
+                          color: color.primaryContainer,
                         ),
                       ),
                     ],

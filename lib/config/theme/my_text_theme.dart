@@ -14,10 +14,10 @@ TextTheme createTextTheme(
   TextTheme textTheme = displayTextTheme.copyWith(
     //size: 24, Regular, color: morado
     headlineSmall:
-        bodyTextTheme.headlineSmall?.copyWith(color: color.primary),
+        bodyTextTheme.headlineSmall,
     //size: 22, medium
     titleLarge:
-        displayTextTheme.titleLarge?.copyWith(color: color.primary),
+        displayTextTheme.titleLarge,
     //size: 16, regular
     bodyLarge: bodyTextTheme.bodyLarge,
     //size: 14, regular para textos

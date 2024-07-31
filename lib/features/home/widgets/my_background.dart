@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/config/theme/my_theme.dart';
 
 class MyBackground extends StatelessWidget {
   final Widget child;
@@ -16,7 +15,7 @@ class MyBackground extends StatelessWidget {
       width: width,
       height: 270,
       child: CustomPaint(
-        painter: _CurvePainter(),
+        painter: _CurvePainter(context),
         child: child,
       ),
     );
@@ -24,11 +23,17 @@ class MyBackground extends StatelessWidget {
 }
 
 class _CurvePainter extends CustomPainter {
+  final BuildContext context;
+
+  _CurvePainter(this.context);
+
   @override
   void paint(Canvas canvas, Size size) {
+    final color = Theme.of(context).colorScheme;
+
     final paint = Paint()
       ..strokeWidth = 10
-      ..color = MaterialTheme.lightScheme().primary
+      ..color = color.primary
       ..style = PaintingStyle.fill;
 
     final path = Path()

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/constants/enviroments_assets.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
+import 'package:guardowl/features/share/custom_button_icon.dart';
 
 class MyAppBar extends StatelessWidget {
   const MyAppBar({super.key});
@@ -8,6 +9,9 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final titleAppBarStyle =
+        textTheme.titleLarge?.copyWith(color: color.onPrimary);
 
     return Container(
       padding: const EdgeInsets.only(
@@ -17,52 +21,22 @@ class MyAppBar extends StatelessWidget {
       ),
       height: sizeHeightAppBar,
       color: color.primary,
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           //icon menu
-          _Menubutton(),
-          Spacer(),
+          const CustomButtonIcon(
+            icon: Icons.menu,
+          ),
+          const Spacer(),
           //title app bar
-          _TitleAppBar(),
-          Spacer(),
+          Text('GuardOwl', style: titleAppBarStyle),
+          const Spacer(),
           // icon notification
-          _NotificationButton(),
+          const CustomButtonIcon(
+            icon: Icons.notifications_none_outlined,
+          ),
         ],
-      ),
-    );
-  }
-}
-
-class _Menubutton extends StatelessWidget {
-  const _Menubutton();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Image.asset(
-        menuIconPng,
-        width: sizeIconsAppBar,
-        height: sizeIconsAppBar,
-      ),
-    );
-  }
-}
-
-class _NotificationButton extends StatelessWidget {
-  const _NotificationButton();
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
-
-    return GestureDetector(
-      onTap: () {},
-      child: Icon(
-        Icons.notifications_none_outlined,
-        size: sizeIconsAppBar,
-        color: color.onPrimary,
       ),
     );
   }
