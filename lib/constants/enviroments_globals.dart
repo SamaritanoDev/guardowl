@@ -8,3 +8,4 @@ BorderRadius borderRadiusCircularInput = BorderRadius.circular(6.0);
 
 //paddings
 double paddingBorder = 20.0;
+double heightMyBackgroung = 1;

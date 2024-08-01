@@ -9,8 +9,6 @@ TextTheme createTextTheme(
   TextTheme displayTextTheme =
       GoogleFonts.getTextTheme(displayFontString, baseTextTheme);
 
-       final color = Theme.of(context).colorScheme;
-
   TextTheme textTheme = displayTextTheme.copyWith(
     //size: 24, Regular, color: morado
     headlineSmall:
