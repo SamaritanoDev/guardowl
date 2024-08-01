@@ -34,13 +34,13 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             height: 1.4,
             child: Center(
               child: HeaderAuthentication(
-                  titleAuthentication: isRegisterMode ? 'Sign In' : 'Sing Up',
+                  titleAuthentication: isRegisterMode ? 'Sing In' : 'Sign Up',
                   subTitleAuthentication: isRegisterMode
                       ? 'Hi! Welcome back, you have been missed'
                       : 'Create your new account'),
             ),
           ),
-          isRegisterMode ? const SignInView() : const RegisterView(),
+          isRegisterMode ? const SingInView() : const RegisterView(),
           const SizedBox(height: 20),
           //button home
           FilledButton(
