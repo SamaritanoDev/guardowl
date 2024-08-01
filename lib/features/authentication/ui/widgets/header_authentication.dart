@@ -25,6 +25,7 @@ class HeaderAuthentication extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(height: 50),
         Text(titleAuthentication, style: titleSingInStyle),
         const SizedBox(height: 10),
         Text(subTitleAuthentication, style: subtitleSingInStyle),

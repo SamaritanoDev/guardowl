@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/authentication/register_view.dart';
-import 'package:guardowl/features/authentication/sing_in_view.dart';
-import 'package:guardowl/features/authentication/widgets/header_authentication.dart';
-import 'package:guardowl/features/authentication/widgets/link_account.dart';
-import 'package:guardowl/features/home/widgets/search_widgets.dart';
+import 'package:guardowl/features/authentication/ui/register_view.dart';
+import 'package:guardowl/features/authentication/ui/widgets/widgets_auhtentication.dart';
+import 'package:guardowl/features/home/home_view.dart';
+import 'package:guardowl/features/share/share.dart';
 
-class AuthenticationView extends StatelessWidget {
+class AuthenticationView extends StatefulWidget {
   const AuthenticationView({super.key});
+
+  @override
+  State<AuthenticationView> createState() => _AuthenticationViewState();
+}
+
+class _AuthenticationViewState extends State<AuthenticationView> {
+  bool isRegisterMode = true;
+
+  void toggleAuthMode() {
+    setState(() {
+      isRegisterMode = !isRegisterMode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,24 +30,30 @@ class AuthenticationView extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const MyBackground(
-            height: 1.45,
+          MyBackground(
+            height: 1.4,
             child: Center(
               child: HeaderAuthentication(
-                  titleAuthentication: 'Sing In',
-                  subTitleAuthentication: 'Create your new account'),
+                  titleAuthentication: isRegisterMode ? 'Sign In' : 'Sing Up',
+                  subTitleAuthentication: isRegisterMode
+                      ? 'Hi! Welcome back, you have been missed'
+                      : 'Create your new account'),
             ),
           ),
-          //TODO: formulario dependiendo si esta registrado o no
-          const SingInView(),
+          isRegisterMode ? const SignInView() : const RegisterView(),
           const SizedBox(height: 20),
           //button home
           FilledButton(
             style: singInStyleButton,
-            onPressed: () => Navigator.pushNamed(context, '/home'),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeView()),
+              );
+            },
             child: const Text('Continue'),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 30),
           const _LineOtherSocial(),
           const SizedBox(height: 35),
           //butons of social
@@ -48,11 +66,14 @@ class AuthenticationView extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          const LinkAccount(
-            routeName: 'up',
-            questionText: 'If you have an account?',
+          LinkAccount(
+            routeName: isRegisterMode ? 'up' : 'in',
+            questionText: isRegisterMode
+                ? 'Don’t have an account?'
+                : 'If you have an account?',
+            onpressed: toggleAuthMode,
           ),
-          const SizedBox(height: 48),
+          const SizedBox(height: 42),
         ],
       ),
     );

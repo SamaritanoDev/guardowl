@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/features/authentication/register_view.dart';
-import 'package:guardowl/features/authentication/sing_in_view.dart';
 
 class LinkAccount extends StatelessWidget {
   final String questionText;
   final String routeName;
+  final VoidCallback onpressed;
   const LinkAccount({
     super.key,
     required this.routeName,
     required this.questionText,
+    required this.onpressed,
   });
 
   @override
@@ -17,27 +17,16 @@ class LinkAccount extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
 
     //styles
-    final textLinkStyle = textTheme.titleMedium?.copyWith(
-      color: const Color(0xff3F3F3F),
+    final textLinkStyle = textTheme.titleMedium?.copyWith(         
+      color: color.onSurfaceVariant,
     );
     final boldTextLinkStyle = textTheme.titleMedium?.copyWith(
       color: color.primary,
     );
 
     return InkWell(
-      // onTap: () => Navigator.pushNamed(context, '/sign$routeName'),
-      onTap: () => {
-        Navigator.push(
-          context,
-          routeName == 'up'
-              ? MaterialPageRoute(
-                  builder: (context) => const RegisterView(),
-                )
-              : MaterialPageRoute(
-                  builder: (context) => const SingInView(),
-                ),
-        )
-      },
+      splashColor: Colors.transparent,
+      onTap: onpressed,
       child: Column(
         children: [
           Text.rich(

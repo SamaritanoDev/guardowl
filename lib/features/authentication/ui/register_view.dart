@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/authentication/widgets/form_email_password.dart';
-import 'package:guardowl/features/authentication/widgets/text_field_custom.dart';
+import 'package:guardowl/features/authentication/ui/widgets/form_email_password.dart';
+import 'package:guardowl/features/authentication/ui/widgets/text_field_custom.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
@@ -28,9 +28,9 @@ class RegisterView extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 15),
           const FormEmailPassword(),
-          const SizedBox(height: 33),
+          const SizedBox(height: 10),
         ],
       ),
     );

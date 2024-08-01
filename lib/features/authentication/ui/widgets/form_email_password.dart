@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/features/authentication/widgets/text_field_custom.dart';
+import 'package:guardowl/features/authentication/ui/widgets/text_field_custom.dart';
 
 class FormEmailPassword extends StatelessWidget {
   const FormEmailPassword({super.key});
