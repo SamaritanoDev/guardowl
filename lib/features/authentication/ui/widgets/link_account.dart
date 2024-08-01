@@ -17,7 +17,7 @@ class LinkAccount extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
 
     //styles
-    final textLinkStyle = textTheme.titleMedium?.copyWith(         
+    final textLinkStyle = textTheme.titleMedium?.copyWith(
       color: color.onSurfaceVariant,
     );
     final boldTextLinkStyle = textTheme.titleMedium?.copyWith(
@@ -35,7 +35,7 @@ class LinkAccount extends StatelessWidget {
               style: textLinkStyle,
               children: <InlineSpan>[
                 TextSpan(
-                  text: ' Sign $routeName',
+                  text: ' Sing $routeName',
                   style: boldTextLinkStyle,
                 ),
               ],

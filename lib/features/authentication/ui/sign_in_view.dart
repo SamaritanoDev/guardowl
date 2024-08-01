@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:guardowl/constants/constants.dart';
 import 'package:guardowl/features/authentication/ui/widgets/form_email_password.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({super.key});
+class SingInView extends StatelessWidget {
+  const SingInView({super.key});
 
   @override
   Widget build(BuildContext context) {
