@@ -4,10 +4,18 @@ import 'package:guardowl/constants/enviroments_globals.dart';
 class TextFieldCustom extends StatelessWidget {
   final String labelTextField;
   final double? width;
+  final String? errorMessage;
+  final bool obscureText;
+  final Function(String)? onChanged;
+  final String? Function(String?)? validator;
   const TextFieldCustom({
     super.key,
     required this.labelTextField,
     this.width,
+    this.errorMessage,
+    required this.obscureText,
+    this.onChanged,
+    this.validator,
   });
 
   @override
@@ -17,6 +25,7 @@ class TextFieldCustom extends StatelessWidget {
     final labelStyle = textTheme.titleMedium?.copyWith(
       color: color.primary,
     );
+    final border = OutlineInputBorder(borderRadius: borderRadiusCircularInput);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,11 +34,17 @@ class TextFieldCustom extends StatelessWidget {
         const SizedBox(height: 5),
         SizedBox(
           width: width,
-          height: 50,
-          child: TextField(
+          child: TextFormField(
+            onChanged: onChanged,
+            validator: validator,
+            obscureText: obscureText,
             decoration: InputDecoration(
+              errorBorder:
+                  border.copyWith(borderSide: BorderSide(color: color.error)),
+              isDense: true,
+              errorText: errorMessage,
+              focusColor: color.primary,
               border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
                 borderRadius: borderRadiusCircularInput,
               ),
             ),

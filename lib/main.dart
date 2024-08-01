@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/config/config.dart';
+import 'package:guardowl/features/authentication/blocs/authentication/authentication_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
 import 'package:guardowl/features/home/home_view.dart';
 import 'package:guardowl/features/share/custom_navigation_bar.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    BlocProvider(
+      create: (context) => AuthenticationCubit(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

@@ -37,7 +37,7 @@ class MaterialTheme {
       scrim: Color(0xff000000),
       inverseSurface: Color(0xff2f3036),
       inverseOnSurface: Color(0xfff1f0f7),
-      inversePrimary: Color(0xffcfbdfe),
+      inversePrimary: Color(0xffebecfa), //claro en dark
       primaryFixed: Color(0xffeaebf9),
       onPrimaryFixed: Color(0xff201047),
       primaryFixedDim: Color(0xffcfbdfe),
@@ -69,8 +69,8 @@ class MaterialTheme {
       brightness: Brightness.dark,
       primary: Color(0xffcfbdfe),
       surfaceTint: Color(0xffcfbdfe),
-      onPrimary: Color(0xff36275d),
-      primaryContainer: Color(0xff4d3d75),
+      onPrimary: Color(0xff555FD2),
+      primaryContainer: Color(0xff555FD2),
       onPrimaryContainer: Color(0xffeaebf9),
       secondary: Color(0xff8bd6b6),
       onSecondary: Color(0xff003828),
@@ -96,9 +96,9 @@ class MaterialTheme {
       scrim: Color(0xffcfbdfe),
       inverseSurface: Color(0xffe3e2e9),
       inverseOnSurface: Color(0xff2f3036),
-      inversePrimary: Color(0xff555FD2),
+      inversePrimary: Color(0xffebecfa), //claro en light
       primaryFixed: Color(0xffeaebf9),
-      onPrimaryFixed: Color(0xff201047),
+      onPrimaryFixed: Color(0xff555FD2),
       primaryFixedDim: Color(0xffcfbdfe),
       onPrimaryFixedVariant: Color(0xff4d3d75),
       secondaryFixed: Color(0xffa6f2d1),
@@ -282,21 +282,13 @@ extension MaterialSchemeUtils on MaterialScheme {
 class ExtendedColor {
   final Color seed, value;
   final ColorFamily light;
-  final ColorFamily lightHighContrast;
-  final ColorFamily lightMediumContrast;
   final ColorFamily dark;
-  final ColorFamily darkHighContrast;
-  final ColorFamily darkMediumContrast;
 
   const ExtendedColor({
     required this.seed,
     required this.value,
     required this.light,
-    required this.lightHighContrast,
-    required this.lightMediumContrast,
     required this.dark,
-    required this.darkHighContrast,
-    required this.darkMediumContrast,
   });
 }
 

@@ -23,12 +23,11 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
-    const singInStyleButton = ButtonStyle(
-      minimumSize: WidgetStatePropertyAll(Size(300, 50)),
-    );
+    const singInStyleButton =
+        ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
 
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           MyBackground(
             height: 1.4,
@@ -43,15 +42,16 @@ class _AuthenticationViewState extends State<AuthenticationView> {
           isRegisterMode ? const SingInView() : const RegisterView(),
           const SizedBox(height: 20),
           //button home
-          FilledButton(
-            style: singInStyleButton,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeView()),
-              );
-            },
-            child: const Text('Continue'),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: paddingAppBar),
+            child: FilledButton(
+              style: singInStyleButton,
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => const HomeView()));
+              },
+              child: const Text('Continue'),
+            ),
           ),
           const SizedBox(height: 30),
           const _LineOtherSocial(),
@@ -65,7 +65,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
               _ButtonSocialNetwork(iconApple),
             ],
           ),
-          const Spacer(),
+          const SizedBox(height: 35),
           LinkAccount(
             routeName: isRegisterMode ? 'up' : 'in',
             questionText: isRegisterMode
@@ -73,7 +73,6 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                 : 'If you have an account?',
             onpressed: toggleAuthMode,
           ),
-          const SizedBox(height: 42),
         ],
       ),
     );
