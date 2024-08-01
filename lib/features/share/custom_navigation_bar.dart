@@ -53,7 +53,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.large(
         tooltip: ' I’m your route assistant',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/route-assistant');
+        },
         shape: const CircleBorder(),
         elevation: 3,
         splashColor: color.primaryContainer,
