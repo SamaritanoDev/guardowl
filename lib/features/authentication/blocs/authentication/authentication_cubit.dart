@@ -4,4 +4,12 @@ part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit() : super(const AuthenticationState());
+
+  void usernameChanged(String value) {
+    emit(
+      state.copyWith(
+        firstName: value,
+      ),
+    );
+  }
 }
