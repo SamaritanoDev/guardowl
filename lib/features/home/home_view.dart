@@ -13,7 +13,6 @@ class HomeView extends StatelessWidget {
         preferredSize: Size(double.infinity, sizeHeightAppBar),
         child: MyAppBar(),
       ),
-      
       body: ListView(
         children: [
           SizedBox(

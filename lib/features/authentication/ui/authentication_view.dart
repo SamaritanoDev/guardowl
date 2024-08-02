@@ -23,8 +23,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
-    const singInStyleButton =
-        ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
+    const singInStyleButton = ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
 
     return Scaffold(
       body: ListView(
@@ -34,9 +33,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             child: Center(
               child: HeaderAuthentication(
                   titleAuthentication: isRegisterMode ? 'Sing In' : 'Sign Up',
-                  subTitleAuthentication: isRegisterMode
-                      ? 'Hi! Welcome back, you have been missed'
-                      : 'Create your new account'),
+                  subTitleAuthentication:
+                      isRegisterMode ? 'Hi! Welcome back, you have been missed' : 'Create your new account'),
             ),
           ),
           isRegisterMode ? const SingInView() : const RegisterView(),
@@ -47,8 +45,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             child: FilledButton(
               style: singInStyleButton,
               onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const HomeView()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => const CustomNavigationBar()));
               },
               child: const Text('Continue'),
             ),
@@ -68,9 +66,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
           const SizedBox(height: 35),
           LinkAccount(
             routeName: isRegisterMode ? 'up' : 'in',
-            questionText: isRegisterMode
-                ? 'Don’t have an account?'
-                : 'If you have an account?',
+            questionText: isRegisterMode ? 'Don’t have an account?' : 'If you have an account?',
             onpressed: toggleAuthMode,
           ),
         ],
