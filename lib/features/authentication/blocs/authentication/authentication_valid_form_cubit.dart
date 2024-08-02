@@ -2,28 +2,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:guardowl/features/authentication/infraestructura/inputs/inputs.dart';
-part 'authentication_state.dart';
+part 'authentication_valid_formstate.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthenticationCubit() : super(const AuthenticationState());
 
   void onSubmit() {
-    emit(state.copyWith(
-      formStatus: FormStatus.validating,
-      firstName: FirstName.dirty(state.firstName.value),
-      lastName: LastName.dirty(state.lastName.value),
-      email: Email.dirty(state.email.value),
-      password: Password.dirty(state.password.value),
-      isValid: Formz.validate(
-        [
-          state.firstName,
-          state.lastName,
-          state.email,
-          state.password,
-        ],
+    emit(
+      state.copyWith(
+        formStatus: FormStatus.validating,
+        firstName: FirstName.dirty(state.firstName.value),
+        lastName: LastName.dirty(state.lastName.value),
+        email: Email.dirty(state.email.value),
+        password: Password.dirty(state.password.value),
+        isValid: Formz.validate(
+          [
+            state.firstName,
+            state.lastName,
+            state.email,
+            state.password,
+          ],
+        ),
       ),
-    ));
-    print('submit $state');
+    );
   }
 
   //metodos: emitir valores

@@ -1,6 +1,6 @@
-part of 'authentication_cubit.dart';
+part of 'authentication_valid_form_cubit.dart';
 
-enum FormStatus { invalid, valid, validating, posting }
+enum FormStatus { invalid, valid, validating }
 
 class AuthenticationState extends Equatable {
   final FormStatus formStatus;

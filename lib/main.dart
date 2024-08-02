@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/config/config.dart';
-import 'package:guardowl/features/authentication/blocs/authentication/authentication_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/authentication/authentication_valid_form_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
-import 'package:guardowl/features/home/home_view.dart';
-import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 
 void main() {
   runApp(
@@ -29,7 +27,6 @@ class MainApp extends StatelessWidget {
       title: 'GuardOwl',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       home: const AuthenticationView(),
-      // home: const CustomNavigationBar(),
     );
   }
 }

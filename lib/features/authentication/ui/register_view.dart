@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/authentication/blocs/authentication/authentication_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/authentication/authentication_valid_form_cubit.dart';
 import 'package:guardowl/features/authentication/ui/widgets/form_email_password.dart';
 import 'package:guardowl/features/authentication/ui/widgets/text_field_custom.dart';
 

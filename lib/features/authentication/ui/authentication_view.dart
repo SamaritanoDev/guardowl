@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
+import 'package:guardowl/features/authentication/blocs/authentication/authentication_valid_form_cubit.dart';
 import 'package:guardowl/features/authentication/ui/register_view.dart';
 import 'package:guardowl/features/authentication/ui/widgets/widgets_auhtentication.dart';
-import 'package:guardowl/features/home/home_view.dart';
 import 'package:guardowl/features/share/share.dart';
 
 class AuthenticationView extends StatefulWidget {
@@ -23,7 +24,10 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
-    const singInStyleButton = ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
+    const singInStyleButton =
+        ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
+
+    final authenticationCubit = context.watch<AuthenticationCubit>();
 
     return Scaffold(
       body: ListView(
@@ -33,8 +37,9 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             child: Center(
               child: HeaderAuthentication(
                   titleAuthentication: isRegisterMode ? 'Sing In' : 'Sign Up',
-                  subTitleAuthentication:
-                      isRegisterMode ? 'Hi! Welcome back, you have been missed' : 'Create your new account'),
+                  subTitleAuthentication: isRegisterMode
+                      ? 'Hi! Welcome back, you have been missed'
+                      : 'Create your new account'),
             ),
           ),
           isRegisterMode ? const SingInView() : const RegisterView(),
@@ -45,8 +50,13 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             child: FilledButton(
               style: singInStyleButton,
               onPressed: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => const CustomNavigationBar()));
+                authenticationCubit.onSubmit();
+                // Navigator.pushReplacement(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const CustomNavigationBar(),
+                //   ),
+                // );
               },
               child: const Text('Continue'),
             ),
@@ -66,7 +76,9 @@ class _AuthenticationViewState extends State<AuthenticationView> {
           const SizedBox(height: 35),
           LinkAccount(
             routeName: isRegisterMode ? 'up' : 'in',
-            questionText: isRegisterMode ? 'Don’t have an account?' : 'If you have an account?',
+            questionText: isRegisterMode
+                ? 'Don’t have an account?'
+                : 'If you have an account?',
             onpressed: toggleAuthMode,
           ),
         ],
