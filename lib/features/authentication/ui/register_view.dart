@@ -12,7 +12,7 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = 160.00;
 
-    final authenticationCubit = context.watch<AuthenticationCubit>();
+    final authenticationCubit = context.watch<AuthenticationValidFormCubit>();
     final firstName = authenticationCubit.state.firstName;
     final lastName = authenticationCubit.state.lastName;
 

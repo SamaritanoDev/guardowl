@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'sign_in_state.dart';
 
-class LoginCubit extends Cubit<LoginFormState> {
+class SignInCubit extends Cubit<SignInState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  LoginCubit(StatusAuth status) : super(LoginFormState(status: status));
+  SignInCubit(StatusAuth status) : super(SignInState(status: status));
 
   Future<void> onSubmit() async {
     emit(state.copyWhith(status: const LoadingAuth()));
@@ -23,14 +23,6 @@ class LoginCubit extends Cubit<LoginFormState> {
     } catch (e) {
       emit(state.copyWhith(status: ErrorAuth(error: e)));
     }
-  }
-
-  void onChangeEmail(String value) {
-    emit(state.copyWhith(email: value));
-  }
-
-  void onChangePassword(String value) {
-    emit(state.copyWhith(password: value));
   }
 
   void logOut() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/features/authentication/blocs/authentication/authentication_valid_form_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
 import 'package:guardowl/features/authentication/ui/widgets/text_field_custom.dart';
 
 class FormEmailPassword extends StatelessWidget {
@@ -8,7 +9,7 @@ class FormEmailPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authenticationCubit = context.watch<AuthenticationCubit>();
+    final authenticationCubit = context.watch<AuthenticationValidFormCubit>();
     final email = authenticationCubit.state.email;
     final password = authenticationCubit.state.password;
 
@@ -23,11 +24,15 @@ class FormEmailPassword extends StatelessWidget {
           obscureText: false,
         ),
         const SizedBox(height: 21),
-        TextFieldCustom(
-          labelTextField: 'Password',
-          onChanged: authenticationCubit.passwordChanged,
-          errorMessage: password.errorMessage,
-          obscureText: true,
+        BlocBuilder<SignInCubit, SignInState>(
+          builder: (context, state) {
+            return TextFieldCustom(
+              labelTextField: 'Password',
+              onChanged: authenticationCubit.passwordChanged,
+              errorMessage: password.errorMessage,
+              obscureText: !state.passwordVisible,
+            );
+          },
         ),
       ],
     );

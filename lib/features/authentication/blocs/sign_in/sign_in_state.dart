@@ -18,13 +18,13 @@ class LoadingAuth extends StatusAuth {
   const LoadingAuth();
 }
 
-class LoginFormState extends Equatable {
+class SignInState extends Equatable {
   final StatusAuth status;
   final String email;
   final String password;
   final bool passwordVisible;
 
-  const LoginFormState({
+  const SignInState({
     required this.status,
     this.email = '',
     this.password = '',
@@ -33,13 +33,13 @@ class LoginFormState extends Equatable {
 
   bool get isLoading => status == const LoadingAuth();
 
-  LoginFormState copyWhith({
+  SignInState copyWhith({
     String? email,
     String? password,
     StatusAuth? status,
     bool? passwordVisible,
   }) =>
-      LoginFormState(
+      SignInState(
         email: email ?? this.email,
         password: password ?? this.password,
         status: status ?? this.status,

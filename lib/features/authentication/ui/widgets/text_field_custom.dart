@@ -35,6 +35,7 @@ class TextFieldCustom extends StatelessWidget {
         SizedBox(
           width: width,
           child: TextFormField(
+            
             onChanged: onChanged,
             validator: validator,
             obscureText: obscureText,

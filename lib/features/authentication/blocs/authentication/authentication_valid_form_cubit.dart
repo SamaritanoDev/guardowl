@@ -2,10 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:guardowl/features/authentication/infraestructura/inputs/inputs.dart';
-part 'authentication_valid_formstate.dart';
+part 'authentication_valid_form_state.dart';
 
-class AuthenticationCubit extends Cubit<AuthenticationState> {
-  AuthenticationCubit() : super(const AuthenticationState());
+class AuthenticationValidFormCubit extends Cubit<AuthenticationValidFormState> {
+  AuthenticationValidFormCubit() : super(const AuthenticationValidFormState());
 
   void onSubmit() {
     emit(

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "497383329986",
+    "project_id": "appguardowl",
+    "storage_bucket": "appguardowl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497383329986:android:0d7fe9b01ed609cbab6b5b",
+        "android_client_info": {
+          "package_name": "com.example.guardowl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497383329986-fig5vhelqumvndglg8s615il2bpfkh3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB-WknlxH0kVj1Z-81t3McjB9aKKxTvP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497383329986-fig5vhelqumvndglg8s615il2bpfkh3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

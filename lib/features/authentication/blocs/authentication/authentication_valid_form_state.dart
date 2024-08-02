@@ -2,7 +2,7 @@ part of 'authentication_valid_form_cubit.dart';
 
 enum FormStatus { invalid, valid, validating }
 
-class AuthenticationState extends Equatable {
+class AuthenticationValidFormState extends Equatable {
   final FormStatus formStatus;
   final bool isValid;
   final FirstName firstName;
@@ -10,7 +10,7 @@ class AuthenticationState extends Equatable {
   final Email email;
   final Password password;
 
-  const AuthenticationState({
+  const AuthenticationValidFormState({
     this.formStatus = FormStatus.invalid,
     this.isValid = false,
     this.firstName = const FirstName.pure(),
@@ -19,7 +19,7 @@ class AuthenticationState extends Equatable {
     this.password = const Password.pure(),
   });
 
-  AuthenticationState copyWith({
+  AuthenticationValidFormState copyWith({
     FormStatus? formStatus,
     bool? isValid,
     FirstName? firstName,
@@ -27,7 +27,7 @@ class AuthenticationState extends Equatable {
     Email? email,
     Password? password,
   }) =>
-      AuthenticationState(
+      AuthenticationValidFormState(
         formStatus: formStatus ?? this.formStatus,
         isValid: isValid ?? this.isValid,
         firstName: firstName ?? this.firstName,
