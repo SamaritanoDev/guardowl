@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/valid_form/valid_form_register_cubit.dart';
 import 'package:guardowl/features/authentication/ui/widgets/text_field_custom.dart';
 
 class FormEmailPassword extends StatelessWidget {
-  const FormEmailPassword({super.key});
+  final Function(String) onChangedEmail;
+  final Function(String) onChangedPassword;
+
+  const FormEmailPassword({
+    super.key,
+    required this.onChangedEmail,
+    required this.onChangedPassword,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final validFormRegisterCubit = context.watch<ValidFormRegisterCubit>();
+    final email = validFormRegisterCubit.state.email;
+    final password = validFormRegisterCubit.state.password;
+
     final authenticationCubit = context.read<SignInCubit>();
-    final email = authenticationCubit.state.email;
-    final password = authenticationCubit.state.password;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -18,7 +28,7 @@ class FormEmailPassword extends StatelessWidget {
         const SizedBox(height: 10),
         TextFieldCustom(
           labelTextField: 'Email',
-          onChanged: authenticationCubit.onChangeEmail,
+          onChanged: onChangedEmail,
           errorMessage: email.errorMessage,
           obscureText: false,
         ),
@@ -27,7 +37,7 @@ class FormEmailPassword extends StatelessWidget {
           builder: (context, state) {
             return TextFieldCustom(
               labelTextField: 'Password',
-              onChanged: authenticationCubit.onChangePassword,
+              onChanged: onChangedPassword,
               errorMessage: password.errorMessage,
               obscureText: !state.passwordVisible,
               suffixIcon: IconButton(

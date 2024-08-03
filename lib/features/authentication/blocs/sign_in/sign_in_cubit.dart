@@ -15,24 +15,6 @@ class SignInCubit extends Cubit<SignInState> {
           ),
         );
 
-  void validForm() {
-    emit(
-      state.copyWith(
-        status: Validating(),
-        firstName: FirstName.dirty(state.firstName.value),
-        lastName: LastName.dirty(state.lastName.value),
-        email: Email.dirty(state.email.value),
-        password: Password.dirty(state.password.value),
-        isValid: Formz.validate([
-          state.firstName,
-          state.lastName,
-          state.email,
-          state.password,
-        ]),
-      ),
-    );
-  }
-
   Future<void> onSubmit() async {
     emit(state.copyWith(status: const LoadingAuth()));
 
@@ -64,8 +46,6 @@ class SignInCubit extends Cubit<SignInState> {
           [
             email,
             state.password,
-            state.firstName,
-            state.lastName,
           ],
         ),
       ),
@@ -78,45 +58,9 @@ class SignInCubit extends Cubit<SignInState> {
       password: password,
       isValid: Formz.validate([
         password,
-        state.firstName,
-        state.lastName,
         state.email,
       ]),
     ));
-  }
-
-  void onFirstNameChanged(String value) {
-    final firstName = FirstName.dirty(value);
-    emit(
-      state.copyWith(
-        firstName: firstName,
-        isValid: Formz.validate(
-          [
-            firstName,
-            state.lastName,
-            state.email,
-            state.password,
-          ],
-        ),
-      ),
-    );
-  }
-
-  void onLastNameChanged(String value) {
-    final lastName = LastName.dirty(value);
-    emit(
-      state.copyWith(
-        lastName: lastName,
-        isValid: Formz.validate(
-          [
-            state.firstName,
-            lastName,
-            state.email,
-            state.password,
-          ],
-        ),
-      ),
-    );
   }
 
   void logOut() {

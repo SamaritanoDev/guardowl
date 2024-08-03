@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
 import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/valid_form/valid_form_register_cubit.dart';
 import 'package:guardowl/features/authentication/ui/register_view.dart';
 import 'package:guardowl/features/authentication/ui/widgets/widgets_auhtentication.dart';
 import 'package:guardowl/features/share/share.dart';
@@ -28,25 +29,37 @@ class _AuthenticationViewState extends State<AuthenticationView> {
         ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
     final color = Theme.of(context).colorScheme;
 
+    final validFormRegisterCubit = context.watch<ValidFormRegisterCubit>();
     final authenticationCubit = context.read<SignInCubit>();
 
     return Scaffold(
-      body: BlocListener<SignInCubit, SignInState>(
-        listenWhen: (previous, current) => previous.status != current.status,
-        listener: (context, state) {
-          if (state.status case Authenticated()) {
-            Navigator.pushReplacementNamed(context, '/home');
-          }
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<SignInCubit, SignInState>(
+            listenWhen: (previous, current) =>
+                previous.status != current.status,
+            listener: (context, state) {
+              if (state.status is Authenticated) {
+                Navigator.pushReplacementNamed(context, '/home');
+              }
 
-          if (state.status case ErrorAuth status) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: color.error,
-                content: Text('${status.error}'),
-              ),
-            );
-          }
-        },
+              if (state.status is ErrorAuth) {
+                final errorStatus = state.status as ErrorAuth;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: color.error,
+                    content: Text('${errorStatus.error}'),
+                  ),
+                );
+              }
+            },
+          ),
+          BlocListener<ValidFormRegisterCubit, ValidFormRegisterState>(
+            listener: (context, state) {
+              print('Current state: $state');
+            },
+          ),
+        ],
         child: ListView(
           children: [
             MyBackground(
@@ -67,8 +80,11 @@ class _AuthenticationViewState extends State<AuthenticationView> {
               child: FilledButton(
                 style: singInStyleButton,
                 onPressed: () {
-                  authenticationCubit.validForm();
-                  authenticationCubit.onSubmit();
+                  if (isRegisterMode) {
+                    authenticationCubit.onSubmit();
+                  } else {
+                    validFormRegisterCubit.validForm();
+                  }
                 },
                 child: const Text('Continue'),
               ),

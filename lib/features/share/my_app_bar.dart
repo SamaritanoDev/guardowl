@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/constants/enviroments_assets.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/share/custom_button_icon.dart';
 
@@ -44,14 +43,3 @@ class MyAppBar extends StatelessWidget {
   }
 }
 
-class _TitleAppBar extends StatelessWidget {
-  const _TitleAppBar();
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset(
-      logoGuardOwlPng,
-      height: sizeIconsAppBar,
-    );
-  }
-}

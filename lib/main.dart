@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/config/config.dart';
 import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/valid_form/valid_form_register_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 import 'package:guardowl/firebase_options.dart';
@@ -42,6 +43,9 @@ class MainApp extends StatelessWidget {
           create: (context) => SignInCubit(
             isAuthenticated ? Authenticated() : NotAuthenticated(),
           ),
+        ),
+        BlocProvider(
+          create: (context) => ValidFormRegisterCubit(Valid()),
         ),
       ],
       child: MaterialApp(
