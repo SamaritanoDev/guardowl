@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/authentication/blocs/authentication/authentication_valid_form_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
 import 'package:guardowl/features/authentication/ui/register_view.dart';
 import 'package:guardowl/features/authentication/ui/widgets/widgets_auhtentication.dart';
@@ -29,10 +28,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
         ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
     final color = Theme.of(context).colorScheme;
 
-    final authenticationValidFormCubit =
-        context.watch<AuthenticationValidFormCubit>();
-
-    final signCubit = context.read<SignInCubit>();
+    final authenticationCubit = context.read<SignInCubit>();
 
     return Scaffold(
       body: BlocListener<SignInCubit, SignInState>(
@@ -71,8 +67,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
               child: FilledButton(
                 style: singInStyleButton,
                 onPressed: () {
-                  authenticationValidFormCubit.onSubmit();
-                  signCubit.onSubmit();
+                  authenticationCubit.validForm();
+                  authenticationCubit.onSubmit();
                 },
                 child: const Text('Continue'),
               ),
@@ -97,6 +93,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                   : 'If you have an account?',
               onpressed: toggleAuthMode,
             ),
+            const SizedBox(height: 35),
           ],
         ),
       ),

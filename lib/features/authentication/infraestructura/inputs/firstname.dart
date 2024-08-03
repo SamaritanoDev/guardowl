@@ -5,13 +5,13 @@ enum FirstNameError { empty, length }
 class FirstName extends FormzInput<String, FirstNameError> {
   const FirstName.pure() : super.pure('');
 
-  const FirstName.dirty(String value) : super.dirty(value);
+  const FirstName.dirty(super.value) : super.dirty();
 
   String? get errorMessage {
     if (isValid || isPure) return null;
 
     if (displayError == FirstNameError.empty) return 'The field is required.';
-    
+
     return null;
   }
 
