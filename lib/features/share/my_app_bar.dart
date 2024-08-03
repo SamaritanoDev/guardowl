@@ -25,7 +25,8 @@ class MyAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           //icon menu
-          const CustomButtonIcon(
+          CustomButtonIcon(
+            onPressed: () => Scaffold.of(context).openDrawer(),
             icon: Icons.menu,
           ),
           const Spacer(),
@@ -33,7 +34,8 @@ class MyAppBar extends StatelessWidget {
           Text('GuardOwl', style: titleAppBarStyle),
           const Spacer(),
           // icon notification
-          const CustomButtonIcon(
+          CustomButtonIcon(
+            onPressed: () {},
             icon: Icons.notifications_none_outlined,
           ),
         ],
