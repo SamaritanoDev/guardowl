@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/config/config.dart';
-import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
-import 'package:guardowl/features/authentication/blocs/valid_form/valid_form_register_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 import 'package:guardowl/firebase_options.dart';
@@ -15,20 +15,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  final auth = FirebaseAuth.instance;
-  final user = auth.currentUser;
-  final isAuthenticated = user != null;
-
-  runApp(MainApp(
-    isAuthenticated: isAuthenticated,
-  ));
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  final bool isAuthenticated;
   const MainApp({
     super.key,
-    required this.isAuthenticated,
   });
 
   @override
@@ -39,17 +31,12 @@ class MainApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => SignInCubit(
-            isAuthenticated ? Authenticated() : NotAuthenticated(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ValidFormRegisterCubit(Valid()),
-        ),
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => LogInCubit()),
+        BlocProvider(create: (context) => SignUpCubit()),
       ],
       child: MaterialApp(
-        initialRoute: isAuthenticated ? '/home' : '/login',
+        initialRoute: '/login',
         debugShowCheckedModeBanner: false,
         title: 'GuardOwl',
         theme: brightness == Brightness.light ? theme.light() : theme.dark(),

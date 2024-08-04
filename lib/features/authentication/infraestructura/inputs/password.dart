@@ -12,14 +12,14 @@ class Password extends FormzInput<String, PasswordError> {
 
     if (displayError == PasswordError.empty) return 'The field is required.';
     if (displayError == PasswordError.length) return 'Minimum 8 characters.';
-
+    
     return null;
   }
 
   @override
   PasswordError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) return PasswordError.empty;
-    if (value.length < 6) return PasswordError.length;
+    if (value.length < 9) return PasswordError.length;
 
     return null;
   }

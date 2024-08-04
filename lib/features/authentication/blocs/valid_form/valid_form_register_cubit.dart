@@ -26,8 +26,6 @@ class ValidFormRegisterCubit extends Cubit<ValidFormRegisterState> {
         ]),
       ),
     );
-    print(
-        'Validating form: ${state.firstName}, ${state.lastName}, ${state.email}, ${state.password}');
   }
 
   void onFirstNameChanged(String value) {
@@ -45,7 +43,6 @@ class ValidFormRegisterCubit extends Cubit<ValidFormRegisterState> {
         ),
       ),
     );
-    print('FirstName changed: $value');
   }
 
   void onLastNameChanged(String value) {
@@ -63,7 +60,6 @@ class ValidFormRegisterCubit extends Cubit<ValidFormRegisterState> {
         ),
       ),
     );
-    print('LastName changed: $value');
   }
 
   void onChangeEmail(String value) {
@@ -81,7 +77,6 @@ class ValidFormRegisterCubit extends Cubit<ValidFormRegisterState> {
         ),
       ),
     );
-    print('Email changed: $value');
   }
 
   void onChangePassword(String value) {
@@ -95,6 +90,5 @@ class ValidFormRegisterCubit extends Cubit<ValidFormRegisterState> {
         state.email,
       ]),
     ));
-    print('Password changed: $value');
   }
 }

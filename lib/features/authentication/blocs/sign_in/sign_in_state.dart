@@ -8,6 +8,8 @@ class Authenticated extends StatusAuth {}
 
 class NotAuthenticated extends StatusAuth {}
 
+class NotRegistered extends StatusAuth {}
+
 class ErrorAuth extends StatusAuth {
   final Object error;
 

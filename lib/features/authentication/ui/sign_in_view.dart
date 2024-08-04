@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/ui/widgets/form_email_password.dart';
 
 class SingInView extends StatelessWidget {
@@ -11,15 +11,23 @@ class SingInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authenticationCubit = context.read<SignInCubit>();
+    final readLogInCubit = context.read<LogInCubit>();
+    final validFormRegisterCubit = context.watch<LogInCubit>();
+    final email = validFormRegisterCubit.state.email;
+    final password = validFormRegisterCubit.state.password;
 
     return Padding(
       padding: EdgeInsets.all(paddingBorder),
       child: Column(
         children: [
           FormEmailPassword(
-            onChangedEmail: authenticationCubit.onChangeEmail,
-            onChangedPassword: authenticationCubit.onChangePassword,
+            // onChangedEmail: logInCubit.emailChanged,
+            // onChangedPassword: logInCubit.passwordChanged,
+            onChangedEmail: (email) => readLogInCubit.emailChanged(email),
+            onChangedPassword: (password) =>
+                readLogInCubit.passwordChanged(password),
+                errorMessageEmail: email.errorMessage,
+                errorMessagePassword: password.errorMessage,
           ),
           const _RecoverPassword(),
         ],

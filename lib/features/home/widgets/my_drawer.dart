@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_in/sign_in_cubit.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -42,13 +43,13 @@ class MyDrawer extends StatelessWidget {
           icon: Icons.settings_outlined,
           onTap: () {},
         ),
-        BlocBuilder<SignInCubit, SignInState>(
-          builder: (context, state) {
-            return _MyListTileDrawer(
-              label: 'Log out',
-              icon: Icons.logout_outlined,
-              onTap: () {},
-            );
+        _MyListTileDrawer(
+          label: 'Log out',
+          icon: Icons.logout_outlined,
+          onTap: () {
+            //todo: colorcar para cerrar sesión
+            context.read<AuthCubit>().signOut();
+            Navigator.pop(context);
           },
         ),
         const SizedBox(height: 20)
