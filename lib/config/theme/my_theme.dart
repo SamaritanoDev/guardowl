@@ -11,7 +11,7 @@ class MaterialTheme {
       primary: Color(0xff555FD2),
       surfaceTint: Color(0xff555FD2),
       onPrimary: Color(0xffffffff),
-      primaryContainer: Color(0xffebecfa), //colorPurpleOpacity
+      primaryContainer: Color(0xffDDDFF6), //colorPurpleOpacity //EEEFFB
       onPrimaryContainer: Color(0xff201047),
       secondary: Color(0xff4CE4B1),
       onSecondary: Color(0xffffffff),
@@ -38,7 +38,7 @@ class MaterialTheme {
       inverseSurface: Color(0xff2f3036),
       inverseOnSurface: Color(0xfff1f0f7),
       inversePrimary: Color(0xffebecfa), //claro en dark
-      primaryFixed: Color(0xffeaebf9),
+      primaryFixed: Color(0xffBBBFED),
       onPrimaryFixed: Color(0xff201047),
       primaryFixedDim: Color(0xffcfbdfe),
       onPrimaryFixedVariant: Color(0xff4d3d75),
@@ -51,7 +51,7 @@ class MaterialTheme {
       tertiaryFixedDim: Color(0xffffb2b7),
       onTertiaryFixedVariant: Color(0xff723339),
       surfaceDim: Color(0xffdad9e0),
-      surfaceBright: Color(0xfffaf8ff),
+      surfaceBright: Color(0xffDDDFF6), //
       surfaceContainerLowest: Color(0xffffffff),
       surfaceContainerLow: Color(0xfff4f3fa),
       surfaceContainer: Color(0xffeeedf4),
@@ -67,8 +67,8 @@ class MaterialTheme {
   static MaterialScheme darkScheme() {
     return const MaterialScheme(
       brightness: Brightness.dark,
-      primary: Color(0xffcfbdfe),
-      surfaceTint: Color(0xffcfbdfe),
+      primary: Color(0xffBBBFED),
+      surfaceTint: Color(0xffBBBFED),
       onPrimary: Color(0xff555FD2),
       primaryContainer: Color(0xff555FD2),
       onPrimaryContainer: Color(0xffeaebf9),
@@ -96,8 +96,8 @@ class MaterialTheme {
       scrim: Color(0xffcfbdfe),
       inverseSurface: Color(0xffe3e2e9),
       inverseOnSurface: Color(0xff2f3036),
-      inversePrimary: Color(0xffebecfa), //claro en light
-      primaryFixed: Color(0xffeaebf9),
+      inversePrimary: Color(0xffEEEFFB), //claro en light
+      primaryFixed: Color(0xffDDDFF6),
       onPrimaryFixed: Color(0xff555FD2),
       primaryFixedDim: Color(0xffcfbdfe),
       onPrimaryFixedVariant: Color(0xff4d3d75),

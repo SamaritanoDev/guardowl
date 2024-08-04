@@ -1,20 +1,27 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/config/config.dart';
-import 'package:guardowl/features/authentication/blocs/authentication/authentication_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
+import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
+import 'package:guardowl/firebase_options.dart';
 
-void main() {
-  runApp(
-    BlocProvider(
-      create: (context) => AuthenticationCubit(),
-      child: const MainApp(),
-    ),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +29,22 @@ class MainApp extends StatelessWidget {
     final textTheme = createTextTheme(context, "Poppins", "Poppins");
     final theme = MaterialTheme(textTheme);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'GuardOwl',
-      theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: const AuthenticationView(),
-      // home: const CustomNavigationBar(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => LogInCubit()),
+        BlocProvider(create: (context) => SignUpCubit()),
+      ],
+      child: MaterialApp(
+        initialRoute: '/login',
+        debugShowCheckedModeBanner: false,
+        title: 'GuardOwl',
+        theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+        routes: {
+          '/login': (context) => const AuthenticationView(),
+          '/home': (context) => const CustomNavigationBar(),
+        },
+      ),
     );
   }
 }

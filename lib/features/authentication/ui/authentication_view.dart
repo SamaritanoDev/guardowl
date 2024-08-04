@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
+import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/register_view.dart';
 import 'package:guardowl/features/authentication/ui/widgets/widgets_auhtentication.dart';
-import 'package:guardowl/features/home/home_view.dart';
 import 'package:guardowl/features/share/share.dart';
 
 class AuthenticationView extends StatefulWidget {
@@ -23,54 +26,84 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
-    const singInStyleButton = ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
+    print("Building AuthenticationView with isRegisterMode: $isRegisterMode");
 
-    return Scaffold(
-      body: ListView(
-        children: [
-          MyBackground(
-            height: 1.4,
-            child: Center(
-              child: HeaderAuthentication(
-                  titleAuthentication: isRegisterMode ? 'Sing In' : 'Sign Up',
-                  subTitleAuthentication:
-                      isRegisterMode ? 'Hi! Welcome back, you have been missed' : 'Create your new account'),
+    const singInStyleButton =
+        ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
+    final color = Theme.of(context).colorScheme;
+    final logInCubit = context.read<LogInCubit>();
+    final signUpCubit = context.read<SignUpCubit>();
+
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state.isSignedIn) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushReplacementNamed(context, '/home');
+          });
+          return CircularProgressIndicator(color: color.primary);
+        } else {
+          return Scaffold(
+            body: ListView(
+              children: [
+                MyBackground(
+                  height: 1.4,
+                  child: Center(
+                    child: HeaderAuthentication(
+                        titleAuthentication:
+                            isRegisterMode ? 'Sing In' : 'Sign Up',
+                        subTitleAuthentication: isRegisterMode
+                            ? 'Hi! Welcome back, you have been missed'
+                            : 'Create your new account'),
+                  ),
+                ),
+                isRegisterMode ? const SingInView() : const RegisterView(),
+                const SizedBox(height: 20),
+                //button home
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: paddingAppBar),
+                  child: FilledButton(
+                    style: singInStyleButton,
+                    onPressed: () {
+                      if (isRegisterMode) {
+                        print(
+                            "Button pressed, isRegisterMode: $isRegisterMode");
+                        logInCubit.validtatingInputsLogIn();
+                        logInCubit.logInWithCredentials();
+                      } else {
+                        signUpCubit.validtatingInputsSignUp();
+                        signUpCubit.signUpWithCredentials();
+                      }
+                    },
+                    child: const Text('Continue'),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                const _LineOtherSocial(),
+                const SizedBox(height: 35),
+                //butons of social
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _ButtonSocialNetwork(iconGoogle),
+                    SizedBox(width: 30),
+                    _ButtonSocialNetwork(iconApple),
+                  ],
+                ),
+                const SizedBox(height: 35),
+                LinkAccount(
+                  routeName: isRegisterMode ? 'up' : 'in',
+                  questionText: isRegisterMode
+                      ? 'Don’t have an account?'
+                      : 'If you have an account?',
+                  onpressed: toggleAuthMode,
+                ),
+                const SizedBox(height: 35),
+              ],
             ),
-          ),
-          isRegisterMode ? const SingInView() : const RegisterView(),
-          const SizedBox(height: 20),
-          //button home
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: paddingAppBar),
-            child: FilledButton(
-              style: singInStyleButton,
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => const CustomNavigationBar()));
-              },
-              child: const Text('Continue'),
-            ),
-          ),
-          const SizedBox(height: 30),
-          const _LineOtherSocial(),
-          const SizedBox(height: 35),
-          //butons of social
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _ButtonSocialNetwork(iconGoogle),
-              SizedBox(width: 30),
-              _ButtonSocialNetwork(iconApple),
-            ],
-          ),
-          const SizedBox(height: 35),
-          LinkAccount(
-            routeName: isRegisterMode ? 'up' : 'in',
-            questionText: isRegisterMode ? 'Don’t have an account?' : 'If you have an account?',
-            onpressed: toggleAuthMode,
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 }

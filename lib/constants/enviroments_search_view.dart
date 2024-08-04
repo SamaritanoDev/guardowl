@@ -1,4 +1,4 @@
-const double sizeHeightAppBar = 100;
+const double sizeHeightAppBar = 120;
 const double paddingAppBar = 14.0;
 const double sizeIconsAppBar = 24;
 const double widthCardImage = 173.34;

@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/authentication/blocs/authentication/authentication_cubit.dart';
+import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/widgets/form_email_password.dart';
 import 'package:guardowl/features/authentication/ui/widgets/text_field_custom.dart';
 
 class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+  const RegisterView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     double width = 160.00;
+    final validFormSignUpCubit = context.watch<SignUpCubit>();
+    final firstName = validFormSignUpCubit.state.firstName;
+    final lastName = validFormSignUpCubit.state.lastName;
+    final email = validFormSignUpCubit.state.email;
+    final password = validFormSignUpCubit.state.password;
 
-    final authenticationCubit = context.watch<AuthenticationCubit>();
-    final firstName = authenticationCubit.state.firstName;
-    final lastName = authenticationCubit.state.lastName;
+    final readSignUpCubit = context.read<SignUpCubit>();
 
     return Form(
       child: Padding(
@@ -26,7 +31,7 @@ class RegisterView extends StatelessWidget {
               children: [
                 TextFieldCustom(
                   labelTextField: 'First name',
-                  onChanged: authenticationCubit.firstNameChanged,
+                  onChanged: validFormSignUpCubit.firstNameChanged,
                   errorMessage: firstName.errorMessage,
                   obscureText: false,
                   width: width,
@@ -34,7 +39,7 @@ class RegisterView extends StatelessWidget {
                 const Spacer(),
                 TextFieldCustom(
                   labelTextField: 'Last name',
-                  onChanged: authenticationCubit.lastNameChanged,
+                  onChanged: validFormSignUpCubit.lastNameChanged,
                   errorMessage: lastName.errorMessage,
                   obscureText: false,
                   width: width,
@@ -42,7 +47,12 @@ class RegisterView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            const FormEmailPassword(),
+            FormEmailPassword(
+              onChangedEmail: readSignUpCubit.emailChanged,
+              onChangedPassword: readSignUpCubit.passwordChanged,
+              errorMessageEmail: email.errorMessage,
+              errorMessagePassword: password.errorMessage,
+            ),
             const SizedBox(height: 10),
           ],
         ),
