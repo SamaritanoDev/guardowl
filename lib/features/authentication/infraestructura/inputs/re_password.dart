@@ -20,7 +20,7 @@ class RePassword extends FormzInput<String, RePasswordError> {
   @override
   RePasswordError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) return RePasswordError.empty;
-    return _rePasswordRegExp.hasMatch(value) && value.length < 9
+    return _rePasswordRegExp.hasMatch(value) && value.length < 6
         ? null
         : RePasswordError.length;
   }

@@ -13,13 +13,14 @@ class RegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = 160.00;
-    final signUpCubit = context.watch<SignUpCubit>();
-    final firstName = signUpCubit.state.firstName;
-    final lastName = signUpCubit.state.lastName;
-    final email = signUpCubit.state.email;
-    final password = signUpCubit.state.password;
+    final validFormSignUpCubit = context.watch<SignUpCubit>();
+    final firstName = validFormSignUpCubit.state.firstName;
+    final lastName = validFormSignUpCubit.state.lastName;
+    final email = validFormSignUpCubit.state.email;
+    final password = validFormSignUpCubit.state.password;
 
     final readSignUpCubit = context.read<SignUpCubit>();
+
     return Form(
       child: Padding(
         padding: EdgeInsets.all(paddingBorder),
@@ -30,9 +31,7 @@ class RegisterView extends StatelessWidget {
               children: [
                 TextFieldCustom(
                   labelTextField: 'First name',
-                  // onChanged: signUpCubit.firstNameChanged,
-                  onChanged: (value) =>
-                      context.read<SignUpCubit>().firstNameChanged(value),
+                  onChanged: validFormSignUpCubit.firstNameChanged,
                   errorMessage: firstName.errorMessage,
                   obscureText: false,
                   width: width,
@@ -40,8 +39,7 @@ class RegisterView extends StatelessWidget {
                 const Spacer(),
                 TextFieldCustom(
                   labelTextField: 'Last name',
-                  // onChanged: signUpCubit.lastNameChanged,
-                  onChanged: (value) => readSignUpCubit.lastNameChanged(value),
+                  onChanged: validFormSignUpCubit.lastNameChanged,
                   errorMessage: lastName.errorMessage,
                   obscureText: false,
                   width: width,
@@ -50,12 +48,8 @@ class RegisterView extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             FormEmailPassword(
-              // onChangedEmail: readSignUpCubit.emailChanged,
-              // onChangedPassword: readSignUpCubit.passwordChanged,
-              onChangedEmail: (email) =>
-                  context.read<SignUpCubit>().emailChanged(email),
-              onChangedPassword: (password) =>
-                  context.read<SignUpCubit>().passwordChanged(password),
+              onChangedEmail: readSignUpCubit.emailChanged,
+              onChangedPassword: readSignUpCubit.passwordChanged,
               errorMessageEmail: email.errorMessage,
               errorMessagePassword: password.errorMessage,
             ),

@@ -9,6 +9,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit() : super(const AuthState()) {
     _auth.authStateChanges().listen((User? user) {
+        print("Auth state changed: ${user != null}");
+        
       emit(state.copyWith(isSignedIn: user != null));
     });
   }

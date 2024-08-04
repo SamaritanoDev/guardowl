@@ -26,6 +26,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
+    print("Building AuthenticationView with isRegisterMode: $isRegisterMode");
+
     const singInStyleButton =
         ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
     final color = Theme.of(context).colorScheme;
@@ -64,9 +66,13 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                     style: singInStyleButton,
                     onPressed: () {
                       if (isRegisterMode) {
-                        signUpCubit.signUpWithCredentials();
-                      } else {
+                        print(
+                            "Button pressed, isRegisterMode: $isRegisterMode");
+                        logInCubit.validtatingInputsLogIn();
                         logInCubit.logInWithCredentials();
+                      } else {
+                        signUpCubit.validtatingInputsSignUp();
+                        signUpCubit.signUpWithCredentials();
                       }
                     },
                     child: const Text('Continue'),

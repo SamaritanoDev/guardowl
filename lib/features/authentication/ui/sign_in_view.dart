@@ -12,22 +12,19 @@ class SingInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final readLogInCubit = context.read<LogInCubit>();
-    final validFormRegisterCubit = context.watch<LogInCubit>();
-    final email = validFormRegisterCubit.state.email;
-    final password = validFormRegisterCubit.state.password;
+    final validFormLogInCubit = context.watch<LogInCubit>();
+    final email = validFormLogInCubit.state.email;
+    final password = validFormLogInCubit.state.password;
 
     return Padding(
       padding: EdgeInsets.all(paddingBorder),
       child: Column(
         children: [
           FormEmailPassword(
-            // onChangedEmail: logInCubit.emailChanged,
-            // onChangedPassword: logInCubit.passwordChanged,
-            onChangedEmail: (email) => readLogInCubit.emailChanged(email),
-            onChangedPassword: (password) =>
-                readLogInCubit.passwordChanged(password),
-                errorMessageEmail: email.errorMessage,
-                errorMessagePassword: password.errorMessage,
+            onChangedEmail: readLogInCubit.emailChanged,
+            onChangedPassword: readLogInCubit.passwordChanged,
+            errorMessageEmail: email.errorMessage,
+            errorMessagePassword: password.errorMessage,
           ),
           const _RecoverPassword(),
         ],

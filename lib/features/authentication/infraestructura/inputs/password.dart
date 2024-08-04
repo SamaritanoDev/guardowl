@@ -4,14 +4,13 @@ enum PasswordError { empty, length }
 
 class Password extends FormzInput<String, PasswordError> {
   const Password.pure() : super.pure('');
-
   const Password.dirty(super.value) : super.dirty();
 
   String? get errorMessage {
     if (isValid || isPure) return null;
 
     if (displayError == PasswordError.empty) return 'The field is required.';
-    if (displayError == PasswordError.length) return 'Minimum 8 characters.';
+    if (displayError == PasswordError.length) return 'Minimum 6 characters.';
     
     return null;
   }
@@ -19,7 +18,7 @@ class Password extends FormzInput<String, PasswordError> {
   @override
   PasswordError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) return PasswordError.empty;
-    if (value.length < 9) return PasswordError.length;
+    if (value.length < 6) return PasswordError.length;
 
     return null;
   }

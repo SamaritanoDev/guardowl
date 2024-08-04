@@ -6,7 +6,6 @@ class SignUpState extends Equatable {
   final LastName lastName;
   final Email email;
   final Password password;
-  final RePassword rePassword;
   final String exceptionError;
   final bool isValid;
 
@@ -16,7 +15,6 @@ class SignUpState extends Equatable {
     this.lastName = const LastName.pure(),
     this.email = const Email.pure(),
     this.password = const Password.pure(),
-    this.rePassword = const RePassword.pure(),
     this.exceptionError = "",
     this.isValid = false,
   });
@@ -37,20 +35,11 @@ class SignUpState extends Equatable {
         lastName: lastName ?? this.lastName,
         email: email ?? this.email,
         password: password ?? this.password,
-        rePassword: rePassword ?? this.rePassword,
         exceptionError: exceptionError ?? this.exceptionError,
         isValid: isValid ?? this.isValid,
       );
 
   @override
-  List<Object> get props => [
-        status,
-        firstName,
-        lastName,
-        email,
-        password,
-        rePassword,
-        exceptionError,
-        isValid
-      ];
+  List<Object> get props =>
+      [status, firstName, lastName, email, password, exceptionError, isValid];
 }

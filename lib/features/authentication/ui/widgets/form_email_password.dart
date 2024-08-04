@@ -13,7 +13,7 @@ class FormEmailPassword extends StatelessWidget {
     super.key,
     required this.onChangedEmail,
     required this.onChangedPassword,
-     this.errorMessageEmail,
+    this.errorMessageEmail,
     this.errorMessagePassword,
   });
 
@@ -34,6 +34,9 @@ class FormEmailPassword extends StatelessWidget {
         const SizedBox(height: 21),
         BlocBuilder<LogInCubit, LogInState>(
           builder: (context, state) {
+            print(
+                'Building TextFieldCustom with passwordVisible: ${state.passwordVisible}');
+
             return TextFieldCustom(
               labelTextField: 'Password',
               onChanged: onChangedPassword,
@@ -53,10 +56,4 @@ class FormEmailPassword extends StatelessWidget {
       ],
     );
   }
-
-  // @override
-  // void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  //   super.debugFillProperties(properties);
-  //   properties.add(StringProperty('errorMessage', errorMessage));
-  // }
 }
