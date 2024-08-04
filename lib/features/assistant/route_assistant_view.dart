@@ -1,11 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guardowl/features/share/share.dart';
+import 'package:guardowl/services/gemini_api_service.dart';
 
-class RouteAssistantScreen extends StatelessWidget {
+class RouteAssistantScreen extends StatefulWidget {
   const RouteAssistantScreen({super.key});
 
   @override
+  State<RouteAssistantScreen> createState() => _RouteAssistantScreenState();
+}
+
+class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
+  final _messageController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+  final GeminiApiService _geminiApiService = GeminiApiService();
+
+  Future<void> _sendMessage() async {
+    if (_messageController.text.isNotEmpty) {
+      final userMessage = _messageController.text;
+      _messageController.clear();
+
+      // Add user message to Firestore
+      await _firestore.collection('messages').add({
+        'text': userMessage,
+        'createdAt': Timestamp.now(),
+        'userId': _auth.currentUser!.uid,
+      });
+
+      // Get response from Gemini AI
+      try {
+        final aiResponse = await _geminiApiService.getResponse(userMessage);
+
+        // Add AI response to Firestore
+        await _firestore.collection('messages').add({
+          'text': aiResponse,
+          'createdAt': Timestamp.now(),
+          'userId': 'gemini_ai', // Use a different ID for AI responses
+        });
+      } catch (e) {
+        print('Error: $e');
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Route Assistant'),
@@ -19,8 +61,76 @@ class RouteAssistantScreen extends StatelessWidget {
             const ProfileHeader(),
             const SizedBox(height: 16),
             OptionsList(),
-            const Spacer(),
-            const MessageInput(),
+            // const Spacer(),
+            Expanded(
+              child: StreamBuilder(
+                stream: _firestore
+                    .collection('messages')
+                    .orderBy('createdAt')
+                    .snapshots(),
+                builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
+                  final messages = snapshot.data!.docs;
+                  return ListView.builder(
+                    reverse: true,
+                    itemCount: messages.length,
+                    itemBuilder: (ctx, index) {
+                      final message = messages[index];
+                      final isUserMessage =
+                          message['userId'] == _auth.currentUser!.uid;
+                      return ListTile(
+                        title: Text(message['text']),
+                        subtitle: isUserMessage
+                            ? const Text('You')
+                            : const Text('Guardowl AI'),
+                        tileColor:
+                            isUserMessage ? Colors.blue[100] : Colors.grey[200],
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF0F0F0),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    height: 44.0,
+                    child: TextField(
+                      controller: _messageController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  decoration: BoxDecoration(
+                    color: color.secondaryContainer,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  width: 50.0,
+                  height: 44.0,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_upward, color: Colors.white),
+                    onPressed: _sendMessage,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
@@ -152,49 +262,6 @@ class OptionsList extends StatelessWidget {
             ),
           )
           .toList(),
-    );
-  }
-}
-
-class MessageInput extends StatelessWidget {
-  const MessageInput({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0F0F0),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            height: 44.0,
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: color.secondaryContainer,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          width: 50.0,
-          height: 44.0,
-          child: IconButton(
-            icon: const Icon(Icons.arrow_upward, color: Colors.white),
-            onPressed: () {},
-          ),
-        ),
-      ],
     );
   }
 }
