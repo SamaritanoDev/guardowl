@@ -4,12 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:guardowl/features/authentication/infraestructura/inputs/inputs.dart';
+import 'package:guardowl/features/authentication/models/user_model.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   SignUpCubit() : super(const SignUpState());
 
@@ -90,10 +93,39 @@ class SignUpCubit extends Cubit<SignUpState> {
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
-      await _auth.createUserWithEmailAndPassword(
-          email: state.email.value, password: state.password.value);
-      emit(state.copyWith(status: FormzSubmissionStatus.success));
-      print("Sign up successful");
+      final UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+              email: state.email.value, password: state.password.value);
+
+      // Save User in Firestore
+      final user = userCredential.user;
+
+      // if (user != null) {
+      //   await _firestore.collection('users').doc(user.uid).set({
+      //     'firstName': state.firstName.value,
+      //     'lastName': state.lastName.value,
+      //     'email': state.email.value,
+      //   });
+
+      if (user != null) {
+        final userModel = UserModel(
+          uid: user.uid,
+          email: state.email.value,
+          firstName: state.firstName.value,
+          lastName: state.lastName.value,
+          password: state.password.value,
+        );
+
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .set(userModel.toMapFirestore());
+
+        emit(state.copyWith(status: FormzSubmissionStatus.success));
+        print("Sign up successful");
+      } else {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+      }
     } on FirebaseAuthException catch (error) {
       print("Sign up failed: ${error.message}");
 
