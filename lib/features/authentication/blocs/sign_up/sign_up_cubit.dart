@@ -18,8 +18,6 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void firstNameChanged(String value) {
     final firstName = FirstName.dirty(value);
-    print("Email changed: ${firstName.value}");
-
     final isValid = Formz.validate(
       [
         firstName,
@@ -37,8 +35,6 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void lastNameChanged(String value) {
     final lastName = LastName.dirty(value);
-    print("Email changed: ${lastName.value}");
-
     final isValid = Formz.validate(
       [
         lastName,
@@ -55,8 +51,6 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
-    print("Email changed: ${email.value}");
-
     final isValid = Formz.validate(
       [
         email,
@@ -73,8 +67,6 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void passwordChanged(String value) {
     final password = Password.dirty(value);
-    print("Email changed: ${password.value}");
-
     final isValid = Formz.validate([
       state.email,
       state.firstName,
@@ -88,8 +80,6 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   Future<void> signUpWithCredentials() async {
-    print("Attempting sign up...");
-
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
@@ -114,7 +104,6 @@ class SignUpCubit extends Cubit<SignUpState> {
             .set(userModel.toMapFirestore());
 
         emit(state.copyWith(status: FormzSubmissionStatus.success));
-        print("Sign up successful");
       } else {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
@@ -131,8 +120,6 @@ class SignUpCubit extends Cubit<SignUpState> {
           exceptionError: error.message.toString(),
           status: FormzSubmissionStatus.failure));
     } catch (error) {
-      print("Sign up failed: Unexpected error");
-
       emit(state.copyWith(
           exceptionError: "Unexpected error please try again later",
           status: FormzSubmissionStatus.failure));
@@ -140,8 +127,6 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   Future<void> signUpWithGoogle() async {
-    print("Attempting Google sign up...");
-
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
@@ -188,7 +173,6 @@ class SignUpCubit extends Cubit<SignUpState> {
               .set(userModel.toMapFirestore());
         }
         emit(state.copyWith(status: FormzSubmissionStatus.success));
-        print("Google sign up successful");
       } else {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
@@ -206,7 +190,6 @@ class SignUpCubit extends Cubit<SignUpState> {
         exceptionError: error.message.toString(),
       ));
     } catch (error) {
-      print("Google sign up failed: Unexpected error");
       emit(state.copyWith(
           status: FormzSubmissionStatus.failure,
           exceptionError: 'Unexpected error please try again later.'));
@@ -244,6 +227,5 @@ class SignUpCubit extends Cubit<SignUpState> {
         ],
       ),
     ));
-    print('submit $state');
   }
 }
