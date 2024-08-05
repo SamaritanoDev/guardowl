@@ -18,7 +18,7 @@ class GeminiApiService {
         "contents": [
           {
             "parts": [
-              {"text": $prompt}
+              {"text": prompt}
             ]
           }
         ]
