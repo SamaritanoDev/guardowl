@@ -3,18 +3,26 @@ import 'package:http/http.dart' as http;
 
 class GeminiApiService {
   final String baseUrl =
-      'https://your-gemini-endpoint.com/api'; // Replace with actual Gemini endpoint URL
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 
   Future<String> getResponse(String prompt) async {
     final url = Uri.parse(
-        '$baseUrl/your-endpoint'); // Replace with actual endpoint path
+        '$baseUrl?key=YOUR_API_KEY'); // Replace with actual endpoint path
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer YOUR_API_KEY', // Replace with actual API key
       },
-      body: jsonEncode({'prompt': prompt}),
+      body: jsonEncode({
+        "contents": [
+          {
+            "parts": [
+              {"text": $prompt}
+            ]
+          }
+        ]
+      }),
     );
 
     if (response.statusCode == 200) {
