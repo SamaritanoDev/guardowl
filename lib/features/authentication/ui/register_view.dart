@@ -12,7 +12,8 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = 160.00;
+    final media = MediaQuery.of(context);
+    final width = media.size.width / 2.5;
     final validFormSignUpCubit = context.watch<SignUpCubit>();
     final firstName = validFormSignUpCubit.state.firstName;
     final lastName = validFormSignUpCubit.state.lastName;
