@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/constants/enviroments_assets.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
 import 'package:guardowl/features/share/custom_button_icon.dart';
 
@@ -25,7 +24,8 @@ class MyAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           //icon menu
-          const CustomButtonIcon(
+          CustomButtonIcon(
+            onPressed: () => Scaffold.of(context).openDrawer(),
             icon: Icons.menu,
           ),
           const Spacer(),
@@ -33,7 +33,8 @@ class MyAppBar extends StatelessWidget {
           Text('GuardOwl', style: titleAppBarStyle),
           const Spacer(),
           // icon notification
-          const CustomButtonIcon(
+          CustomButtonIcon(
+            onPressed: () {},
             icon: Icons.notifications_none_outlined,
           ),
         ],
@@ -42,14 +43,3 @@ class MyAppBar extends StatelessWidget {
   }
 }
 
-class _TitleAppBar extends StatelessWidget {
-  const _TitleAppBar();
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset(
-      logoGuardOwlPng,
-      height: sizeIconsAppBar,
-    );
-  }
-}

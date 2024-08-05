@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardowl/utils/drop_marker.dart';
 
 class MyCardImage extends StatelessWidget {
   final String urlImage;
@@ -53,13 +54,13 @@ class MyCardImage extends StatelessWidget {
                         titleCategory,
                         style: textTheme.titleLarge?.copyWith(
                           fontSize: 18,
-                          color: color.primaryContainer,
+                          color: color.inversePrimary,
                         ),
                       ),
                       Text(
                         countVisit,
                         style: textTheme.bodySmall?.copyWith(
-                          color: color.primaryContainer,
+                          color: color.inversePrimary,
                         ),
                       ),
                     ],
