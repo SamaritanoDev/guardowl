@@ -99,14 +99,6 @@ class SignUpCubit extends Cubit<SignUpState> {
 
       // Save User in Firestore
       final user = userCredential.user;
-
-      // if (user != null) {
-      //   await _firestore.collection('users').doc(user.uid).set({
-      //     'firstName': state.firstName.value,
-      //     'lastName': state.lastName.value,
-      //     'email': state.email.value,
-      //   });
-
       if (user != null) {
         final userModel = UserModel(
           uid: user.uid,
@@ -171,9 +163,35 @@ class SignUpCubit extends Cubit<SignUpState> {
         idToken: googleAuth.idToken,
       );
 
-      await _auth.signInWithCredential(credential);
-      emit(state.copyWith(status: FormzSubmissionStatus.success));
-      print("Google sign up successful");
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        // Check if user data already exists in Firestore
+        final userDoc =
+            await _firestore.collection('users').doc(user.uid).get();
+
+        if (!userDoc.exists) {
+          final userModel = UserModel(
+            uid: user.uid,
+            email: user.email ?? '',
+            firstName: googleUser.displayName?.split(' ').first,
+            lastName: googleUser.displayName?.split(' ').skip(1).join(' '),
+            password: '', // Password is not save
+          );
+
+          // Save User in Firestore
+          await _firestore
+              .collection('users')
+              .doc(user.uid)
+              .set(userModel.toMapFirestore());
+        }
+        emit(state.copyWith(status: FormzSubmissionStatus.success));
+        print("Google sign up successful");
+      } else {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+      }
     } on FirebaseAuthException catch (error) {
       print("Google sign up failed: ${error.message}");
 
