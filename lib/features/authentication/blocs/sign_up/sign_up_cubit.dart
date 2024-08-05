@@ -122,7 +122,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       print("Sign up failed: ${error.message}");
 
       emit(state.copyWith(
-          exceptionError: error.message.toString(),
+          exceptionError: _mapFirebaseAuthExceptionToMessage(error),
           status: FormzSubmissionStatus.failure));
     } on PlatformException catch (error) {
       print("Sign up failed: ${error.message}");
@@ -210,6 +210,21 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(
           status: FormzSubmissionStatus.failure,
           exceptionError: 'Unexpected error please try again later.'));
+    }
+  }
+
+  String _mapFirebaseAuthExceptionToMessage(FirebaseAuthException error) {
+    switch (error.code) {
+      case 'email-already-in-use':
+        return 'The account already exists for that email.';
+      case 'invalid-email':
+        return 'The email address is badly formatted.';
+      case 'operation-not-allowed':
+        return 'Operation not allowed.';
+      case 'weak-password':
+        return 'The password is too weak.';
+      default:
+        return 'An unknown error occurred.';
     }
   }
 

@@ -15,7 +15,6 @@ class UserModel {
     required this.password,
   });
 
-//todo:
   factory UserModel.fromFirebaseUser(User user, Map<String, dynamic> userData) {
     final firstName = userData['firstName'] as String? ?? '';
     final lastName = userData['lastName'] as String? ?? '';
