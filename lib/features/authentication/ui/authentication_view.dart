@@ -19,7 +19,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
   bool isRegisterMode = true;
 
   void toggleAuthMode() {
-    setState(() {
+    setState(() { 
       isRegisterMode = !isRegisterMode;
     });
   }
@@ -82,12 +82,36 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                 const _LineOtherSocial(),
                 const SizedBox(height: 35),
                 //butons of social
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _ButtonSocialNetwork(iconGoogle),
-                    SizedBox(width: 30),
-                    _ButtonSocialNetwork(iconApple),
+                    _ButtonSocialNetwork(
+                      iconGoogle,
+                      onPressed: () {
+                        if (isRegisterMode) {
+                          print(
+                              "Button Google, isRegisterMode: $isRegisterMode");
+                          logInCubit.logInWithGoogle();
+                          //todo: login to Apple
+                        } else {
+                          signUpCubit.signUpWithGoogle();
+                          //todo: signUp to Apple
+                        }
+                      },
+                    ),
+                    const SizedBox(width: 30),
+                    _ButtonSocialNetwork(
+                      iconApple,
+                      onPressed: () {
+                        if (isRegisterMode) {
+                          print(
+                              "Button Apple, isRegisterMode: $isRegisterMode");
+                          //todo: login to Apple
+                        } else {
+                          //todo: signUp to Apple
+                        }
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox(height: 35),
@@ -110,7 +134,11 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
 class _ButtonSocialNetwork extends StatelessWidget {
   final String iconPath;
-  const _ButtonSocialNetwork(this.iconPath);
+  final Function() onPressed;
+  const _ButtonSocialNetwork(
+    this.iconPath, {
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +154,7 @@ class _ButtonSocialNetwork extends StatelessWidget {
           color.primaryContainer,
         ),
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       icon: Image.asset(
         iconPath,
         width: 27,

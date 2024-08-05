@@ -2,12 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:guardowl/features/authentication/infraestructura/inputs/inputs.dart';
 part 'login_state.dart';
 
 class LogInCubit extends Cubit<LogInState> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   LogInCubit() : super(const LogInState());
 
   void emailChanged(String value) {
@@ -34,12 +33,13 @@ class LogInCubit extends Cubit<LogInState> {
 
   Future<void> logInWithCredentials() async {
     print("Attempting login...");
-//todo: porque este emit esta fuera del try
 
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
-      await _auth.signInWithEmailAndPassword(
+      final FirebaseAuth auth = FirebaseAuth.instance;
+
+      await auth.signInWithEmailAndPassword(
         email: state.email.value,
         password: state.password.value,
       );
@@ -58,6 +58,49 @@ class LogInCubit extends Cubit<LogInState> {
     }
   }
 
+  Future<void> logInWithGoogle() async {
+    print("Attempting Google login...");
+
+    try {
+      emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+        print("Google login cancelled");
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      emit(state.copyWith(status: FormzSubmissionStatus.success));
+      print("Google login successful");
+    } on FirebaseAuthException catch (e) {
+      print("Google login failed: ${e.message}");
+
+      emit(state.copyWith(
+        status: FormzSubmissionStatus.failure,
+        exceptionError: e.message ?? "An unknown error occurred",
+      ));
+    } catch (e) {
+      print("Google login failed: $e");
+
+      emit(state.copyWith(
+        status: FormzSubmissionStatus.failure,
+        exceptionError: "An unknown error occurred",
+      ));
+    }
+  }
+
   void validtatingInputsLogIn() {
     emit(state.copyWith(
       status: FormzSubmissionStatus.inProgress,
@@ -70,12 +113,9 @@ class LogInCubit extends Cubit<LogInState> {
         ],
       ),
     ));
-    print('submit $state');
   }
 
   void togglePasswordVisibility() {
-    print('Toggling password visibility');
-    
     emit(state.copyWith(
       passwordVisible: !state.passwordVisible,
     ));

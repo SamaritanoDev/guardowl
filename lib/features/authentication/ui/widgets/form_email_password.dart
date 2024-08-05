@@ -34,9 +34,7 @@ class FormEmailPassword extends StatelessWidget {
         const SizedBox(height: 21),
         BlocBuilder<LogInCubit, LogInState>(
           builder: (context, state) {
-            print(
-                'Building TextFieldCustom with passwordVisible: ${state.passwordVisible}');
-
+            
             return TextFieldCustom(
               labelTextField: 'Password',
               onChanged: onChangedPassword,

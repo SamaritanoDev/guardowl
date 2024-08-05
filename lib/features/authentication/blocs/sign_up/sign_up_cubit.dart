@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:guardowl/features/authentication/infraestructura/inputs/inputs.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   SignUpCubit() : super(const SignUpState());
 
@@ -82,7 +84,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     ));
   }
 
-  void signUpWithCredentials() async {
+  Future<void> signUpWithCredentials() async {
     print("Attempting sign up...");
 
     try {
@@ -110,6 +112,54 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(
           exceptionError: "Unexpected error please try again later",
           status: FormzSubmissionStatus.failure));
+    }
+  }
+
+  Future<void> signUpWithGoogle() async {
+    print("Attempting Google sign up...");
+
+    try {
+      emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        emit(state.copyWith(
+          status: FormzSubmissionStatus.failure,
+          exceptionError: 'Google sign in was cancelled.',
+        ));
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await _auth.signInWithCredential(credential);
+      emit(state.copyWith(status: FormzSubmissionStatus.success));
+      print("Google sign up successful");
+    } on FirebaseAuthException catch (error) {
+      print("Google sign up failed: ${error.message}");
+
+      emit(state.copyWith(
+        status: FormzSubmissionStatus.failure,
+        exceptionError: error.message.toString(),
+      ));
+    } on PlatformException catch (error) {
+      print("Google sign up failed: ${error.message}");
+      emit(state.copyWith(
+        status: FormzSubmissionStatus.failure,
+        exceptionError: error.message.toString(),
+      ));
+    } catch (error) {
+      print("Google sign up failed: Unexpected error");
+      emit(state.copyWith(
+          status: FormzSubmissionStatus.failure,
+          exceptionError: 'Unexpected error please try again later.'));
     }
   }
 

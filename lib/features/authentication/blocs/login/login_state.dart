@@ -34,5 +34,6 @@ class LogInState extends Equatable {
           passwordVisible: passwordVisible ?? this.passwordVisible);
 
   @override
-  List<Object> get props => [status, email, password, exceptionError, isValid];
+  List<Object> get props =>
+      [status, email, password, exceptionError, isValid, passwordVisible];
 }
