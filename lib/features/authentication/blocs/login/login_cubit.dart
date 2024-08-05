@@ -11,8 +11,6 @@ class LogInCubit extends Cubit<LogInState> {
 
   void emailChanged(String value) {
     final email = Email.dirty(value);
-    print("Email changed: ${email.value}");
-
     final isValid = Formz.validate([email, state.password]);
     emit(state.copyWith(
       email: email,
@@ -22,8 +20,6 @@ class LogInCubit extends Cubit<LogInState> {
 
   void passwordChanged(String value) {
     final password = Password.dirty(value);
-    print("Password changed: ${password.value}");
-
     final isValid = Formz.validate([state.email, password]);
     emit(state.copyWith(
       password: password,
@@ -32,7 +28,6 @@ class LogInCubit extends Cubit<LogInState> {
   }
 
   Future<void> logInWithCredentials() async {
-    print("Attempting login...");
 
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
@@ -47,7 +42,6 @@ class LogInCubit extends Cubit<LogInState> {
       print('Passowrd con logInWithCredentials: ${state.password.value}');
 
       emit(state.copyWith(status: FormzSubmissionStatus.success));
-      print("Login successful");
     } on FirebaseAuthException catch (e) {
       print("Login failed: ${e.message}");
 
@@ -59,8 +53,7 @@ class LogInCubit extends Cubit<LogInState> {
   }
 
   Future<void> logInWithGoogle() async {
-    print("Attempting Google login...");
-
+    
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
@@ -68,7 +61,6 @@ class LogInCubit extends Cubit<LogInState> {
 
       if (googleUser == null) {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
-        print("Google login cancelled");
         return;
       }
 
@@ -83,7 +75,6 @@ class LogInCubit extends Cubit<LogInState> {
       await FirebaseAuth.instance.signInWithCredential(credential);
 
       emit(state.copyWith(status: FormzSubmissionStatus.success));
-      print("Google login successful");
     } on FirebaseAuthException catch (e) {
       print("Google login failed: ${e.message}");
 
