@@ -53,7 +53,7 @@ class LogInCubit extends Cubit<LogInState> {
 
       emit(state.copyWith(
         status: FormzSubmissionStatus.failure,
-        exceptionError: e.message ?? "An unknown error occurred",
+        exceptionError: e.message ?? "An unknown error occurred.",
       ));
     }
   }

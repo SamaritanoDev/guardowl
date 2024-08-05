@@ -63,7 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '497383329986',
     projectId: 'appguardowl',
     storageBucket: 'appguardowl.appspot.com',
+    androidClientId: '497383329986-m5s697o5qlvlg3egck01esmno0bethqg.apps.googleusercontent.com',
     iosClientId: '497383329986-gdidkp84ja616rc6oeirqg0cr23mhmcq.apps.googleusercontent.com',
     iosBundleId: 'com.example.guardowl',
   );
+
 }

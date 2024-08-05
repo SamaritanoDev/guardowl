@@ -4,12 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:guardowl/features/authentication/infraestructura/inputs/inputs.dart';
+import 'package:guardowl/features/authentication/models/user_model.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   SignUpCubit() : super(const SignUpState());
 
@@ -90,15 +93,36 @@ class SignUpCubit extends Cubit<SignUpState> {
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
-      await _auth.createUserWithEmailAndPassword(
-          email: state.email.value, password: state.password.value);
-      emit(state.copyWith(status: FormzSubmissionStatus.success));
-      print("Sign up successful");
+      final UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
+              email: state.email.value, password: state.password.value);
+
+      // Save User in Firestore
+      final user = userCredential.user;
+      if (user != null) {
+        final userModel = UserModel(
+          uid: user.uid,
+          email: state.email.value,
+          firstName: state.firstName.value,
+          lastName: state.lastName.value,
+          password: state.password.value,
+        );
+
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .set(userModel.toMapFirestore());
+
+        emit(state.copyWith(status: FormzSubmissionStatus.success));
+        print("Sign up successful");
+      } else {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+      }
     } on FirebaseAuthException catch (error) {
       print("Sign up failed: ${error.message}");
 
       emit(state.copyWith(
-          exceptionError: error.message.toString(),
+          exceptionError: _mapFirebaseAuthExceptionToMessage(error),
           status: FormzSubmissionStatus.failure));
     } on PlatformException catch (error) {
       print("Sign up failed: ${error.message}");
@@ -139,9 +163,35 @@ class SignUpCubit extends Cubit<SignUpState> {
         idToken: googleAuth.idToken,
       );
 
-      await _auth.signInWithCredential(credential);
-      emit(state.copyWith(status: FormzSubmissionStatus.success));
-      print("Google sign up successful");
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        // Check if user data already exists in Firestore
+        final userDoc =
+            await _firestore.collection('users').doc(user.uid).get();
+
+        if (!userDoc.exists) {
+          final userModel = UserModel(
+            uid: user.uid,
+            email: user.email ?? '',
+            firstName: googleUser.displayName?.split(' ').first,
+            lastName: googleUser.displayName?.split(' ').skip(1).join(' '),
+            password: '', // Password is not save
+          );
+
+          // Save User in Firestore
+          await _firestore
+              .collection('users')
+              .doc(user.uid)
+              .set(userModel.toMapFirestore());
+        }
+        emit(state.copyWith(status: FormzSubmissionStatus.success));
+        print("Google sign up successful");
+      } else {
+        emit(state.copyWith(status: FormzSubmissionStatus.failure));
+      }
     } on FirebaseAuthException catch (error) {
       print("Google sign up failed: ${error.message}");
 
@@ -160,6 +210,21 @@ class SignUpCubit extends Cubit<SignUpState> {
       emit(state.copyWith(
           status: FormzSubmissionStatus.failure,
           exceptionError: 'Unexpected error please try again later.'));
+    }
+  }
+
+  String _mapFirebaseAuthExceptionToMessage(FirebaseAuthException error) {
+    switch (error.code) {
+      case 'email-already-in-use':
+        return 'The account already exists for that email.';
+      case 'invalid-email':
+        return 'The email address is badly formatted.';
+      case 'operation-not-allowed':
+        return 'Operation not allowed.';
+      case 'weak-password':
+        return 'The password is too weak.';
+      default:
+        return 'An unknown error occurred.';
     }
   }
 
