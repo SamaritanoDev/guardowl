@@ -9,6 +9,8 @@ class DestinationCubit extends Cubit<DestinationState> {
   DestinationCubit()
       : super(
           DestinationState(
+            destinations: const [],
+            hasReachedMax: false,
             status: InitialLoadingState(),
           ),
         ) {
@@ -17,6 +19,9 @@ class DestinationCubit extends Cubit<DestinationState> {
 
   void _markAsLoaded(List<DestinationsScore> destinations) {
     emit(DestinationState(
+      destinations: destinations,
+      hasReachedMax: destinations.length <
+          10, // Asume que si menos de 10 items, alcanzó el máximo.
       status: LoadedState(destinations: destinations),
     ));
   }
@@ -24,19 +29,23 @@ class DestinationCubit extends Cubit<DestinationState> {
   void _loadArticlesFromFile(String filePath) async {
     emit(
       DestinationState(
+        destinations: const [],
+        hasReachedMax: false,
         status: InitialLoadingState(),
       ),
     );
     try {
       String jsonString = await rootBundle.loadString(filePath);
-
-      List<DestinationsScore> destinations = destinationsScoreFromJson(jsonString);
+      List<DestinationsScore> destinations =
+          destinationsScoreFromJson(jsonString);
 
       if (destinations.isNotEmpty) {
         _markAsLoaded(destinations);
       } else {
         emit(
           DestinationState(
+            destinations: const [],
+            hasReachedMax: true,
             status: EmptyState(),
           ),
         );
@@ -44,6 +53,31 @@ class DestinationCubit extends Cubit<DestinationState> {
     } catch (e) {
       emit(
         DestinationState(
+          destinations: const [],
+          hasReachedMax: true,
+          status: ErrorState(error: e.toString()),
+        ),
+      );
+    }
+  }
+
+  void loadMoreDestinations() async {
+    if (state.hasReachedMax) return;
+
+    try {
+      String jsonString = await rootBundle.loadString(jsonDestinationsHeight);
+      List<DestinationsScore> moreDestinations =
+          destinationsScoreFromJson(jsonString);
+
+      emit(
+        state.copyWith(
+          destinations: List.of(state.destinations)..addAll(moreDestinations),
+          hasReachedMax: moreDestinations.isEmpty,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
           status: ErrorState(error: e.toString()),
         ),
       );

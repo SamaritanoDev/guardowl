@@ -22,26 +22,28 @@ class ErrorState extends StateDestination {
 class EmptyState extends StateDestination {}
 
 class DestinationState extends Equatable {
-  final StateDestination status;
   final List<DestinationsScore> destinations;
+  final bool hasReachedMax;
+  final StateDestination status;
+
   const DestinationState({
+    required this.destinations,
+    required this.hasReachedMax,
     required this.status,
-    this.destinations = const [],
   });
 
-  bool get isInitialLoading => status == InitialLoadingState();
-
-  bool get isEmpty => status == EmptyState();
-
   DestinationState copyWith({
-    StateDestination? status,
     List<DestinationsScore>? destinations,
-    int? countdestinations,
-  }) =>
-      DestinationState(
-        status: status ?? this.status,
-      );
+    bool? hasReachedMax,
+    StateDestination? status,
+  }) {
+    return DestinationState(
+      destinations: destinations ?? this.destinations,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      status: status ?? this.status,
+    );
+  }
 
   @override
-  List<Object> get props => [status, destinations];
+  List<Object> get props => [destinations, hasReachedMax, status];
 }

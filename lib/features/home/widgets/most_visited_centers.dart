@@ -25,11 +25,11 @@ class MostVisitedCenters extends StatelessWidget {
 
     final stateDestination = context.watch<DestinationCubit>().state;
 
-    if (stateDestination.isInitialLoading) {
+    if (stateDestination  is InitialLoadingState) {
       return Center(
         child: CircularProgressIndicator(color: color.secondary),
       );
-    } else if (stateDestination.isEmpty) {
+    } else if (stateDestination  is EmptyState) {
       return Center(
         child: Text(
           'No hay artículos disponibles.',
