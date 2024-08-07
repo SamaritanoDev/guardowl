@@ -116,9 +116,11 @@ class __ThemeDarkLightState extends State<_ThemeDarkLight> {
       WidgetStateProperty.resolveWith<Icon?>(
     (Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
-        return const Icon(Icons.mode_night_outlined);
+        return const Icon(
+          Icons.light_mode_outlined,
+        );
       }
-      return const Icon(Icons.light_mode_outlined);
+      return const Icon(Icons.mode_night_outlined);
     },
   );
 
@@ -127,10 +129,10 @@ class __ThemeDarkLightState extends State<_ThemeDarkLight> {
     final color = Theme.of(context).colorScheme;
 
     return Switch(
-      activeColor: color.onPrimary,
-      activeTrackColor: color.primaryContainer,
-      inactiveThumbColor: color.onPrimaryContainer,
-      inactiveTrackColor: color.outline,
+      activeColor: color.secondary,
+      activeTrackColor: color.onPrimary,
+      inactiveThumbColor: color.tertiary,
+      inactiveTrackColor: color.shadow,
       thumbIcon: thumbIcon,
       value: light,
       onChanged: (bool value) {

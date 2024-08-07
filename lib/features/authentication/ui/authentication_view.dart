@@ -28,7 +28,6 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
-    
     const singInStyleButton =
         ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
     final color = Theme.of(context).colorScheme;
@@ -139,6 +138,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                     onpressed: toggleAuthMode,
                   ),
                   const SizedBox(height: 35),
+                  const _TitleReference(),
+                  const SizedBox(height: 10),
                 ],
               ),
             );
@@ -218,6 +219,27 @@ class _LineCustom extends StatelessWidget {
       color: const Color(0xffc1c1c1),
       width: width * 0.25,
       height: 1,
+    );
+  }
+}
+
+class _TitleReference extends StatelessWidget {
+  const _TitleReference();
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final subtitleStyle = textTheme.labelMedium?.copyWith(
+      color: color.primary,
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('Made with Flutter', style: subtitleStyle),
+        Icon(Icons.flutter_dash_outlined, color: color.primary)
+      ],
     );
   }
 }

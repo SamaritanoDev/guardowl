@@ -76,13 +76,13 @@ class _ListTileLocationMarker extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final textBodySmallError =
-        textTheme.bodySmall?.copyWith(color: color.tertiary);
+        textTheme.bodySmall?.copyWith(color: color.secondary);
 
     return ListTile(
       leading: CustomCard(
         child: Icon(
           Icons.location_on,
-          color: color.tertiary,
+          color: color.secondary,
         ),
       ),
       iconColor: color.primary,
@@ -109,7 +109,7 @@ class CustomCard extends StatelessWidget {
       height: widthHeightMiniCardPurple,
       child: Card(
         elevation: 0,
-        color: color.tertiaryContainer,
+        color: color.secondaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.6),
         ),
