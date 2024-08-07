@@ -36,7 +36,6 @@ class HomeView extends StatelessWidget {
             ),
           ),
           const MostVisitedCenters(),
-          const LocationMarkerData(),
         ],
       ),
     );

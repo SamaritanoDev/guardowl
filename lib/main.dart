@@ -6,6 +6,7 @@ import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
+import 'package:guardowl/features/destinations/cubit/article_cubit.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 import 'package:guardowl/firebase_options.dart';
 
@@ -34,6 +35,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => LogInCubit()),
         BlocProvider(create: (context) => SignUpCubit()),
+        BlocProvider(create: (context) => DestinationCubit()),
       ],
       child: MaterialApp(
         initialRoute: '/login',

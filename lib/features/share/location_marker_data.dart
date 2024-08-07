@@ -37,21 +37,6 @@ class LocationMarkerData extends StatelessWidget {
                 nameLocation: "Kelapa Gading, Jakarta Utara",
                 distanceToLocation: "1.2 km",
               ),
-              _ListTileLocationMarker(
-                namePlace: "Mall of Indonesia",
-                nameLocation: "Kelapa Gading, Jakarta Utara",
-                distanceToLocation: "1.2 km",
-              ),
-              _ListTileLocationMarker(
-                namePlace: "Mall of Indonesia",
-                nameLocation: "Kelapa Gading, Jakarta Utara",
-                distanceToLocation: "1.2 km",
-              ),
-              _ListTileLocationMarker(
-                namePlace: "Mall of Indonesia",
-                nameLocation: "Kelapa Gading, Jakarta Utara",
-                distanceToLocation: "1.2 km",
-              ),
             ],
           ),
         ),

@@ -32,5 +32,8 @@ flutter:
     - assets/logos/guardowl_.svg
     - assets/logos/logo_guardowl.png
     - assets/icons/appbar/menu.png
+    - assets/logos/placeholder_254x254.gif
     #logos social network
     - assets/icons/authentication/
+    #data
+    - lib/features/destinations/data/destinations_score.json
