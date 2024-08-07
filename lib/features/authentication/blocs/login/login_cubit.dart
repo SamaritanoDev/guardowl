@@ -28,7 +28,6 @@ class LogInCubit extends Cubit<LogInState> {
   }
 
   Future<void> logInWithCredentials() async {
-
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 
@@ -53,7 +52,6 @@ class LogInCubit extends Cubit<LogInState> {
   }
 
   Future<void> logInWithGoogle() async {
-    
     try {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 

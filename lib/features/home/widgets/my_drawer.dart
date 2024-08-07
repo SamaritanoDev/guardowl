@@ -23,15 +23,22 @@ class MyDrawer extends StatelessWidget {
           child: Container(
             width: double.infinity,
             color: color.primary,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.close, color: color.onPrimary)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(Icons.close, color: color.onPrimary)),
+                    const Spacer(),
+                    Text('nombre y apellido', style: textLargeStyle),
+                    Text('correo electronico', style: textLargeStyle),
+                  ],
+                ),
                 const Spacer(),
-                Text('nombre y apellido', style: textLargeStyle),
-                Text('correo electronico', style: textLargeStyle),
+                const _ThemeDarkLight(),
               ],
             ),
           ),
@@ -40,6 +47,11 @@ class MyDrawer extends StatelessWidget {
         _MyListTileDrawer(
           label: 'Settings',
           icon: Icons.settings_outlined,
+          onTap: () {},
+        ),
+        _MyListTileDrawer(
+          label: 'My favourites',
+          icon: Icons.favorite_border,
           onTap: () {},
         ),
         _MyListTileDrawer(
@@ -54,6 +66,7 @@ class MyDrawer extends StatelessWidget {
             );
           },
         ),
+
         const SizedBox(height: 20)
       ],
     );
@@ -85,6 +98,46 @@ class _MyListTileDrawer extends StatelessWidget {
       leading: Icon(icon, color: iconColor),
       title: Text(label, style: labelStyle),
       onTap: onTap,
+    );
+  }
+}
+
+class _ThemeDarkLight extends StatefulWidget {
+  const _ThemeDarkLight({super.key});
+
+  @override
+  State<_ThemeDarkLight> createState() => __ThemeDarkLightState();
+}
+
+class __ThemeDarkLightState extends State<_ThemeDarkLight> {
+  bool light = true;
+
+  final WidgetStateProperty<Icon?> thumbIcon =
+      WidgetStateProperty.resolveWith<Icon?>(
+    (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
+        return const Icon(Icons.mode_night_outlined);
+      }
+      return const Icon(Icons.light_mode_outlined);
+    },
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
+    return Switch(
+      activeColor: color.onPrimary,
+      activeTrackColor: color.primaryContainer,
+      inactiveThumbColor: color.onPrimaryContainer,
+      inactiveTrackColor: color.outline,
+      thumbIcon: thumbIcon,
+      value: light,
+      onChanged: (bool value) {
+        setState(() {
+          light = value;
+        });
+      },
     );
   }
 }

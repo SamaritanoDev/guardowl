@@ -29,6 +29,20 @@ class UserModel {
     );
   }
 
+  //  factory UserModel.fromFirestore(Map<String, dynamic> userData, String uid) {
+  //   final firstName = userData['firstName'] as String? ?? '';
+  //   final lastName = userData['lastName'] as String? ?? '';
+  //   final email = userData['email'] as String? ?? '';
+
+  //   return UserModel(
+  //     uid: uid,
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     email: email,
+  //     password: '',
+  //   );
+  // }
+
   Map<String, dynamic> toMapFirestore() {
     return {
       'firstName': firstName,
