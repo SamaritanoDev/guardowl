@@ -1,4 +1,4 @@
-part of 'article_cubit.dart';
+part of 'destinations_cubit.dart';
 
 sealed class StateDestination {
   const StateDestination();
@@ -23,27 +23,31 @@ class EmptyState extends StateDestination {}
 
 class DestinationState extends Equatable {
   final List<DestinationsScore> destinations;
+  final List<DestinationsScore> favorites;
   final bool hasReachedMax;
   final StateDestination status;
 
   const DestinationState({
     required this.destinations,
+    required this.favorites,
     required this.hasReachedMax,
     required this.status,
   });
 
   DestinationState copyWith({
     List<DestinationsScore>? destinations,
+    List<DestinationsScore>? favorites,
     bool? hasReachedMax,
     StateDestination? status,
   }) {
     return DestinationState(
       destinations: destinations ?? this.destinations,
+       favorites: favorites ?? this.favorites,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       status: status ?? this.status,
     );
   }
 
   @override
-  List<Object> get props => [destinations, hasReachedMax, status];
+  List<Object> get props => [destinations, favorites, hasReachedMax, status];
 }

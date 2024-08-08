@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guardowl/features/discovery/widgets/continue_navigation_button.dart';
 import 'package:guardowl/features/discovery/widgets/from_to_inputs.dart';
 import 'package:guardowl/features/discovery/widgets/routing_icons.dart';
+import 'package:guardowl/features/share/my_app_bar_arrow.dart';
 
 class NavigationSearchView extends StatefulWidget {
   const NavigationSearchView({
@@ -21,19 +22,12 @@ class _NavigationSearchViewState extends State<NavigationSearchView> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leadingWidth: 80,
-        leading: Center(
-            child: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
-            Icons.arrow_back_outlined,
-            size: 30,
-          ),
-        )),
+      backgroundColor: color.onPrimary,
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 50),
+        child: MyAppBarArrow(),
       ),
       body: Container(
           padding: const EdgeInsets.all(28),

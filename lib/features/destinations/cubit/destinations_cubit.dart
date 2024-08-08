@@ -3,13 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:guardowl/constants/constants.dart';
 import 'package:guardowl/features/destinations/models/destinations_score_model.dart';
-part 'article_state.dart';
+part 'destinations_state.dart';
 
 class DestinationCubit extends Cubit<DestinationState> {
   DestinationCubit()
       : super(
           DestinationState(
             destinations: const [],
+            favorites: const [],
             hasReachedMax: false,
             status: InitialLoadingState(),
           ),
@@ -20,6 +21,7 @@ class DestinationCubit extends Cubit<DestinationState> {
   void _markAsLoaded(List<DestinationsScore> destinations) {
     emit(DestinationState(
       destinations: destinations,
+      favorites: const [],
       hasReachedMax: destinations.length <
           10, // Asume que si menos de 10 items, alcanzó el máximo.
       status: LoadedState(destinations: destinations),
@@ -30,6 +32,7 @@ class DestinationCubit extends Cubit<DestinationState> {
     emit(
       DestinationState(
         destinations: const [],
+        favorites: const [],
         hasReachedMax: false,
         status: InitialLoadingState(),
       ),
@@ -45,6 +48,7 @@ class DestinationCubit extends Cubit<DestinationState> {
         emit(
           DestinationState(
             destinations: const [],
+            favorites: const [],
             hasReachedMax: true,
             status: EmptyState(),
           ),
@@ -54,6 +58,7 @@ class DestinationCubit extends Cubit<DestinationState> {
       emit(
         DestinationState(
           destinations: const [],
+           favorites: const [],
           hasReachedMax: true,
           status: ErrorState(error: e.toString()),
         ),
@@ -82,5 +87,17 @@ class DestinationCubit extends Cubit<DestinationState> {
         ),
       );
     }
+  }
+
+  void addFavorite(DestinationsScore destination) {
+    final updatedFavorites = List<DestinationsScore>.from(state.favorites)
+      ..add(destination);
+    emit(state.copyWith(favorites: updatedFavorites));
+  }
+
+  void removeFavorite(DestinationsScore destination) {
+    final updatedFavorites = List<DestinationsScore>.from(state.favorites)
+      ..remove(destination);
+    emit(state.copyWith(favorites: updatedFavorites));
   }
 }

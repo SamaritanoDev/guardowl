@@ -32,7 +32,7 @@ class MyCardImage extends StatelessWidget {
         children: [
           Image.network(
             urlImage,
-            width: width,
+            width: double.infinity,
             height: 115,
             fit: BoxFit.cover,
             color: Colors.black.withOpacity(0.4),
@@ -72,19 +72,25 @@ class MyCardImage extends StatelessWidget {
                           color: color.secondary,
                         ),
                         const SizedBox(width: 5),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              location,
-                              style: textSubTitleCard,
-                            ),
-                            Text(
-                              place,
-                              style: textSubTitleCard,
-                            ),
-                          ],
+                        Text(
+                          location,
+                          style: textSubTitleCard,
                         ),
+                        const SizedBox(width: 5),
+                        Text(
+                          '- ',
+                          style: textSubTitleCard,
+                        ),
+                        Text(
+                          place,
+                          style: textSubTitleCard,
+                        ),
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+
+                        //   ],
+                        // ),
                       ],
                     ),
                   ],

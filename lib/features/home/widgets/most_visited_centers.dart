@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/enviroments_search_view.dart';
-import 'package:guardowl/features/destinations/cubit/article_cubit.dart';
+import 'package:guardowl/features/destinations/cubit/destinations_cubit.dart';
 import 'package:guardowl/features/home/widgets/my_card_image.dart';
+import 'package:guardowl/features/share/loader_custom.dart';
 
 class MostVisitedCenters extends StatelessWidget {
   const MostVisitedCenters({super.key});
@@ -13,6 +14,7 @@ class MostVisitedCenters extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final media = MediaQuery.of(context);
     final width = media.size.width;
+    final height = media.size.height;
     final textTitleLargePrimary = textTheme.titleLarge?.copyWith(
       color: color.primary,
       fontSize: 18,
@@ -25,14 +27,14 @@ class MostVisitedCenters extends StatelessWidget {
 
     final stateDestination = context.watch<DestinationCubit>().state;
 
-    if (stateDestination  is InitialLoadingState) {
-      return Center(
-        child: CircularProgressIndicator(color: color.secondary),
+    if (stateDestination is InitialLoadingState) {
+      return const Center(
+        child: BottomLoader(),
       );
-    } else if (stateDestination  is EmptyState) {
+    } else if (stateDestination is EmptyState) {
       return Center(
         child: Text(
-          'No hay artículos disponibles.',
+          'There are no items available.',
           style: textTitleLargePrimary,
         ),
       );
@@ -46,18 +48,18 @@ class MostVisitedCenters extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: paddingAppBar),
             child: Text(
-              "Destinations you must visit",
+              "Destinations I want to visit:",
               style: textTitleLargePrimary,
             ),
           ),
           const SizedBox(height: 6),
           SizedBox(
-            height: heightCardImage,
+            height: height * 0.8,
             width: width,
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: paddingAppBar),
               itemCount: destinationsHeight.length,
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
               itemExtent: widthCardImage,
               itemBuilder: (BuildContext context, int index) {
                 final destination = destinationsHeight[index];

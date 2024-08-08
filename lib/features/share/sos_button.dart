@@ -5,6 +5,8 @@ class SosButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    
     return OutlinedButton(
       onPressed: () {
         // TODO: add global onPressed method
@@ -15,16 +17,16 @@ class SosButton extends StatelessWidget {
         side: BorderSide.none,
         shape: const CircleBorder(),
         // change the splash color when tap this button.
-        overlayColor: Colors.white,
+        overlayColor: color.onPrimary,
         elevation: 7,
-        shadowColor: Colors.black,
+        shadowColor: color.shadow,
         padding: const EdgeInsets.all(12),
-        backgroundColor: const Color.fromARGB(255, 255, 103, 121),
+        backgroundColor: color.tertiary,
       ),
-      child: const Text(
+      child: Text(
         'SOS',
         style: TextStyle(
-          color: Colors.white,
+          color: color.onPrimary,
           fontSize: 20,
           fontWeight: FontWeight.w700,
         ),

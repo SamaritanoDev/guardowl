@@ -33,6 +33,7 @@ flutter:
     - assets/logos/logo_guardowl.png
     - assets/icons/appbar/menu.png
     - assets/logos/placeholder_254x254.gif
+    - assets/logos/placeholder_409x409.gif
     #logos social network
     - assets/icons/authentication/
     #data

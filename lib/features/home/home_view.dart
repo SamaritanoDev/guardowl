@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
               style: textTitleLargePrimary,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 30),
           const DestinationsList(),
         ],
       ),

@@ -50,9 +50,9 @@ class MyDrawer extends StatelessWidget {
           onTap: () {},
         ),
         _MyListTileDrawer(
-          label: 'My favourites',
+          label: 'My wish list',
           icon: Icons.favorite_border,
-          onTap: () {},
+          onTap: () => Navigator.pushNamed(context, '/favourites'),
         ),
         _MyListTileDrawer(
           label: 'Log out',
@@ -103,7 +103,7 @@ class _MyListTileDrawer extends StatelessWidget {
 }
 
 class _ThemeDarkLight extends StatefulWidget {
-  const _ThemeDarkLight({super.key});
+  const _ThemeDarkLight();
 
   @override
   State<_ThemeDarkLight> createState() => __ThemeDarkLightState();
