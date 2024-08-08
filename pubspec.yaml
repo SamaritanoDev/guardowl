@@ -1,10 +1,10 @@
 name: guardowl
-description: "A new Flutter project."
-publish_to: "none"
+description: 'A new Flutter project.'
+publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ">=3.4.1 <4.0.0"
+  sdk: '>=3.4.1 <4.0.0'
 
 dependencies:
   cloud_firestore: ^5.2.0
@@ -16,7 +16,9 @@ dependencies:
   flutter_bloc: ^8.1.6
   formz: ^0.7.0
   google_fonts: ^6.2.1
+  google_generative_ai: ^0.4.4
   google_sign_in: ^6.2.1
+  http: ^1.2.2
   material_design_icons_flutter: ^7.0.7296
 
 dev_dependencies:
