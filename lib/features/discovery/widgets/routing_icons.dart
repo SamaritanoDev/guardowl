@@ -10,12 +10,13 @@ class RoutingIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
           Icons.radio_button_checked,
-          color: primaryColor,
+          color: color.primary,
         ),
         const SizedBox(height: 8),
         ...List.generate(
@@ -23,13 +24,13 @@ class RoutingIcons extends StatelessWidget {
           (_) => Container(
             height: 4.5,
             width: 2,
-            color: Colors.grey,
+            color: color.onSurfaceVariant,
             margin: const EdgeInsets.only(bottom: 8),
           ),
         ),
         Icon(
           Icons.my_location_sharp,
-          color: primaryColor,
+          color: color.primary,
         ),
         const SizedBox(height: 15),
       ],

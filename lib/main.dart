@@ -6,6 +6,8 @@ import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
+import 'package:guardowl/features/destinations/cubit/destinations_cubit.dart';
+import 'package:guardowl/features/favourites/favourites_view.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 import 'package:guardowl/firebase_options.dart';
 
@@ -34,6 +36,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => LogInCubit()),
         BlocProvider(create: (context) => SignUpCubit()),
+        BlocProvider(create: (context) => DestinationCubit()),
       ],
       child: MaterialApp(
         initialRoute: '/login',
@@ -43,6 +46,8 @@ class MainApp extends StatelessWidget {
         routes: {
           '/login': (context) => const AuthenticationView(),
           '/home': (context) => const CustomNavigationBar(),
+          '/favourites': (context) => const FavouritesView(),
+          
         },
       ),
     );

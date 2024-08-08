@@ -6,6 +6,7 @@ class SearchContainerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     return OutlinedButton(
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -14,18 +15,18 @@ class SearchContainerButton extends StatelessWidget {
         ));
       },
       style: OutlinedButton.styleFrom(
-        overlayColor: Colors.white,
+        overlayColor: color.onPrimary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        shadowColor: Colors.black,
+        shadowColor: color.shadow,
         elevation: 4,
         side: BorderSide.none,
         padding: const EdgeInsets.all(12),
         alignment: Alignment.centerLeft,
-        backgroundColor: Colors.white,
+        backgroundColor: color.onPrimary,
       ),
       child: Icon(
         Icons.search,
-        color: Theme.of(context).primaryColor,
+        color: color.primary,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/constants/constants.dart';
+import 'package:guardowl/features/home/widgets/destinations_list.dart';
 import 'package:guardowl/features/home/widgets/my_drawer.dart';
 import 'package:guardowl/features/home/widgets/search_widgets.dart';
 import 'package:guardowl/features/share/share.dart';
@@ -10,8 +11,14 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final media = MediaQuery.of(context);
     final width = media.size.width;
+    final textTitleLargePrimary = textTheme.titleLarge?.copyWith(
+      color: color.primary,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
 
     return Scaffold(
       drawer: Drawer(
@@ -35,8 +42,16 @@ class HomeView extends StatelessWidget {
               child: const HeaderSearch(),
             ),
           ),
-          const MostVisitedCenters(),
-          const LocationMarkerData(),
+          // const MostVisitedCenters(),
+          Padding(
+            padding: const EdgeInsets.only(left: paddingAppBar),
+            child: Text(
+              "Destinations you must visit",
+              style: textTitleLargePrimary,
+            ),
+          ),
+          const SizedBox(height: 30),
+          const DestinationsList(),
         ],
       ),
     );
