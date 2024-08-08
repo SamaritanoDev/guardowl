@@ -129,7 +129,7 @@ class _PhotoListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 175,
+                      width: 170,
                       child: Text(
                         destination.title,
                         style: textTitleCard,
