@@ -7,8 +7,8 @@ class DestinationsScore {
   String grupo;
   String riskSegment;
   int quantity;
-  double latitud;
-  double longitud;
+  double latitude;
+  double longitude;
   String title;
   String photoUrl;
 
@@ -19,8 +19,8 @@ class DestinationsScore {
     required this.grupo,
     required this.riskSegment,
     required this.quantity,
-    required this.latitud,
-    required this.longitud,
+    required this.latitude,
+    required this.longitude,
     required this.title,
     required this.photoUrl,
   });
@@ -33,8 +33,8 @@ class DestinationsScore {
         grupo: json["GRUPO"],
         riskSegment: json["risk_segment"],
         quantity: json["quantity"],
-        latitud: json["latitud"]?.toDouble(),
-        longitud: json["longitud"]?.toDouble(),
+        latitude: json["latitude"]?.toDouble(),
+        longitude: json["longitude"]?.toDouble(),
         title: json["title"],
         photoUrl: json["photo_url"],
       );
@@ -46,8 +46,8 @@ class DestinationsScore {
         "GRUPO": grupo,
         "risk_segment": riskSegment,
         "quantity": quantity,
-        "latitud": latitud,
-        "longitud": longitud,
+        "latitude": latitude,
+        "longitude": longitude,
         "title": title,
         "photo_url": photoUrl,
       };
