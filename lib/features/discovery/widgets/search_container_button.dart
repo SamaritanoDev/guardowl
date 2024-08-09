@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/features/discovery/navigation_search_view.dart';
+import 'package:guardowl/features/discovery/views/navigation_search_view.dart';
 
 class SearchContainerButton extends StatelessWidget {
   const SearchContainerButton({super.key});

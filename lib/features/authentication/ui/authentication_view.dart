@@ -197,9 +197,9 @@ class _LineOtherSocial extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const SizedBox(width: 20.0),
-        const _LineCustom(),
+        const _LineCustom(margin: EdgeInsets.only(right: 20.0, left: 2.0)),
         Text('Other social networks', style: subtitleSocialStyle),
-        const _LineCustom(),
+        const _LineCustom(margin: EdgeInsets.only(right: 2.0, left: 20.0)),
         const SizedBox(width: 20.0),
       ],
     );
@@ -207,18 +207,18 @@ class _LineOtherSocial extends StatelessWidget {
 }
 
 class _LineCustom extends StatelessWidget {
-  const _LineCustom();
+  const _LineCustom({required this.margin});
+  final EdgeInsets margin;
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final width = media.size.width;
-
-    return Container(
-      padding: EdgeInsets.all(paddingBorder),
-      color: const Color(0xffc1c1c1),
-      width: width * 0.25,
-      height: 1,
+    return Expanded(
+      child: Container(
+        margin: margin,
+        padding: EdgeInsets.all(paddingBorder),
+        color: const Color(0xffc1c1c1),
+        height: 1,
+      ),
     );
   }
 }

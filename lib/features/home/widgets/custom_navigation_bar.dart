@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/features/discovery/discovery_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guardowl/features/discovery/discovery_bloc_page.dart';
 import 'package:guardowl/features/home/home_view.dart';
+import 'package:guardowl/features/discovery/bloc/location_bloc.dart';
 import 'package:guardowl/features/share/share.dart';
 
 enum _Pages { home, discovery }
 
-class CustomNavigationBar extends StatefulWidget {
-  const CustomNavigationBar({super.key});
-
-  @override
-  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
-}
-
 extension _PagesExtension on _Pages {
-  ({IconData icon, IconData selectedIcon, String label}) get resources => switch (this) {
+  ({IconData icon, IconData selectedIcon, String label}) get resources =>
+      switch (this) {
         _Pages.home => (
             icon: Icons.home_outlined,
             selectedIcon: Icons.home,
@@ -25,6 +21,13 @@ extension _PagesExtension on _Pages {
             label: 'Discover',
           ),
       };
+}
+
+class CustomNavigationBar extends StatefulWidget {
+  const CustomNavigationBar({super.key});
+
+  @override
+  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
@@ -42,8 +45,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     final textTheme = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
 
-    final NavigationBarThemeData navigationBarThemeData = NavigationBarThemeData(
-      labelTextStyle: WidgetStateProperty.all(textTheme.labelSmall?.copyWith(color: color.primary)),
+    final navigationBarThemeData = NavigationBarThemeData(
+      labelTextStyle: WidgetStateProperty.all(
+          textTheme.labelSmall?.copyWith(color: color.primary)),
     );
 
     return Scaffold(
@@ -70,13 +74,23 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               });
             },
             selectedIndex: currentPage.index,
-            destinations: _destinationViews.map(_NavigationDestinationCustom.new).toList()),
+            destinations: _destinationViews
+                .map(_NavigationDestinationCustom.new)
+                .toList()),
       ),
       body: PageStorage(
         bucket: bucket,
         child: switch (currentPage) {
           _Pages.home => const HomeView(key: PageStorageKey('HomeView')),
-          _Pages.discovery => const DiscoveryView(key: PageStorageKey('DiscoveryView'))
+          _Pages.discovery => DiscoveryView(
+              key: const PageStorageKey('DiscoveryView'),
+              onInit: () => context
+                  .read<LocationBloc>()
+                  .add(const LocationStreamRequestedOpen()),
+              onDispose: () => context
+                  .read<LocationBloc>()
+                  .add(const LocationStreamRequestedClose()),
+            )
         },
       ),
     );
