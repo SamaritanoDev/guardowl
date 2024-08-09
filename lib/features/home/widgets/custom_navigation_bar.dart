@@ -13,7 +13,8 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 extension _PagesExtension on _Pages {
-  ({IconData icon, IconData selectedIcon, String label}) get resources => switch (this) {
+  ({IconData icon, IconData selectedIcon, String label}) get resources =>
+      switch (this) {
         _Pages.home => (
             icon: Icons.home_outlined,
             selectedIcon: Icons.home,
@@ -42,8 +43,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     final textTheme = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
 
-    final NavigationBarThemeData navigationBarThemeData = NavigationBarThemeData(
-      labelTextStyle: WidgetStateProperty.all(textTheme.labelSmall?.copyWith(color: color.primary)),
+    final NavigationBarThemeData navigationBarThemeData =
+        NavigationBarThemeData(
+      labelTextStyle: WidgetStateProperty.all(
+          textTheme.labelSmall?.copyWith(color: color.primary)),
     );
 
     return Scaffold(
@@ -72,13 +75,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               });
             },
             selectedIndex: currentPage.index,
-            destinations: _destinationViews.map(_NavigationDestinationCustom.new).toList()),
+            destinations: _destinationViews
+                .map(_NavigationDestinationCustom.new)
+                .toList()),
       ),
       body: PageStorage(
         bucket: bucket,
         child: switch (currentPage) {
           _Pages.home => const HomeView(key: PageStorageKey('HomeView')),
-          _Pages.discovery => const DiscoveryView(key: PageStorageKey('DiscoveryView'))
+          _Pages.discovery =>
+            const DiscoveryView(key: PageStorageKey('DiscoveryView'))
         },
       ),
     );

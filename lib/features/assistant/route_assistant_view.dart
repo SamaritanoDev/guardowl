@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:guardowl/features/share/my_app_bar_arrow.dart';
 import 'package:guardowl/features/share/share.dart';
 import 'package:guardowl/services/gemini_api_service.dart';
 
@@ -49,9 +50,10 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Route Assistant'),
-        centerTitle: true,
+      backgroundColor: color.onPrimary,
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 50),
+        child: MyAppBarArrow(title: 'Route Assistant'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -125,7 +127,7 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
                   width: 50.0,
                   height: 44.0,
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_upward, color: Colors.white),
+                    icon: Icon(Icons.arrow_upward, color: color.onPrimary),
                     onPressed: _sendMessage,
                   ),
                 ),
