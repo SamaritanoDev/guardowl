@@ -23,14 +23,12 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     LoadLocationZones event,
     Emitter<LocationState> emit,
   ) async {
-    if (state case final LocationSuccess success) {
-      final res = await _markersService.getMarkers();
+    final res = await _markersService.getMarkers();
 
-      emit(LocationSuccess(
-        success.location,
-        locationZones: res.getOrElse((_) => []),
-      ));
-    }
+    emit(LocationSuccess(
+      event.location,
+      locationZones: res.getOrElse((_) => []),
+    ));
   }
 
   void _onLocationRequested(
@@ -41,11 +39,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
     final res = await _locationService.getLocation();
 
-    emit(res.fold(LocationFailure.new, LocationSuccess.new));
+    (res.fold(
+      (failure) => emit(LocationFailure(failure)),
+      (location) => add(LoadLocationZones(location)),
+    ));
 
     if (res.isLeft()) return;
     add(const LocationStreamRequestedOpen());
-    add(const LoadLocationZones());
   }
 
   Future<void> onLocationStreamRequested(

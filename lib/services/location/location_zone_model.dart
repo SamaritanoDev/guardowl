@@ -19,7 +19,7 @@ class LocationZone {
 
   factory LocationZone.fromJson(Map<String, dynamic> json) {
     return LocationZone(
-      id: json.hashCode.toString(),
+      id: json['longitude'].toString() + json['latitude'].toString(),
       title: json['title'],
       latitude: json['latitude'],
       longitude: json['longitude'],
