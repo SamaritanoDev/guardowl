@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 class UserModel {
   final String uid;
   final String email;
@@ -15,33 +13,20 @@ class UserModel {
     required this.password,
   });
 
-  factory UserModel.fromFirebaseUser(User user, Map<String, dynamic> userData) {
-    final firstName = userData['firstName'] as String? ?? '';
-    final lastName = userData['lastName'] as String? ?? '';
-    final email = userData['email'] as String? ?? '';
+  factory UserModel.fromFirebaseUser(Map<String, dynamic> data) {
+    final firstName = data['firstName'] as String? ?? '';
+    final lastName = data['lastName'] as String? ?? '';
+    final email = data['email'] as String? ?? '';
+    final uid = data['uid'] as String? ?? '';
 
     return UserModel(
-      uid: user.uid,
+      uid: uid,
       firstName: firstName,
       lastName: lastName,
       email: email,
-      password: '',
+      password: '', // '?'
     );
   }
-
-  //  factory UserModel.fromFirestore(Map<String, dynamic> userData, String uid) {
-  //   final firstName = userData['firstName'] as String? ?? '';
-  //   final lastName = userData['lastName'] as String? ?? '';
-  //   final email = userData['email'] as String? ?? '';
-
-  //   return UserModel(
-  //     uid: uid,
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     email: email,
-  //     password: '',
-  //   );
-  // }
 
   Map<String, dynamic> toMapFirestore() {
     return {

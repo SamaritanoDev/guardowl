@@ -30,11 +30,18 @@ class MyDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: Icon(Icons.close, color: color.onPrimary)),
+                        onPressed: () => Navigator.pop(context), icon: Icon(Icons.close, color: color.onPrimary)),
                     const Spacer(),
-                    Text('nombre y apellido', style: textLargeStyle),
-                    Text('correo electronico', style: textLargeStyle),
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) => context.read<AuthCubit>(),
+                      builder: (context, state) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(state.fullName, style: textLargeStyle),
+                          Text(state.email, style: textLargeStyle),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 const Spacer(),
@@ -112,8 +119,7 @@ class _ThemeDarkLight extends StatefulWidget {
 class __ThemeDarkLightState extends State<_ThemeDarkLight> {
   bool light = true;
 
-  final WidgetStateProperty<Icon?> thumbIcon =
-      WidgetStateProperty.resolveWith<Icon?>(
+  final WidgetStateProperty<Icon?> thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
     (Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
         return const Icon(
