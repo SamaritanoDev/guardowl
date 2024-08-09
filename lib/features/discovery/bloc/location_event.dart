@@ -21,5 +21,6 @@ final class LocationStreamRequestedClose extends LocationStreamRequested {
 }
 
 final class LoadLocationZones extends LocationEvent {
-  const LoadLocationZones();
+  final (double latitude, double longitude) location;
+  const LoadLocationZones(this.location);
 }

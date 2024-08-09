@@ -19,25 +19,23 @@ class MapView extends StatefulWidget {
 }
 
 class _MapViewState extends State<MapView> {
-  BitmapDescriptor customIconLow = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor customIconMedium = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor customIconHigh = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor customIconLow;
+  late BitmapDescriptor customIconMedium;
+  late BitmapDescriptor customIconHigh;
 
-  void setCustomMarker() {
-    final customIcon = [
-      'assets/icons/markers_for_map/good_score.png',
-      'assets/icons/markers_for_map/medium_score.png',
-      'assets/icons/markers_for_map/high_score.png',
-    ]
-        .map((path) => BitmapDescriptor.asset(const ImageConfiguration(), path))
-        .toList();
+  void setCustomMarker() async {
+    customIconMedium = await BitmapDescriptor.asset(const ImageConfiguration(),
+        'assets/icons/markers_for_map/medium_score.png');
+    customIconHigh = await BitmapDescriptor.asset(const ImageConfiguration(),
+        'assets/icons/markers_for_map/high_score.png');
+    customIconLow = await BitmapDescriptor.asset(const ImageConfiguration(),
+        'assets/icons/markers_for_map/high_score.png');
 
-    Future.wait(customIcon).then((value) {
-      customIconHigh = value[2];
-      customIconMedium = value[1];
-      customIconLow = value[0];
-    });
+    _isIconLoaded = true;
+    setState(() {});
   }
+
+  bool _isIconLoaded = false;
 
   @override
   void initState() {
@@ -55,15 +53,20 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isIconLoaded == false) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         if (state case LocationSuccess success) {
-          _controller?.animateCamera(CameraUpdate.newCameraPosition(
+          /*   _controller?.animateCamera(CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(success.location.$1, success.location.$2),
               zoom: 14.4746,
             ),
-          ));
+          )); */
         }
       },
       child: GoogleMap(
@@ -76,7 +79,8 @@ class _MapViewState extends State<MapView> {
               RiskSegment.high => customIconHigh,
             },
             position: LatLng(zone.latitude, zone.longitude),
-            infoWindow: InfoWindow(title: zone.title, snippet: zone.riskGroup),
+            infoWindow:
+                InfoWindow(title: zone.title, snippet: zone.riskSegment),
           );
         }).toSet(),
         mapType: MapType.normal,
