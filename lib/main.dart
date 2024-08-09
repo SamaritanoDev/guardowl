@@ -40,7 +40,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => SignUpCubit()),
         BlocProvider(create: (context) => DestinationCubit()),
         BlocProvider(
-            create: (context) =>
+            create: (context) => 
                 LocationBloc()..add(const LocationRequested())),
       ],
       child: MaterialApp(
