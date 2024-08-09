@@ -1,12 +1,14 @@
 name: guardowl
-description: "A new Flutter project."
-publish_to: "none"
+description: 'A new Flutter project.'
+publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ">=3.4.1 <4.0.0"
+  sdk: '>=3.4.1 <4.0.0'
 
 dependencies:
+  bloc: ^8.1.4
+  bloc_concurrency: ^0.2.5
   cloud_firestore: ^5.2.0
   equatable: ^2.0.5
   firebase_auth: ^5.1.3
@@ -15,8 +17,13 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   formz: ^0.7.0
+  fpdart: ^1.1.0
+  geolocator: ^12.0.0
   google_fonts: ^6.2.1
+  google_generative_ai: ^0.4.4
+  google_maps_flutter: ^2.9.0
   google_sign_in: ^6.2.1
+  http: ^1.2.2
   material_design_icons_flutter: ^7.0.7296
 
 dev_dependencies:
@@ -34,7 +41,11 @@ flutter:
     - assets/icons/appbar/menu.png
     - assets/logos/placeholder_254x254.gif
     - assets/logos/placeholder_409x409.gif
+    - assets/icons/markers_for_map/high_score.png
+    - assets/icons/markers_for_map/good_score.png
+    - assets/icons/markers_for_map/medium_score.png
     #logos social network
     - assets/icons/authentication/
     #data
     - lib/features/destinations/data/destinations_score.json
+    - lib/services/location/locations_zone_data.json
