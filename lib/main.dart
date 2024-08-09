@@ -10,6 +10,7 @@ import 'package:guardowl/features/destinations/cubit/destinations_cubit.dart';
 import 'package:guardowl/features/favourites/favourites_view.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 import 'package:guardowl/features/discovery/bloc/location_bloc.dart';
+import 'package:guardowl/features/assistant/route_assistant_view.dart';
 import 'package:guardowl/firebase_options.dart';
 
 void main() async {
@@ -51,6 +52,7 @@ class MainApp extends StatelessWidget {
           '/login': (context) => const AuthenticationView(),
           '/home': (context) => const CustomNavigationBar(),
           '/favourites': (context) => const FavouritesView(),
+          '/route-assistant': (_) => const RouteAssistantScreen(),
         },
       ),
     );

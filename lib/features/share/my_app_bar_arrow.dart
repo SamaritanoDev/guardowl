@@ -19,7 +19,7 @@ class MyAppBarArrow extends StatelessWidget {
       appBar: AppBar(
         title: Text(title ?? '', style: textTitlePrimary),
         backgroundColor: color.onPrimary,
-        leadingWidth: 80,
+        leadingWidth: 50,
         leading: Center(
           child: IconButton(
             onPressed: () => Navigator.of(context).pop(),
