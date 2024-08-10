@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guardowl/constants/enviroments_globals.dart';
 import 'package:guardowl/features/assistant/widgets/assistant_profile_headder.dart';
 import 'package:guardowl/features/assistant/widgets/chat_box_input.dart';
 import 'package:guardowl/features/assistant/widgets/chat_messages_list.dart';
@@ -34,7 +35,10 @@ class RouteAssistantScreen extends StatelessWidget {
               const AssistantProfileHeader(),
             ],
           )),
-          const ChatBoxInput(),
+          ChatBoxInput(
+            apiKey: valueApiKeyGemini,
+            scrollController: _controller,
+          ),
         ],
       ),
     );

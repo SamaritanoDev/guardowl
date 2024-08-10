@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:guardowl/features/assistant/models/chat_message.dart';
-import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
 
 class ChatMessagesList extends StatelessWidget {
-  const ChatMessagesList({super.key, required this.controller});
-
   final ScrollController controller;
+
+  const ChatMessagesList({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -22,75 +19,71 @@ class ChatMessagesList extends StatelessWidget {
       fontWeight: FontWeight.bold,
     );
 
-    return BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) => state.currentUser,
-        builder: (context, state) {
-          return StreamBuilder<List<ChatMessage>>(
-            stream: fetchMessages(),
-            builder: (ctx, AsyncSnapshot<List<ChatMessage>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
-              final messages = snapshot.data!;
+    final textBodyYou = textTheme.bodyMedium?.copyWith(
+      color: color.shadow,
+    );
 
-              return ListView.builder(
-                shrinkWrap: true,
-                controller: controller,
-                itemCount: messages.length,
-                itemBuilder: (ctx, index) {
-                  final message = messages[index];
+    final textBodyAssistant = textTheme.bodySmall?.copyWith(
+      color: color.primary,
+      fontWeight: FontWeight.bold,
+    );
 
-                  final isUserMessage =
-                      message.userId == state.currentUser?.uid;
-                  final (left, right) =
-                      (isUserMessage ? 25.0 : 0.0, isUserMessage ? 0.0 : 25.0);
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        top: 7, bottom: 7, left: left, right: right),
-                    child: ListTile(
-                      title: Text(message.message),
-                      subtitle: isUserMessage
-                          ? Text('You', style: textStyleYou)
-                          : Text('Guardowl AI', style: textStyleAssistant),
-                      tileColor: isUserMessage
-                          ? color.secondary
-                          : color.primaryContainer,
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        });
-  }
-}
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('messages')
+          .orderBy('createdAt', descending: true)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-Stream<List<ChatMessage>> fetchMessages() {
-  final firestore = FirebaseFirestore.instance;
-  try {
-    final messages = firestore
-        .collection('messages')
-        .orderBy('createdAt')
-        // .where(
-        //   'destination',
-        //   isEqualTo: 'Lima',
-        // )
-        .withConverter<ChatMessage>(
-          fromFirestore: (snapshot, _) => ChatMessage.fromFirebaseUser(
-            snapshot.data()!,
-          ),
-          toFirestore: (value, _) => value.toMapFirestore(),
-        )
-        .snapshots()
-        .map((snapshot) => snapshot.docs)
-        .map((docs) => docs.map((doc) => doc.data()))
-        .map((messages) => messages.toList());
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const Center(child: Text('No messages yet.'));
+        }
 
-    return messages;
-  } catch (e) {
-    return throw Exception('Failed to load data');
+        final messages = snapshot.data!.docs;
+
+        return ListView.builder(
+          shrinkWrap: true,
+          controller: controller,
+          reverse: true,
+          itemCount: messages.length,
+          itemBuilder: (context, index) {
+            final message = messages[index];
+            final isUserMessage = message['userId'] != 'gemini_ai';
+
+            return ListTile(
+              title: Align(
+                alignment: isUserMessage
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: isUserMessage
+                    ? Text('You', style: textStyleYou)
+                    : Text('Guardowl AI', style: textStyleAssistant),
+              ),
+              subtitle: Align(
+                alignment: isUserMessage
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: isUserMessage
+                        ? color.secondary
+                        : color.primaryContainer,
+                  ),
+                  child: Text(
+                    message['message'],
+                    style: isUserMessage ? textBodyYou : textBodyAssistant,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

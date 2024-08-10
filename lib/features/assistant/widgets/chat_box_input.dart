@@ -5,7 +5,13 @@ import 'package:guardowl/features/assistant/models/chat_message.dart';
 import 'package:guardowl/services/gemini_api_service.dart';
 
 class ChatBoxInput extends StatefulWidget {
-  const ChatBoxInput({super.key});
+  final String apiKey;
+  final ScrollController scrollController;
+  const ChatBoxInput({
+    super.key,
+    required this.apiKey,
+    required this.scrollController,
+  });
 
   @override
   State<ChatBoxInput> createState() => _ChatBoxInputState();
@@ -15,14 +21,19 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
   final _messageController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  final GeminiApiService _geminiApiService = GeminiApiService();
+  late GeminiApiService _geminiApiService;
+
+  @override
+  void initState() {
+    super.initState();
+    _geminiApiService = GeminiApiService(apiKey: widget.apiKey);
+  }
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Container(
       color: color.primary,
-      // margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
       child: Row(
         children: [
@@ -86,6 +97,10 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
               message: aiResponse,
               destination: 'Lima',
             ).toMapFirestore());
+
+        // Scroll to bottom after adding new messages
+        widget.scrollController
+            .jumpTo(widget.scrollController.position.maxScrollExtent);
       } catch (e, st) {
         print('Error: $e , ST: $st');
       }
