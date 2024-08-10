@@ -21,7 +21,7 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Container(
-      color: color.primaryContainer,
+      color: color.primary,
       // margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
       child: Row(
@@ -29,7 +29,7 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFF0F0F0),
+                color: color.onPrimary,
                 borderRadius: BorderRadius.circular(8),
               ),
               height: 44.0,
@@ -47,13 +47,13 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
           const SizedBox(width: 8),
           Container(
             decoration: BoxDecoration(
-              color: color.onPrimaryContainer,
+              color: color.secondary,
               borderRadius: BorderRadius.circular(8),
             ),
             width: 50.0,
             height: 44.0,
             child: IconButton(
-              icon: Icon(Icons.arrow_upward, color: color.onPrimary),
+              icon: Icon(Icons.arrow_upward, color: color.shadow),
               onPressed: _sendMessage,
             ),
           ),

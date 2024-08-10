@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 
 class OptionsList extends StatelessWidget {
   final List<String> options = [
-    'Create routes',
-    'Explore destinations',
     'Plan Activities',
-    'Gastronomy',
-    'Events',
-    'Accommodation',
+    'Recommendations',
   ];
 
   OptionsList({super.key});

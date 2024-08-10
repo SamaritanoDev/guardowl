@@ -11,6 +11,17 @@ class ChatMessagesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final textStyleYou = textTheme.labelSmall?.copyWith(
+      color: color.shadow,
+    );
+
+    final textStyleAssistant = textTheme.labelSmall?.copyWith(
+      color: color.primary,
+      fontWeight: FontWeight.bold,
+    );
+
     return BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) => state.currentUser,
         builder: (context, state) {
@@ -32,14 +43,21 @@ class ChatMessagesList extends StatelessWidget {
                 itemBuilder: (ctx, index) {
                   final message = messages[index];
 
-                  final isUserMessage = message.userId == state.currentUser?.uid;
-                  final (left, right) = (isUserMessage ? 25.0 : 0.0, isUserMessage ? 0.0 : 25.0);
+                  final isUserMessage =
+                      message.userId == state.currentUser?.uid;
+                  final (left, right) =
+                      (isUserMessage ? 25.0 : 0.0, isUserMessage ? 0.0 : 25.0);
                   return Padding(
-                    padding: EdgeInsets.only(top: 7, bottom: 7, left: left, right: right),
+                    padding: EdgeInsets.only(
+                        top: 7, bottom: 7, left: left, right: right),
                     child: ListTile(
                       title: Text(message.message),
-                      subtitle: isUserMessage ? const Text('You') : const Text('Guardowl AI'),
-                      tileColor: isUserMessage ? Colors.blue[100] : Colors.grey[200],
+                      subtitle: isUserMessage
+                          ? Text('You', style: textStyleYou)
+                          : Text('Guardowl AI', style: textStyleAssistant),
+                      tileColor: isUserMessage
+                          ? color.secondary
+                          : color.primaryContainer,
                     ),
                   );
                 },
