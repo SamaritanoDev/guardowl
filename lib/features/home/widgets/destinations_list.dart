@@ -42,7 +42,6 @@ class _DestinationsListState extends State<DestinationsList> {
         child: Text('There are no items available.', style: textError),
       );
     } else if (stateDestination.status is LoadedState) {
-      print("Loaded destinations: ${stateDestination.destinations.length}");
 
       final destinations = stateDestination.destinations;
 

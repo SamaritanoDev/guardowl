@@ -108,14 +108,10 @@ class SignUpCubit extends Cubit<SignUpState> {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
     } on FirebaseAuthException catch (error) {
-      print("Sign up failed: ${error.message}");
-
       emit(state.copyWith(
           exceptionError: _mapFirebaseAuthExceptionToMessage(error),
           status: FormzSubmissionStatus.failure));
     } on PlatformException catch (error) {
-      print("Sign up failed: ${error.message}");
-
       emit(state.copyWith(
           exceptionError: error.message.toString(),
           status: FormzSubmissionStatus.failure));
@@ -177,14 +173,11 @@ class SignUpCubit extends Cubit<SignUpState> {
         emit(state.copyWith(status: FormzSubmissionStatus.failure));
       }
     } on FirebaseAuthException catch (error) {
-      print("Google sign up failed: ${error.message}");
-
       emit(state.copyWith(
         status: FormzSubmissionStatus.failure,
         exceptionError: error.message.toString(),
       ));
     } on PlatformException catch (error) {
-      print("Google sign up failed: ${error.message}");
       emit(state.copyWith(
         status: FormzSubmissionStatus.failure,
         exceptionError: error.message.toString(),

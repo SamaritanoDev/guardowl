@@ -52,11 +52,11 @@ class MyDrawer extends StatelessWidget {
           ),
         ),
         //options
-        _MyListTileDrawer(
-          label: 'Emergency numbers',
-          icon: Icons.phone_in_talk_outlined,
-          onTap: () => Navigator.pushNamed(context, '/emergency-numbers'),
-        ),
+        // _MyListTileDrawer(
+        //   label: 'Emergency numbers',
+        //   icon: Icons.phone_in_talk_outlined,
+        //   onTap: () {},
+        // ),
         _MyListTileDrawer(
           label: 'My wish list',
           icon: Icons.favorite_border,
