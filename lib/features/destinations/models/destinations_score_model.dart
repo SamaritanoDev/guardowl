@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 class DestinationsScore {
+  String ubigeoPjfs;
+  int distFiscal;
   String dptoPjfs;
   String provPjfs;
   String distPjfs;
-  String grupo;
+  String group;
   String riskSegment;
   int quantity;
   double latitude;
@@ -13,10 +15,12 @@ class DestinationsScore {
   String photoUrl;
 
   DestinationsScore({
+    required this.ubigeoPjfs,
+    required this.distFiscal,
     required this.dptoPjfs,
     required this.provPjfs,
     required this.distPjfs,
-    required this.grupo,
+    required this.group,
     required this.riskSegment,
     required this.quantity,
     required this.latitude,
@@ -27,23 +31,27 @@ class DestinationsScore {
 
   factory DestinationsScore.fromJson(Map<String, dynamic> json) =>
       DestinationsScore(
-        dptoPjfs: json["dpto_pjfs"],
-        provPjfs: json["prov_pjfs"],
-        distPjfs: json["dist_pjfs"],
-        grupo: json["GRUPO"],
-        riskSegment: json["risk_segment"],
-        quantity: json["quantity"],
-        latitude: json["latitude"]?.toDouble(),
-        longitude: json["longitude"]?.toDouble(),
-        title: json["title"],
-        photoUrl: json["photo_url"],
+        ubigeoPjfs: json["ubigeo_pjfs"] ?? '',
+        distFiscal: json["dist_fiscal"] ?? 0,
+        dptoPjfs: json["dpto_pjfs"] ?? '',
+        provPjfs: json["prov_pjfs"] ?? '',
+        distPjfs: json["dist_pjfs"] ?? '',
+        group: json["group"] ?? '',
+        riskSegment: json["risk_segment"] ?? '',
+        quantity: json["quantity"] ?? 0,
+        latitude: (json["latitude"] ?? 0).toDouble(),
+        longitude: (json["longitude"] ?? 0).toDouble(),
+        title: json["title"] ?? '',
+        photoUrl: json["photo_url"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
+        "ubigeo_pjfs": ubigeoPjfs,
+        "dist_fiscal": distFiscal,
         "dpto_pjfs": dptoPjfs,
         "prov_pjfs": provPjfs,
         "dist_pjfs": distPjfs,
-        "GRUPO": grupo,
+        "group": group,
         "risk_segment": riskSegment,
         "quantity": quantity,
         "latitude": latitude,

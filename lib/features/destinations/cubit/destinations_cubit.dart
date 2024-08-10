@@ -22,13 +22,14 @@ class DestinationCubit extends Cubit<DestinationState> {
     emit(DestinationState(
       destinations: destinations,
       favorites: const [],
-      hasReachedMax: destinations.length <
-          10, // Asume que si menos de 10 items, alcanzó el máximo.
+      hasReachedMax: destinations.length < 10,
       status: LoadedState(destinations: destinations),
     ));
   }
 
   void _loadArticlesFromFile(String filePath) async {
+    print('Loading file: $filePath');
+
     emit(
       DestinationState(
         destinations: const [],
@@ -39,8 +40,14 @@ class DestinationCubit extends Cubit<DestinationState> {
     );
     try {
       String jsonString = await rootBundle.loadString(filePath);
+
+      print('File loaded successfully');
+
       List<DestinationsScore> destinations =
           destinationsScoreFromJson(jsonString);
+
+      // Verificar el contenido del JSON
+      print('Destinations loaded: ${destinations.length}');
 
       if (destinations.isNotEmpty) {
         _markAsLoaded(destinations);
@@ -55,10 +62,12 @@ class DestinationCubit extends Cubit<DestinationState> {
         );
       }
     } catch (e) {
+      print('Error loading file: $e');
+
       emit(
         DestinationState(
           destinations: const [],
-           favorites: const [],
+          favorites: const [],
           hasReachedMax: true,
           status: ErrorState(error: e.toString()),
         ),
