@@ -10,13 +10,20 @@ class OptionsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final lableStyle = textTheme.labelLarge?.copyWith(
+      color: color.onPrimary,
+    );
+
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: options
           .map(
             (option) => ActionChip(
-              label: Text(option),
+              color: WidgetStatePropertyAll(color.primary),
+              label: Text(option, style: lableStyle),
               onPressed: () {
                 // Handle option selection
               },
