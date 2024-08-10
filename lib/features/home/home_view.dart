@@ -33,26 +33,31 @@ class HomeView extends StatelessWidget {
         preferredSize: Size(double.infinity, sizeHeightAppBar),
         child: MyAppBar(),
       ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: 270,
-            child: MyBackground(
-              height: heightMyBackgroung,
-              child: const HeaderSearch(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 270,
+              child: MyBackground(
+                height: heightMyBackgroung,
+                child: const HeaderSearch(),
+              ),
             ),
-          ),
-          // const MostVisitedCenters(),
-          Padding(
-            padding: const EdgeInsets.only(left: paddingAppBar),
-            child: Text(
-              "Destinations you must visit",
-              style: textTitleLargePrimary,
+            Padding(
+              padding: const EdgeInsets.only(left: paddingAppBar),
+              child: Text(
+                "Destinations you must visit",
+                style: textTitleLargePrimary,
+              ),
             ),
-          ),
-          const SizedBox(height: 30),
-          const DestinationsList(),
-        ],
+            const SizedBox(height: 30),
+            const SizedBox(
+              height: 400, // Ajusta la altura según lo que necesites
+              child: DestinationsList(),
+            ),
+          ],
+        ),
       ),
     );
   }

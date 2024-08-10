@@ -59,12 +59,12 @@ class _MapViewState extends State<MapView> {
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         if (state case LocationSuccess success) {
-          /*   _controller?.animateCamera(CameraUpdate.newCameraPosition(
+          _controller?.animateCamera(CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(success.location.$1, success.location.$2),
               zoom: 14.4746,
             ),
-          )); */
+          ));
         }
       },
       child: GoogleMap(

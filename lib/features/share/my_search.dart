@@ -9,7 +9,8 @@ class MySearch extends StatefulWidget {
 }
 
 class _MySearchState extends State<MySearch> {
-  final TextEditingController _serachController = TextEditingController();
+  final TextEditingController _destinationSerachController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +28,19 @@ class _MySearchState extends State<MySearch> {
     );
 
     return SearchBar(
+      onSubmitted: (value) {
+        Navigator.pushNamed(context, '/route-assistant');
+      },
       hintText: 'Find my next destination...',
-      controller: _serachController,
+      controller: _destinationSerachController,
       shape: WidgetStateProperty.all(boderRaiudSearch),
       backgroundColor: WidgetStatePropertyAll(color.onPrimary),
       elevation: const WidgetStatePropertyAll(0.0),
       hintStyle: WidgetStatePropertyAll(hintTextstyle),
       textStyle: WidgetStatePropertyAll(inputTextstyle),
-      leading: IconButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/route-assistant');
-        },
-        icon: Icon(
-          Icons.search,
-          color: color.primary,
-        ),
+      leading: Icon(
+        Icons.search,
+        color: color.primary,
       ),
     );
   }
