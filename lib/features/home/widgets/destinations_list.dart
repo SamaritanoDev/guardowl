@@ -42,6 +42,7 @@ class _DestinationsListState extends State<DestinationsList> {
         child: Text('There are no items available.', style: textError),
       );
     } else if (stateDestination.status is LoadedState) {
+
       final destinations = stateDestination.destinations;
 
       return Container(
@@ -85,6 +86,6 @@ class _DestinationsListState extends State<DestinationsList> {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return currentScroll >= (maxScroll * 0.5);
   }
 }

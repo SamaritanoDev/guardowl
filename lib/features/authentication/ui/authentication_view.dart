@@ -81,8 +81,6 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                       style: singInStyleButton,
                       onPressed: () {
                         if (isRegisterMode) {
-                          print(
-                              "Button pressed, isRegisterMode: $isRegisterMode");
                           logInCubit.validtatingInputsLogIn();
                           logInCubit.logInWithCredentials();
                         } else {
@@ -107,10 +105,8 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                             print(
                                 "Button Google, isRegisterMode: $isRegisterMode");
                             logInCubit.logInWithGoogle();
-                            //todo: login to Apple
                           } else {
                             signUpCubit.signUpWithGoogle();
-                            //todo: signUp to Apple
                           }
                         },
                       ),
@@ -119,8 +115,6 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                         iconApple,
                         onPressed: () {
                           if (isRegisterMode) {
-                            print(
-                                "Button Apple, isRegisterMode: $isRegisterMode");
                             //todo: login to Apple
                           } else {
                             //todo: signUp to Apple

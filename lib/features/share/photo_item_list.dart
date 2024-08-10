@@ -104,11 +104,11 @@ class _BotomPhoto extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              destination.dptoPjfs,
+              destination.dptoPjfs.toUpperCase(),
               style: textSubTitleCard,
             ),
             Text(
-              destination.provPjfs,
+              destination.provPjfs.toUpperCase(),
               style: textSubTitleCard,
             ),
           ],
