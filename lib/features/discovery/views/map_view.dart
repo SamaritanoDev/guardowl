@@ -29,7 +29,7 @@ class _MapViewState extends State<MapView> {
     customIconHigh = await BitmapDescriptor.asset(const ImageConfiguration(),
         'assets/icons/markers_for_map/high_score.png');
     customIconLow = await BitmapDescriptor.asset(const ImageConfiguration(),
-        'assets/icons/markers_for_map/high_score.png');
+        'assets/icons/markers_for_map/good_score.png');
 
     _isIconLoaded = true;
     setState(() {});
@@ -54,9 +54,7 @@ class _MapViewState extends State<MapView> {
   @override
   Widget build(BuildContext context) {
     if (_isIconLoaded == false) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const SizedBox.shrink();
     }
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
@@ -79,15 +77,14 @@ class _MapViewState extends State<MapView> {
               RiskSegment.high => customIconHigh,
             },
             position: LatLng(zone.latitude, zone.longitude),
-            infoWindow:
-                InfoWindow(title: zone.title, snippet: zone.riskSegment),
+            infoWindow: InfoWindow(title: zone.title, snippet: zone.riskGroup),
           );
         }).toSet(),
         mapType: MapType.normal,
         myLocationEnabled: true,
         initialCameraPosition: CameraPosition(
           target: LatLng(widget.initialLocation.$1, widget.initialLocation.$2),
-          zoom: 14.4746,
+          zoom: 5,
         ),
         onMapCreated: (GoogleMapController controller) {
           _controller = controller;

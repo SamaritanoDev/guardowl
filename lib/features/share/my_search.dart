@@ -35,7 +35,9 @@ class _MySearchState extends State<MySearch> {
       hintStyle: WidgetStatePropertyAll(hintTextstyle),
       textStyle: WidgetStatePropertyAll(inputTextstyle),
       leading: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/route-assistant');
+        },
         icon: Icon(
           Icons.search,
           color: color.primary,
