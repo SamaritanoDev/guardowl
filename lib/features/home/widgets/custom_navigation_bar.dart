@@ -8,8 +8,7 @@ import 'package:guardowl/features/share/share.dart';
 enum _Pages { home, discovery }
 
 extension _PagesExtension on _Pages {
-  ({IconData icon, IconData selectedIcon, String label}) get resources =>
-      switch (this) {
+  ({IconData icon, IconData selectedIcon, String label}) get resources => switch (this) {
         _Pages.home => (
             icon: Icons.home_outlined,
             selectedIcon: Icons.home,
@@ -46,17 +45,15 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     final color = Theme.of(context).colorScheme;
 
     final navigationBarThemeData = NavigationBarThemeData(
-      labelTextStyle: WidgetStateProperty.all(
-          textTheme.labelSmall?.copyWith(color: color.primary)),
+      labelTextStyle: WidgetStateProperty.all(textTheme.labelSmall?.copyWith(color: color.primary)),
     );
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton.large(
+        heroTag: '/assistant-button',
         tooltip: ' I’m your route assistant',
-        onPressed: () {
-          Navigator.pushNamed(context, '/route-assistant');
-        },
+        onPressed: () => Navigator.pushNamed(context, '/route-assistant'),
         shape: const CircleBorder(),
         elevation: 3,
         splashColor: color.primaryContainer,
@@ -76,9 +73,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
               });
             },
             selectedIndex: currentPage.index,
-            destinations: _destinationViews
-                .map(_NavigationDestinationCustom.new)
-                .toList()),
+            destinations: _destinationViews.map(_NavigationDestinationCustom.new).toList()),
       ),
       body: PageStorage(
         bucket: bucket,
@@ -86,12 +81,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           _Pages.home => const HomeView(key: PageStorageKey('HomeView')),
           _Pages.discovery => DiscoveryView(
               key: const PageStorageKey('DiscoveryView'),
-              onInit: () => context
-                  .read<LocationBloc>()
-                  .add(const LocationStreamRequestedOpen()),
-              onDispose: () => context
-                  .read<LocationBloc>()
-                  .add(const LocationStreamRequestedClose()),
+              onInit: () => context.read<LocationBloc>().add(const LocationStreamRequestedOpen()),
+              onDispose: () => context.read<LocationBloc>().add(const LocationStreamRequestedClose()),
             )
         },
       ),

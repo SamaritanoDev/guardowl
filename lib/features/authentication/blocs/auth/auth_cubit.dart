@@ -21,7 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
             .withConverter<UserModel>(
               fromFirestore: (snapshot, _) => UserModel.fromFirebaseUser(
                 snapshot.data()!,
-              ),
+              ).copyWith(uid: snapshot.id),
               toFirestore: (user, _) => user.toMapFirestore(),
             )
             .get();
