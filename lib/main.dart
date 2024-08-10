@@ -7,7 +7,9 @@ import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
 import 'package:guardowl/features/destinations/cubit/destinations_cubit.dart';
-import 'package:guardowl/features/favourites/favourites_view.dart';
+import 'package:guardowl/features/home/blocs/emergency_phone/emergency_phone_cubit.dart';
+import 'package:guardowl/features/home/views/favourites_view.dart';
+import 'package:guardowl/features/home/views/phones_view.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
 import 'package:guardowl/features/discovery/bloc/location_bloc.dart';
 import 'package:guardowl/features/assistant/route_assistant_view.dart';
@@ -40,9 +42,11 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => SignUpCubit()),
         BlocProvider(create: (context) => DestinationCubit()),
         BlocProvider(
-            create: (context) => 
+            create: (context) =>
                 LocationBloc()..add(const LocationRequested())),
+        BlocProvider(create: (context) => EmergencyPhoneCubit()),
       ],
+      
       child: MaterialApp(
         initialRoute: '/login',
         debugShowCheckedModeBanner: false,
@@ -53,6 +57,7 @@ class MainApp extends StatelessWidget {
           '/home': (context) => const CustomNavigationBar(),
           '/favourites': (context) => const FavouritesView(),
           '/route-assistant': (_) => const RouteAssistantScreen(),
+          '/emergency-numbers': (_) => const PhonesView(),
         },
       ),
     );
