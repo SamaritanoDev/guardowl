@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:guardowl/features/assistant/widgets/bubble.message.dart';
 
 class ChatMessagesList extends StatelessWidget {
   final ScrollController controller;
@@ -8,31 +9,8 @@ class ChatMessagesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final textStyleYou = textTheme.labelSmall?.copyWith(
-      color: color.shadow,
-    );
-
-    final textStyleAssistant = textTheme.labelSmall?.copyWith(
-      color: color.primary,
-      fontWeight: FontWeight.bold,
-    );
-
-    final textBodyYou = textTheme.bodyMedium?.copyWith(
-      color: color.shadow,
-    );
-
-    final textBodyAssistant = textTheme.bodySmall?.copyWith(
-      color: color.primary,
-      fontWeight: FontWeight.bold,
-    );
-
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('messages')
-          .orderBy('createdAt', descending: true)
-          .snapshots(),
+      stream: FirebaseFirestore.instance.collection('messages').orderBy('createdAt', descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -53,33 +31,9 @@ class ChatMessagesList extends StatelessWidget {
             final message = messages[index];
             final isUserMessage = message['userId'] != 'gemini_ai';
 
-            return ListTile(
-              title: Align(
-                alignment: isUserMessage
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: isUserMessage
-                    ? Text('You', style: textStyleYou)
-                    : Text('Guardowl AI', style: textStyleAssistant),
-              ),
-              subtitle: Align(
-                alignment: isUserMessage
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: isUserMessage
-                        ? color.secondary
-                        : color.primaryContainer,
-                  ),
-                  child: Text(
-                    message['message'],
-                    style: isUserMessage ? textBodyYou : textBodyAssistant,
-                  ),
-                ),
-              ),
+            return BubbleMessage(
+              isUserMessage: isUserMessage,
+              message: message['message'],
             );
           },
         );
