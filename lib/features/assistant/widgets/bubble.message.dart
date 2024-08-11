@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 // quiza se deba crear un widget independiente para los mensajes del usuario
 // y otro para los de guardowl se pasaria el modelo respectivo a cada widget
@@ -7,7 +8,8 @@ import 'package:flutter/material.dart';
 // para mostrarse en la UI.
 
 class BubbleMessage extends StatelessWidget {
-  const BubbleMessage({super.key, required this.isUserMessage, required this.message});
+  const BubbleMessage(
+      {super.key, required this.isUserMessage, required this.message});
 
   final bool isUserMessage;
   final String message;
@@ -25,7 +27,7 @@ class BubbleMessage extends StatelessWidget {
       fontWeight: FontWeight.bold,
     );
 
-    final textBodyYou = textTheme.bodyMedium?.copyWith(
+    final textBodyYou = textTheme.bodySmall?.copyWith(
       color: color.shadow,
     );
 
@@ -37,7 +39,9 @@ class BubbleMessage extends StatelessWidget {
     return ListTile(
       title: Align(
         alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-        child: isUserMessage ? Text('You', style: textStyleYou) : Text('Guardowl AI', style: textStyleAssistant),
+        child: isUserMessage
+            ? Text('You', style: textStyleYou)
+            : Text('Guardowl AI', style: textStyleAssistant),
       ),
       subtitle: Align(
         alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
@@ -47,9 +51,11 @@ class BubbleMessage extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             color: isUserMessage ? color.secondary : color.primaryContainer,
           ),
-          child: Text(
-            message,
-            style: isUserMessage ? textBodyYou : textBodyAssistant,
+          child: MarkdownBody(
+            data: message,
+            styleSheet: MarkdownStyleSheet(
+              p: isUserMessage ? textBodyYou : textBodyAssistant,
+            ),
           ),
         ),
       ),

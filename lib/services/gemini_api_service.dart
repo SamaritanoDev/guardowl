@@ -7,7 +7,7 @@ class GeminiApiService {
   GeminiApiService({required this.apiKey});
 
   final String baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
 
   Future<String> getResponse(String prompt) async {
     final url = Uri.parse('$baseUrl?key=$apiKey');
@@ -27,6 +27,7 @@ class GeminiApiService {
 
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
+      print('Gemini API Response: $result');
       return result['candidates'][0]['content']['parts'][0]['text'];
     } else {
       throw Exception('Failed to load data');
