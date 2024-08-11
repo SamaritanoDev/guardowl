@@ -3,24 +3,14 @@ import 'package:flutter/material.dart';
 class ContinueNavigationButton extends StatelessWidget {
   const ContinueNavigationButton({
     super.key,
-    required this.toAddress,
-    required this.fromAddress,
+    required this.onPressed,
   });
-  final String toAddress;
-  final String fromAddress;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      // TODO: mejorar esta implementacion con el estado.
-      onPressed: toAddress.isNotEmpty & fromAddress.isNotEmpty
-          ? () async {
-              //TODO: usar informacion de los textFields para
-              //actualizar la vista del mapa y el resto de funcionalidades
-
-              Navigator.of(context).pop(); // Se cierra el modal
-            }
-          : null,
+      onPressed: onPressed,
       style: FilledButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),

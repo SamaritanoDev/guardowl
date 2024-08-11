@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../core/failures.dart';
@@ -43,5 +44,22 @@ class LocationService {
     return Geolocator.getPositionStream().map((position) {
       return right((position.latitude, position.longitude));
     });
+  }
+
+  Future<Either<Failure, String>> getAddressFromLocation(
+      double latitude, double longitude) async {
+    try {
+      final placemarks = await placemarkFromCoordinates(latitude, longitude);
+
+      final placemark = placemarks.firstOrNull;
+
+      if (placemark == null) return right('No address found');
+
+      final address = '${placemark.street}, ${placemark.locality}';
+
+      return right(address);
+    } catch (e) {
+      return left(UnknowFailure('An unknown error occurred $e'));
+    }
   }
 }

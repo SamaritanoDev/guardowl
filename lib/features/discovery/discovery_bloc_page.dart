@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guardowl/features/discovery/navigation_search/bloc/navigation_search_bloc.dart';
 import 'package:guardowl/features/discovery/views/error_map_view.dart';
 import 'package:guardowl/features/discovery/widgets/search_container_button.dart';
 import 'package:guardowl/features/share/sos_button.dart';
@@ -61,14 +62,46 @@ class _DiscoveryViewState extends State<DiscoveryView> {
           Column(
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 20),
-                  Expanded(child: SearchContainerButton()),
-                  SizedBox(width: 10),
-                  SosButton(),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 20),
+                  Expanded(
+                      child: BlocSelector<NavigationSearchBloc,
+                          NavigationSearchState, bool>(
+                    selector: (state) {
+                      return state.originState.isSelectingCoordinates ||
+                          state.destinationState.isSelectingCoordinates;
+                    },
+                    builder: (context, state) {
+                      if (state) {
+                        return const SearchSelectingCard();
+                      }
+                      return SearchContainerButton(
+                        onPressed: () {
+                          context
+                              .read<NavigationSearchBloc>()
+                              .add(const ChangeShowRoute(false));
+                          if (context.read<LocationBloc>().state
+                              case LocationSuccess success) {
+                            final originState = context
+                                .read<NavigationSearchBloc>()
+                                .state
+                                .originState;
+
+                            if (originState is LocationSearchInitial) {
+                              context
+                                  .read<NavigationSearchBloc>()
+                                  .add(LoadOriginCoordinates(success.location));
+                            }
+                          }
+                        },
+                      );
+                    },
+                  )),
+                  const SizedBox(width: 10),
+                  const SosButton(),
+                  const SizedBox(width: 10),
                 ],
               ),
             ],

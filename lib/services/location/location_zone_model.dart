@@ -19,7 +19,7 @@ class LocationZone {
 
   factory LocationZone.fromJson(Map<String, dynamic> json) {
     return LocationZone(
-      id: json['longitude'].toString() + json['latitude'].toString(),
+      id: json['id'],
       title: json['title'],
       latitude: json['latitude'],
       longitude: json['longitude'],
@@ -35,12 +35,21 @@ class LocationZone {
       'RIESGO MEDIO' => RiskSegment.medium,
       'RIESGO ALTO' => RiskSegment.high,
       'RIESGO MUY ALTO' => RiskSegment.high,
-      _ => RiskSegment.low
+      'ROUTE' => RiskSegment.route,
+      _ => RiskSegment.route
     };
   }
 }
 
-enum RiskSegment { low, medium, high }
+enum RiskSegment { low, medium, high, route }
 
-List<LocationZone> locationZoneFromJson(String str) => List<LocationZone>.from(
-    json.decode(str).map((x) => LocationZone.fromJson(x)));
+List<LocationZone> locationZoneFromJson(String str) {
+  final decodeList = List<Map<String, dynamic>>.from(json.decode(str));
+
+  final listWithId = List.generate(
+    decodeList.length,
+    (index) => {'id': index.toString(), ...decodeList[index]},
+  );
+  return List<LocationZone>.from(
+      listWithId.map((x) => LocationZone.fromJson(x)));
+}
