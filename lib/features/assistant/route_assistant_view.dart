@@ -24,8 +24,26 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
   void initState() {
     super.initState();
     _geminiApiService = GeminiApiService(apiKey: valueApiKeyGemini);
+  }
 
-    _sendInitialMessage();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _handleInitialMessage();
+  }
+
+  Future<void> _handleInitialMessage() async {
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    if (arguments != null && arguments.containsKey('prompt')) {
+      // El usuario ha enviado un destino, así que mostramos la respuesta del servicio
+      final userPrompt = arguments['prompt'] as String;
+      _sendMessage(userPrompt);
+    } else {
+      // No hay un destino proporcionado, mostramos el mensaje inicial
+      _sendInitialMessage();
+    }
   }
 
   Future<void> _sendInitialMessage() async {
@@ -34,13 +52,36 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
           'Ask the user which destination in Peru he or she wants to travel to or visit, in a natural tone';
       final aiResponse = await _geminiApiService.getResponse(initialMessage);
 
-      print('Gemini Response: $aiResponse');
+      // print('Gemini Response: $aiResponse');
 
       final aiMessage = ChatMessage(
         userId: 'gemini_ai',
         message: aiResponse,
         createdAt: DateTime.now(),
         destination: 'Lima',
+      );
+
+      setState(() {
+        _messages.insert(0, aiMessage);
+      });
+
+      _controller.jumpTo(_controller.position.maxScrollExtent);
+    } catch (e, st) {
+      print('Error: $e , ST: $st');
+    }
+  }
+
+  void _sendMessage(String prompt) async {
+    try {
+      final aiResponse = await _geminiApiService.getResponse(prompt);
+
+      print('Gemini Response: $aiResponse');
+
+      final aiMessage = ChatMessage(
+        userId: 'gemini_ai',
+        message: aiResponse,
+        createdAt: DateTime.now(),
+        destination: 'Lima', // Puedes ajustar esto si es necesario
       );
 
       setState(() {

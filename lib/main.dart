@@ -7,6 +7,7 @@ import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/authentication_view.dart';
 import 'package:guardowl/features/destinations/cubit/destinations_cubit.dart';
+import 'package:guardowl/features/home/blocs/activity_cubit/activity_cubit.dart';
 import 'package:guardowl/features/home/views/favourites_view.dart';
 import 'package:guardowl/features/discovery/navigation_search/bloc/navigation_search_bloc.dart';
 import 'package:guardowl/features/home/widgets/custom_navigation_bar.dart';
@@ -44,6 +45,7 @@ class MainApp extends StatelessWidget {
             create: (context) =>
                 LocationBloc()..add(const LocationRequested())),
         BlocProvider(create: (context) => NavigationSearchBloc()),
+        BlocProvider(create: (context) => ActivityCubit()),
       ],
       child: MaterialApp(
         initialRoute: '/login',

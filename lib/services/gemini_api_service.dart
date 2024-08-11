@@ -27,7 +27,7 @@ class GeminiApiService {
 
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
-      print('Gemini API Response: $result');
+      // print('Gemini API Response: $result');
       return result['candidates'][0]['content']['parts'][0]['text'];
     } else {
       throw Exception('Failed to load data');

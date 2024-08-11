@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
-import 'package:guardowl/features/home/widgets/destinations_list.dart';
+import 'package:guardowl/features/home/blocs/activity_cubit/activity_cubit.dart';
+import 'package:guardowl/features/home/widgets/activiy_list.dart';
 import 'package:guardowl/features/home/widgets/my_drawer.dart';
 import 'package:guardowl/features/home/widgets/search_widgets.dart';
 import 'package:guardowl/features/share/share.dart';
@@ -52,9 +54,21 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const SizedBox(
-              height: 400,
-              child: DestinationsList(),
+            BlocBuilder<ActivityCubit, ActivityState>(
+              builder: (context, state) {
+                if (state is ActivityLoaded) {
+                  return SizedBox(
+                    height: 400,
+                    child: ActivitiesList(activities: state.activities),
+                  );
+                } else if (state is ActivityError) {
+                  return Center(
+                    child: Text('Error: ${state.error}'),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             ),
           ],
         ),
