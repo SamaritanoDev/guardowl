@@ -1,0 +1,37 @@
+[
+    {
+        "entityName": "Central Policial",
+        "number": "105",
+        "location": "Perú"
+    },
+    {
+        "entityName": "Bomberos",
+        "number": "116",
+        "location": "Perú"
+    },
+    {
+        "entityName": "Sistema de Atención Médica Móvil de Emergencia (SAMU)",
+        "number": "106",
+        "location": "Perú"
+    },
+    {
+        "entityName": "Informaciones",
+        "number": "103",
+        "location": "Perú"
+    },
+    {
+        "entityName": "Defensa Civil",
+        "number": "115",
+        "location": "Perú"
+    },
+    {
+        "entityName": "Denuncias por violencia contra la mujer e integrantes del grupo familiar",
+        "number": "100",
+        "location": "Perú"
+    },
+    {
+        "entityName": "Emergencias de salud mental",
+        "number": "113",
+        "location": "Perú"
+    }
+]

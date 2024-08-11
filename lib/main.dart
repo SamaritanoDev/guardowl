@@ -40,10 +40,10 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => LogInCubit()),
         BlocProvider(create: (context) => SignUpCubit()),
         BlocProvider(create: (context) => DestinationCubit()),
-        BlocProvider(create: (context) => NavigationSearchBloc()),
         BlocProvider(
             create: (context) =>
                 LocationBloc()..add(const LocationRequested())),
+        BlocProvider(create: (context) => NavigationSearchBloc()),
       ],
       child: MaterialApp(
         initialRoute: '/login',

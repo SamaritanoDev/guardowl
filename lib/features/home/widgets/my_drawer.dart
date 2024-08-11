@@ -30,7 +30,8 @@ class MyDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
-                        onPressed: () => Navigator.pop(context), icon: Icon(Icons.close, color: color.onPrimary)),
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(Icons.close, color: color.onPrimary)),
                     const Spacer(),
                     BlocConsumer<AuthCubit, AuthState>(
                       listener: (context, state) => context.read<AuthCubit>(),
@@ -51,11 +52,11 @@ class MyDrawer extends StatelessWidget {
           ),
         ),
         //options
-        _MyListTileDrawer(
-          label: 'Settings',
-          icon: Icons.settings_outlined,
-          onTap: () {},
-        ),
+        // _MyListTileDrawer(
+        //   label: 'Emergency numbers',
+        //   icon: Icons.phone_in_talk_outlined,
+        //   onTap: () {},
+        // ),
         _MyListTileDrawer(
           label: 'My wish list',
           icon: Icons.favorite_border,
@@ -119,7 +120,8 @@ class _ThemeDarkLight extends StatefulWidget {
 class __ThemeDarkLightState extends State<_ThemeDarkLight> {
   bool light = true;
 
-  final WidgetStateProperty<Icon?> thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
+  final WidgetStateProperty<Icon?> thumbIcon =
+      WidgetStateProperty.resolveWith<Icon?>(
     (Set<WidgetState> states) {
       if (states.contains(WidgetState.selected)) {
         return const Icon(

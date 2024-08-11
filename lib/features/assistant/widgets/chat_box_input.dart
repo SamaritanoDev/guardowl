@@ -5,7 +5,13 @@ import 'package:guardowl/features/assistant/models/chat_message.dart';
 import 'package:guardowl/services/gemini_api_service.dart';
 
 class ChatBoxInput extends StatefulWidget {
-  const ChatBoxInput({super.key});
+  final String apiKey;
+  final ScrollController scrollController;
+  const ChatBoxInput({
+    super.key,
+    required this.apiKey,
+    required this.scrollController,
+  });
 
   @override
   State<ChatBoxInput> createState() => _ChatBoxInputState();
@@ -15,21 +21,26 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
   final _messageController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  final GeminiApiService _geminiApiService = GeminiApiService();
+  late GeminiApiService _geminiApiService;
+
+  @override
+  void initState() {
+    super.initState();
+    _geminiApiService = GeminiApiService(apiKey: widget.apiKey);
+  }
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Container(
-      color: color.primaryContainer,
-      // margin: const EdgeInsets.only(bottom: 20),
+      color: color.primary,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
       child: Row(
         children: [
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFF0F0F0),
+                color: color.onPrimary,
                 borderRadius: BorderRadius.circular(8),
               ),
               height: 44.0,
@@ -47,13 +58,13 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
           const SizedBox(width: 8),
           Container(
             decoration: BoxDecoration(
-              color: color.onPrimaryContainer,
+              color: color.secondary,
               borderRadius: BorderRadius.circular(8),
             ),
             width: 50.0,
             height: 44.0,
             child: IconButton(
-              icon: Icon(Icons.arrow_upward, color: color.onPrimary),
+              icon: Icon(Icons.arrow_upward, color: color.shadow),
               onPressed: _sendMessage,
             ),
           ),
@@ -86,6 +97,10 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
               message: aiResponse,
               destination: 'Lima',
             ).toMapFirestore());
+
+        // Scroll to bottom after adding new messages
+        widget.scrollController
+            .jumpTo(widget.scrollController.position.maxScrollExtent);
       } catch (e, st) {
         print('Error: $e , ST: $st');
       }

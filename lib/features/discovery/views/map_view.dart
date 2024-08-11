@@ -60,14 +60,13 @@ class _MapViewState extends State<MapView> {
     }
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
-        if (state case LocationSuccess _) {
-          /*   _controller?.animateCamera(CameraUpdate.newCameraPosition(
+        /* if (state case LocationSuccess _) {
             CameraPosition(
               target: LatLng(success.location.$1, success.location.$2),
               zoom: 14.4746,
             ),
-          )); */
-        }
+          ));
+        } */
       },
       child: BlocSelector<NavigationSearchBloc, NavigationSearchState,
           List<LocationZone>>(

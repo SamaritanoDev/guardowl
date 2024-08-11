@@ -22,8 +22,7 @@ class DestinationCubit extends Cubit<DestinationState> {
     emit(DestinationState(
       destinations: destinations,
       favorites: const [],
-      hasReachedMax: destinations.length <
-          10, // Asume que si menos de 10 items, alcanzó el máximo.
+      hasReachedMax: destinations.length < 10,
       status: LoadedState(destinations: destinations),
     ));
   }
@@ -39,6 +38,7 @@ class DestinationCubit extends Cubit<DestinationState> {
     );
     try {
       String jsonString = await rootBundle.loadString(filePath);
+
       List<DestinationsScore> destinations =
           destinationsScoreFromJson(jsonString);
 
@@ -58,7 +58,7 @@ class DestinationCubit extends Cubit<DestinationState> {
       emit(
         DestinationState(
           destinations: const [],
-           favorites: const [],
+          favorites: const [],
           hasReachedMax: true,
           status: ErrorState(error: e.toString()),
         ),

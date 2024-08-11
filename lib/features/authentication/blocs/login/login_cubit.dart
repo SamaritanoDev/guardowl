@@ -38,12 +38,8 @@ class LogInCubit extends Cubit<LogInState> {
         password: state.password.value,
       );
 
-      print('Passowrd con logInWithCredentials: ${state.password.value}');
-
       emit(state.copyWith(status: FormzSubmissionStatus.success));
     } on FirebaseAuthException catch (e) {
-      print("Login failed: ${e.message}");
-
       emit(state.copyWith(
         status: FormzSubmissionStatus.failure,
         exceptionError: e.message ?? "An unknown error occurred.",
@@ -74,18 +70,14 @@ class LogInCubit extends Cubit<LogInState> {
 
       emit(state.copyWith(status: FormzSubmissionStatus.success));
     } on FirebaseAuthException catch (e) {
-      print("Google login failed: ${e.message}");
-
       emit(state.copyWith(
         status: FormzSubmissionStatus.failure,
         exceptionError: e.message ?? "An unknown error occurred",
       ));
     } catch (e) {
-      print("Google login failed: $e");
-
       emit(state.copyWith(
         status: FormzSubmissionStatus.failure,
-        exceptionError: "An unknown error occurred",
+        exceptionError:  "An unknown error occurred",
       ));
     }
   }

@@ -7,3 +7,5 @@ const iconGoogle = 'assets/icons/authentication/icon-google.png';
 const placeholderGuardowl = 'assets/logos/placeholder_409x409.gif';
 const jsonDestinationsHeight =
     'lib/features/destinations/data/destinations_score.json';
+
+const jsonNumbersMap = 'lib/features/home/data/emergency_numbers.json';
