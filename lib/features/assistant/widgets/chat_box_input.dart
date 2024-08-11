@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guardowl/features/assistant/models/chat_message.dart';
@@ -7,10 +6,13 @@ import 'package:guardowl/services/gemini_api_service.dart';
 class ChatBoxInput extends StatefulWidget {
   final String apiKey;
   final ScrollController scrollController;
+  final ValueChanged<ChatMessage> onNewMessage;
+
   const ChatBoxInput({
     super.key,
     required this.apiKey,
     required this.scrollController,
+    required this.onNewMessage,
   });
 
   @override
@@ -20,7 +22,6 @@ class ChatBoxInput extends StatefulWidget {
 class _ChatBoxInputState extends State<ChatBoxInput> {
   final _messageController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
   late GeminiApiService _geminiApiService;
 
   @override
@@ -75,28 +76,33 @@ class _ChatBoxInputState extends State<ChatBoxInput> {
 
   Future<void> _sendMessage() async {
     if (_messageController.text.isNotEmpty) {
-      final userMessage = _messageController.text;
+      final userMessage = ChatMessage(
+        userId: _auth.currentUser!.uid,
+        message: _messageController.text,
+        createdAt: DateTime.now(),
+        destination: 'Lima',
+      );
+
+      // Clear the input field
       _messageController.clear();
 
-      // Add user message to Firestore
-      await _firestore.collection('messages').add(UserMessage(
-            userId: _auth.currentUser!.uid,
-            createdAt: Timestamp.now().toDate(), // check this.
-            message: userMessage,
-            destination: 'Lima', // get this from searchfield
-          ).toMapFirestore());
+      // Notify parent widget about the new user message
+      widget.onNewMessage(userMessage);
 
-      // Get response from Gemini AI
+      // Obtener respuesta de Gemini AI
       try {
-        final aiResponse = await _geminiApiService.getResponse(userMessage);
+        final aiResponse =
+            await _geminiApiService.getResponse(userMessage.message);
 
-        // Add AI response to Firestore
-        await _firestore.collection('messages').add(GuardOwlMessage(
-              userId: 'gemini_ai',
-              createdAt: Timestamp.now().toDate(),
-              message: aiResponse,
-              destination: 'Lima',
-            ).toMapFirestore());
+        final aiMessage = ChatMessage(
+          userId: 'gemini_ai',
+          message: aiResponse,
+          createdAt: DateTime.now(),
+          destination: 'Lima',
+        );
+
+        // Notify parent widget about the new AI message
+        widget.onNewMessage(aiMessage);
 
         // Scroll to bottom after adding new messages
         widget.scrollController
