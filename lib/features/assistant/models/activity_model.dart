@@ -18,13 +18,13 @@ class ActivityModel {
   String address;
 
   factory ActivityModel.fromJson(Map<String, dynamic> json) => ActivityModel(
-        typeActitvity: json["typeActitvity"],
-        photo: json["photo"],
-        nameActivity: json["nameActivity"],
-        nameDestination: json["nameDestination"],
-        season: json["season"],
-        schedule: json["schedule"],
-        address: json["address"],
+        typeActitvity: json["typeActitvity"] ?? '',
+        photo: json["photo"] ?? '',
+        nameActivity: json["nameActivity"] ?? '',
+        nameDestination: json["nameDestination"] ?? '',
+        season: json["season"] ?? '',
+        schedule: json["schedule"] ?? '',
+        address: json["address"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
