@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:guardowl/features/discovery/widgets/continue_navigation_button.dart';
-import 'package:guardowl/features/discovery/widgets/from_to_inputs.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guardowl/features/discovery/navigation_search/bloc/navigation_search_bloc.dart';
+import 'package:guardowl/features/discovery/navigation_search/widgets/continue_navigation_button.dart';
+import 'package:guardowl/features/discovery/navigation_search/widgets/from_to_inputs.dart';
 import 'package:guardowl/features/discovery/widgets/routing_icons.dart';
 import 'package:guardowl/features/share/my_app_bar_arrow.dart';
 
 class NavigationSearchView extends StatefulWidget {
-  const NavigationSearchView({
-    super.key,
-  });
+  const NavigationSearchView({super.key});
 
   @override
   State<NavigationSearchView> createState() => _NavigationSearchViewState();
@@ -15,9 +15,6 @@ class NavigationSearchView extends StatefulWidget {
 
 class _NavigationSearchViewState extends State<NavigationSearchView> {
   final _formKey = GlobalKey<FormState>();
-  String fronAddress = '';
-  String toAddress = '';
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +38,24 @@ class _NavigationSearchViewState extends State<NavigationSearchView> {
                   children: [
                     RoutingIcons(primaryColor: primaryColor),
                     const SizedBox(width: 15),
-                    Expanded(
-                      child: FromToInputs(
-                        isLoading: isLoading,
-                        onChangedTo: (value) => setState(
-                          () => toAddress = value,
-                        ),
-                        onChangedFrom: (value) => setState(
-                          () => fronAddress = value,
-                        ),
-                      ),
-                    ),
+                    const Expanded(child: FromToInputs()),
                   ],
                 ),
                 const SizedBox(height: 30),
                 const Expanded(child: SizedBox()),
-                ContinueNavigationButton(
-                  fromAddress: fronAddress,
-                  toAddress: toAddress,
+                BlocSelector<NavigationSearchBloc, NavigationSearchState, bool>(
+                  selector: (state) => state.isEnablingNavigation,
+                  builder: (context, isEnablingNavigation) {
+                    return ContinueNavigationButton(
+                        onPressed: isEnablingNavigation
+                            ? () {
+                                context
+                                    .read<NavigationSearchBloc>()
+                                    .add(const ChangeShowRoute(true));
+                                Navigator.of(context).pop();
+                              }
+                            : null);
+                  },
                 ),
                 const SizedBox(height: 30),
               ],
