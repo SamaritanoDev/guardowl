@@ -11,4 +11,4 @@ double paddingBorder = 20.0;
 double heightMyBackgroung = 1;
 
 //values api key
-const valueApiKeyGemini = "AIzaSyB9x0w0n2dBSJYaRLPWfRdjj3Rr5eqXzgk";  //['GEMINI_API_KEY']
+const valueApiKeyGemini = "AIzaSyDg43BAqoqypgl-QSKoXD68B81orWtzj18";  //['GEMINI_API_KEY']
