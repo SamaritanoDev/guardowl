@@ -8,12 +8,17 @@ Application focused on helping people walk safely from point A to point B when t
 
 
 ## Deployment
-
+- Open an Android emulator.
 To deploy this project, run in the root flutter project
-
 ```bash
   flutter run
 ```
+- Select a device for Android (this in order to see the map, since it is missing implementation in iOS).
+- Inicia sesión con una cuenta de Google.
+- Write a destination in Peru that you want to visit.
+- Wait for activity recommendation content to be generated with Gemini AI.
+- Go to the guardowl floating button to generate itinerary.
+- Clicking on a photo of a destination in Peru starts a conversation with Gemini AI.
 
 
 ## Features
@@ -33,8 +38,9 @@ To deploy this project, run in the root flutter project
 
 ## Authors
 
-- [@AlbertoGarcia](https://www.github.com/GbrielGarcia)
+
 - [@ChristopherBobadilla](https://www.github.com/Criszx17Dev)
+- [@DenisAlvarez](https://github.com/Deniisolo/Deniisolo)
 - [@JairConislla](https://www.github.com/fardcrex)
 - [@Marianela](https://www.github.com/MARIANELAAZ)
 - [@LeslySamaritano](https://www.github.com/SamaritanoDev)
