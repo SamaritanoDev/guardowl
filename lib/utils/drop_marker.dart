@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
 
 class DropMarker extends StatelessWidget {
+  final Widget icon;
+  final Color colorMarker;
   const DropMarker({
     super.key,
+    required this.icon,
+    required this.colorMarker,
   });
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
-
     return Stack(
       alignment: Alignment.center,
       children: [
         CustomPaint(
-          size: const Size(119, 85),
-          painter: _DropPainter(),
+          size: const Size(119, 80),
+          painter: _DropPainter(colorMarker: colorMarker),
         ),
-        Icon(Icons.coffee, color: color.onPrimary),
+        icon,
       ],
     );
   }
 }
 
 class _DropPainter extends CustomPainter {
+  final Color colorMarker;
+
+  _DropPainter({required this.colorMarker});
+
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -35,7 +41,7 @@ class _DropPainter extends CustomPainter {
     path_0.close();
 
     Paint paint0Fill = Paint()..style = PaintingStyle.fill;
-    paint0Fill.color = const Color(0xff555FD2).withOpacity(1.0);
+    paint0Fill.color = colorMarker.withOpacity(1.0);
     canvas.drawPath(path_0, paint0Fill);
   }
 

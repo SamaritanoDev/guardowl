@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/features/discovery/navigation_search/bloc/navigation_search_bloc.dart';
 import 'package:guardowl/features/discovery/views/error_map_view.dart';
+import 'package:guardowl/features/discovery/widgets/lenged_indicators.dart';
 import 'package:guardowl/features/discovery/widgets/search_container_button.dart';
 import 'package:guardowl/features/share/loader_custom.dart';
 import 'package:guardowl/features/share/sos_button.dart';
-
 import 'bloc/location_bloc.dart';
 import 'views/map_view.dart';
 
@@ -61,6 +61,7 @@ class _DiscoveryViewState extends State<DiscoveryView> {
             ),
           ),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Row(
@@ -105,6 +106,8 @@ class _DiscoveryViewState extends State<DiscoveryView> {
                   const SizedBox(width: 10),
                 ],
               ),
+              const Spacer(),
+              const LengedIndicators(),
             ],
           ),
         ],

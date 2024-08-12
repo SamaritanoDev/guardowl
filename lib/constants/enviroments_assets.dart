@@ -11,3 +11,7 @@ const jsonDestinationsHeight =
 const jsonNumbersMap = 'lib/features/home/data/emergency_numbers.json';
 
 const logoGemiini = 'assets/logos/gemini.png';
+
+const String indicatorHigh = 'assets/icons/markers_for_map/high_score.png';
+const String indicatorGood = 'assets/icons/markers_for_map/good_score.png';
+const  String indicatorMedium = 'assets/icons/markers_for_map/medium_score.png';
