@@ -1,6 +1,6 @@
 part of 'activity_cubit.dart';
 
-abstract class ActivityState extends Equatable {
+class ActivityState extends Equatable {
   const ActivityState();
 
   @override
@@ -8,6 +8,10 @@ abstract class ActivityState extends Equatable {
 }
 
 class ActivityInitial extends ActivityState {}
+
+class ActivityLoading extends ActivityState {
+  const ActivityLoading();
+}
 
 class ActivityLoaded extends ActivityState {
   final List<ActivityModel> activities;
