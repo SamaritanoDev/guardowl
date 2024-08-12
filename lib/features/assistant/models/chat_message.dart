@@ -60,4 +60,19 @@ class ChatMessage {
   String toString() {
     return 'UserMessage(userId: $userId, createdAt: $createdAt, message: $message, destination: $destination)';
   }
+
+  @override
+  bool operator ==(covariant ChatMessage other) {
+    if (identical(this, other)) return true;
+
+    return other.userId == userId &&
+        other.createdAt == createdAt &&
+        other.message == message &&
+        other.destination == destination;
+  }
+
+  @override
+  int get hashCode {
+    return userId.hashCode ^ createdAt.hashCode ^ message.hashCode ^ destination.hashCode;
+  }
 }
