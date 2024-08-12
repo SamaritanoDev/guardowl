@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/enviroments_globals.dart';
+import 'package:guardowl/constants/instructions.dart';
+import 'package:guardowl/features/assistant/models/activity_model.dart';
 import 'package:guardowl/features/assistant/models/chat_message.dart';
 import 'package:guardowl/features/assistant/widgets/assistant_profile_headder.dart';
 import 'package:guardowl/features/assistant/widgets/chat_box_input.dart';
 import 'package:guardowl/features/assistant/widgets/chat_messages_list.dart';
 import 'package:guardowl/features/assistant/widgets/options_list.dart';
+import 'package:guardowl/features/home/blocs/activity_cubit/activity_cubit.dart';
+import 'package:guardowl/features/home/blocs/search/search_cubit.dart';
 import 'package:guardowl/features/share/my_app_bar_arrow.dart';
 import 'package:guardowl/services/gemini_api_service.dart';
 
@@ -33,32 +38,37 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
   }
 
   Future<void> _handleInitialMessage() async {
-    final arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final destination = context.read<SearchCubit>().state.destination;
 
-    if (arguments != null && arguments.containsKey('prompt')) {
-      // El usuario ha enviado un destino, así que mostramos la respuesta del servicio
-      final userPrompt = arguments['prompt'] as String;
-      _sendMessage(userPrompt);
+    // Agregar un retraso pequeño para esperar que las actividades se carguen
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    final activityState = context.read<ActivityCubit>().state;
+
+    if (activityState is ActivityLoaded) {
+      final activities = activityState.activities;
+      if (destination != null && destination.isNotEmpty) {
+        if (activities.isNotEmpty) {
+          _sendMessageNoEmptyDestination(destination, activities);
+        }
+      }
     } else {
-      // No hay un destino proporcionado, mostramos el mensaje inicial
-      _sendInitialMessage();
+      // Si no se ha cargado el estado de actividades, aún puedes enviar el mensaje inicial vacío
+      _sendInitialMessageEmptyDestination();
+      print("ActivityCubit no ha cargado las actividades");
     }
   }
 
-  Future<void> _sendInitialMessage() async {
+  Future<void> _sendInitialMessageEmptyDestination() async {
     try {
-      const initialMessage =
-          'Ask the user which destination in Peru he or she wants to travel to or visit, in a natural tone';
+      const initialMessage = getInitialQuestionNoDestinationChat;
       final aiResponse = await _geminiApiService.getResponse(initialMessage);
-
-      // print('Gemini Response: $aiResponse');
 
       final aiMessage = ChatMessage(
         userId: 'gemini_ai',
         message: aiResponse,
         createdAt: DateTime.now(),
-        destination: 'Lima',
+        destination: '',
       );
 
       setState(() {
@@ -71,17 +81,28 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
     }
   }
 
-  void _sendMessage(String prompt) async {
+  Future<void> _sendMessageNoEmptyDestination(
+      String destination, List<ActivityModel> activities) async {
     try {
-      final aiResponse = await _geminiApiService.getResponse(prompt);
+      print("destino $destination");
 
-      print('Gemini Response: $aiResponse');
+      // Convertir la lista de actividades a una cadena que incluya todos los datos
+      final activitiesString = activities
+          .map((activity) =>
+              'Name: ${activity.nameActivity}, Description: ${activity.nameDestination}, Location: ${activity.season}, Hours: ${activity.schedule}, Address: ${activity.address},')
+          .join('; ');
+
+      final instructionInitial =
+          '$getInitialQuestionDestinationChat for $destination according to these activities: $activitiesString And ends with the question: If you need anything else you can ask me.';
+
+      final aiResponse =
+          await _geminiApiService.getResponse(instructionInitial);
 
       final aiMessage = ChatMessage(
         userId: 'gemini_ai',
         message: aiResponse,
         createdAt: DateTime.now(),
-        destination: 'Lima', // Puedes ajustar esto si es necesario
+        destination: destination,
       );
 
       setState(() {
@@ -121,7 +142,7 @@ class _RouteAssistantScreenState extends State<RouteAssistantScreen> {
                   controller: _controller,
                   messages: _messages,
                 ),
-                const Divider(),
+                Divider(color: color.primary),
                 OptionsList(),
                 const SizedBox(height: 16),
                 const AssistantProfileHeader(),

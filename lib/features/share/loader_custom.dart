@@ -8,8 +8,8 @@ class BottomLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: 24,
-        width: 24,
+        height: 100,
+        width: 100,
         child: Image.asset(placeholderGuardowl),
       ),
     );

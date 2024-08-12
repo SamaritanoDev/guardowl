@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/constants/constants.dart';
+import 'package:guardowl/features/assistant/widgets/loading_widget.dart';
 import 'package:guardowl/features/home/blocs/activity_cubit/activity_cubit.dart';
 import 'package:guardowl/features/home/widgets/activiy_list.dart';
 import 'package:guardowl/features/home/widgets/destinations_list.dart';
@@ -19,7 +20,6 @@ class HomeView extends StatelessWidget {
     final width = media.size.width;
     final textTitleLargePrimary = textTheme.titleLarge?.copyWith(
       color: color.primary,
-      fontSize: 18,
       fontWeight: FontWeight.bold,
     );
 
@@ -72,9 +72,7 @@ class HomeView extends StatelessWidget {
                     child: Text('Error: ${state.error}', style: textError),
                   );
                 } else if (state is ActivityLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const LoadingAssistant();
                 } else {
                   return const Center(
                     child: DestinationsList(),

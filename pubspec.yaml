@@ -44,9 +44,11 @@ flutter:
     - assets/icons/appbar/menu.png
     - assets/logos/placeholder_254x254.gif
     - assets/logos/placeholder_409x409.gif
+    - assets/logos/placeholder_819x819.gif
     - assets/icons/markers_for_map/high_score.png
     - assets/icons/markers_for_map/good_score.png
     - assets/icons/markers_for_map/medium_score.png
+    - assets/logos/gemini.png
     #logos social network
     - assets/icons/authentication/
     #data

@@ -75,9 +75,11 @@ class ActivityDetailView extends StatelessWidget {
                     color: color.secondary,
                   ),
                   const SizedBox(width: 5),
-                  Text(
-                    activity.address,
-                    style: textSubTitleCard,
+                  Expanded(
+                    child: Text(
+                      activity.address,
+                      style: textSubTitleCard,
+                    ),
                   ),
                 ],
               ),

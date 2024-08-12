@@ -7,6 +7,7 @@ import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
 import 'package:guardowl/features/authentication/ui/register_view.dart';
 import 'package:guardowl/features/authentication/ui/widgets/widgets_auhtentication.dart';
+import 'package:guardowl/features/share/loader_custom.dart';
 import 'package:guardowl/features/share/share.dart';
 import 'package:guardowl/utils/snackbar_alert.dart';
 
@@ -56,7 +57,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
               Navigator.pushReplacementNamed(context, '/home');
             });
             return const Center(
-              child: CircularProgressIndicator(),
+              child: BottomLoader(),
             );
           } else {
             return Scaffold(

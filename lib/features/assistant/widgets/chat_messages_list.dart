@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guardowl/features/assistant/models/chat_message.dart';
 import 'package:guardowl/features/assistant/widgets/bubble.message.dart';
+import 'package:guardowl/features/assistant/widgets/loading_widget.dart';
 
 class ChatMessagesList extends StatelessWidget {
   final ScrollController controller;
@@ -16,13 +17,14 @@ class ChatMessagesList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (messages.isEmpty) {
       return const Center(
-          child: Column(
-        children: [
-          SizedBox(height: 200),
-          CircularProgressIndicator(),
-          SizedBox(height: 200),
-        ],
-      ));
+        child: Column(
+          children: [
+            SizedBox(height: 150),
+            LoadingAssistant(),
+            SizedBox(height: 150),
+          ],
+        ),
+      );
     }
 
     return ListView.builder(

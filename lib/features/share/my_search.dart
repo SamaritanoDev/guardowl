@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:guardowl/constants/enviroments_globals.dart';
-import 'package:guardowl/constants/instructions.dart';
-import 'package:guardowl/features/assistant/models/activity_model.dart';
 import 'package:guardowl/features/home/blocs/activity_cubit/activity_cubit.dart';
-import 'package:guardowl/services/gemini_api_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:guardowl/features/home/blocs/search/search_cubit.dart';
 
 class MySearch extends StatefulWidget {
   const MySearch({super.key});
@@ -15,10 +12,14 @@ class MySearch extends StatefulWidget {
 }
 
 class _MySearchState extends State<MySearch> {
-  final TextEditingController _destinationSerachController = TextEditingController();
+  final TextEditingController _destinationSerachController =
+      TextEditingController();
 
-  Future<void> _handleSearch(String query) async {
-    context.read<ActivityCubit>().handleSearch(query);
+  Future<void> _handleSearch(String destination) async {
+    print('Destino buscado desde el search: $destination');
+    context.read<SearchCubit>().setDestination(
+        destination);
+    context.read<ActivityCubit>().handleSearch(destination);
   }
 
   @override
@@ -38,7 +39,6 @@ class _MySearchState extends State<MySearch> {
     );
 
     return SearchBar(
-      // onTap: () => testJsonDecoding(),
       onSubmitted: (value) {
         _handleSearch(value);
       },

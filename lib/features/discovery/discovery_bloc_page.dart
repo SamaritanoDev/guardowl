@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/features/discovery/navigation_search/bloc/navigation_search_bloc.dart';
 import 'package:guardowl/features/discovery/views/error_map_view.dart';
 import 'package:guardowl/features/discovery/widgets/search_container_button.dart';
+import 'package:guardowl/features/share/loader_custom.dart';
 import 'package:guardowl/features/share/sos_button.dart';
 
 import 'bloc/location_bloc.dart';
@@ -46,7 +47,7 @@ class _DiscoveryViewState extends State<DiscoveryView> {
               builder: (context, state) {
                 return switch (state) {
                   LocationLoading() => const Center(
-                      child: CircularProgressIndicator(),
+                      child: BottomLoader(),
                     ),
                   LocationFailure(:final failure) =>
                     ErrorMapView(failure: failure),

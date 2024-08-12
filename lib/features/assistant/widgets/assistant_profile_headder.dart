@@ -54,7 +54,8 @@ class AssistantProfileHeader extends StatelessWidget {
                   children: [
                     const Text(
                       'Hi',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       width: 8.0,
@@ -66,7 +67,8 @@ class AssistantProfileHeader extends StatelessWidget {
                             return Container(
                               padding: const EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(8.0)),
                                 color: color.primaryContainer,
                               ),
                               child: Text(
@@ -90,7 +92,7 @@ class AssistantProfileHeader extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: const Text(
-                    'My name is GuardOwl. I’m 🤖 designed to guide you during your trip. I will show you the safety places:',
+                    'My name is GuardOwl. I am designed to guide you through your journey. You can ask me about these topics:',
                     style: TextStyle(fontSize: 14),
                     softWrap: true,
                     overflow: TextOverflow.clip,

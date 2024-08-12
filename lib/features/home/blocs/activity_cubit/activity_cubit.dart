@@ -12,11 +12,11 @@ part 'activity_state.dart';
 class ActivityCubit extends Cubit<ActivityState> {
   ActivityCubit() : super(ActivityInitial());
 
-  Future<void> handleSearch(String query) async {
+  Future<void> handleSearch(String destination) async {
     final geminiApiService = GeminiApiService(apiKey: valueApiKeyGemini);
-    if (query.isNotEmpty) {
+    if (destination.isNotEmpty) {
       try {
-        final instruction = '$getJsonCard para el destino $query';
+        final instruction = '$getJsonCard for the destination $destination';
 
         emit(const ActivityLoading());
 

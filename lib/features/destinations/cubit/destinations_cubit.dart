@@ -100,4 +100,5 @@ class DestinationCubit extends Cubit<DestinationState> {
       ..remove(destination);
     emit(state.copyWith(favorites: updatedFavorites));
   }
+
 }
