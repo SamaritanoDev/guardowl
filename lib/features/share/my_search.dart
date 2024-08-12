@@ -62,6 +62,7 @@ class _MySearchState extends State<MySearch> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
     TextStyle hintTextstyle = TextStyle(
       color: color.surfaceTint,
     );

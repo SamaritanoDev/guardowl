@@ -23,6 +23,11 @@ class HomeView extends StatelessWidget {
       fontWeight: FontWeight.bold,
     );
 
+    final textError = textTheme.bodyLarge?.copyWith(
+      color: color.error,
+      fontWeight: FontWeight.bold,
+    );
+
     return Scaffold(
       drawer: Drawer(
         width: width,
@@ -64,7 +69,7 @@ class HomeView extends StatelessWidget {
                   );
                 } else if (state is ActivityError) {
                   return Center(
-                    child: Text('Error: ${state.error}'),
+                    child: Text('Error: ${state.error}', style: textError),
                   );
                 } else {
                   return const Center(
