@@ -6,8 +6,7 @@ class GeminiApiService {
 
   GeminiApiService({required this.apiKey});
 
-  final String baseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
+  final String baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
 
   Future<String> getResponse(String prompt) async {
     final url = Uri.parse('$baseUrl?key=$apiKey');
