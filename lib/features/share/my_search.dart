@@ -15,8 +15,7 @@ class MySearch extends StatefulWidget {
 }
 
 class _MySearchState extends State<MySearch> {
-  final TextEditingController _destinationSerachController =
-      TextEditingController();
+  final TextEditingController _destinationSerachController = TextEditingController();
 
   late GeminiApiService _geminiApiService;
 
@@ -32,40 +31,32 @@ class _MySearchState extends State<MySearch> {
         final instruction = '$getJsonCard para el destino $query';
 
         final response = await _geminiApiService.getResponse(instruction);
-        print('Gemini API Response search: $response');
 
-        // Limpiar la respuesta para extraer el JSON
         final cleanedResponse = _cleanResponse(response);
-        print('Cleaned Response: $cleanedResponse');
 
-        // Verificar si la respuesta está vacía
         if (cleanedResponse.isEmpty) {
           throw const FormatException('Response is empty');
         }
 
-        // Decodificar el JSON directamente desde la respuesta
-        final jsonResponse = jsonDecode(cleanedResponse);
+        final jsonResponse = jsonDecode(cleanedResponse) as Map<String, dynamic>;
 
-        if (jsonResponse is List) {
-          final activities =
-              jsonResponse.map((item) => ActivityModel.fromJson(item)).toList();
-          context.read<ActivityCubit>().setActivities(activities);
-        } else {
-          throw const FormatException('Unexpected JSON format');
-        }
-      } catch (e) {
-        print('Error fetching response from Gemini: $e');
+        final activities =
+            (jsonResponse["activities"] as List<dynamic>).map((item) => ActivityModel.fromJson(item)).toList();
+        context.read<ActivityCubit>().setActivities(activities);
+      } catch (e, st) {
+        print('Error fetching response from Gemini: $e\n st:\n $st');
         context.read<ActivityCubit>().setError(e.toString());
       }
     }
   }
 
-//me funciono con lima, amazonas
   String _cleanResponse(String response) {
-    // Usa expresiones regulares para limpiar el texto no deseado
-    final jsonPattern = RegExp(r'^\s*```json\s*(.*?)\s*```$', dotAll: true);
-    final match = jsonPattern.firstMatch(response);
-    return match?.group(1) ?? '';
+    final firstCorchete = response.indexOf('[');
+    final lastCorchete = response.lastIndexOf(']');
+    String recortado = response.substring(firstCorchete, lastCorchete + 1);
+
+    // Agregar las llaves al inicio y al final
+    return '{"activities":${recortado.trim()}}';
   }
 
   @override
@@ -84,6 +75,7 @@ class _MySearchState extends State<MySearch> {
     );
 
     return SearchBar(
+      // onTap: () => testJsonDecoding(),
       onSubmitted: (value) {
         _handleSearch(value);
       },

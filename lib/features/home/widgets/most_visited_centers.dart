@@ -69,6 +69,7 @@ class MostVisitedCenters extends StatelessWidget {
                   titleDestination: destination.title,
                   location: destination.dptoPjfs,
                   place: destination.distPjfs,
+                  onPressed: () {},
                 );
               },
             ),
