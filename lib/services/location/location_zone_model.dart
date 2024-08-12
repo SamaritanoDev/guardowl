@@ -29,12 +29,12 @@ class LocationZone {
   }
 
   RiskSegment get riskSegmentEnum {
-    return switch (riskSegment.toUpperCase()) {
-      'RIESGO MUY BAJO' => RiskSegment.low,
-      'RIESGO BAJO' => RiskSegment.low,
-      'RIESGO MEDIO' => RiskSegment.medium,
-      'RIESGO ALTO' => RiskSegment.high,
-      'RIESGO MUY ALTO' => RiskSegment.high,
+    return switch (riskSegment) {
+      'very low' => RiskSegment.low,
+      'low' => RiskSegment.low,
+      'medium' => RiskSegment.medium,
+      'high' => RiskSegment.high,
+      'very high' => RiskSegment.high,
       'ROUTE' => RiskSegment.route,
       _ => RiskSegment.route
     };

@@ -55,7 +55,9 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.pushReplacementNamed(context, '/home');
             });
-            return CircularProgressIndicator(color: color.primary);
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else {
             return Scaffold(
               body: ListView(
