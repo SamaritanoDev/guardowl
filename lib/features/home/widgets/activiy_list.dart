@@ -25,7 +25,7 @@ class ActivitiesList extends StatelessWidget {
       color: color.outlineVariant,
     );
 
-    return ListView.builder(
+    return SliverList.builder(
       itemCount: activities.length,
       itemBuilder: (context, index) {
         final activity = activities[index];
@@ -35,8 +35,7 @@ class ActivitiesList extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             child: ListTile(
               tileColor: color.primaryContainer,
-              leading: Image.network(activity.photo,
-                  width: 100, height: 100, fit: BoxFit.cover),
+              leading: Image.network(activity.photo, width: 100, height: 100, fit: BoxFit.cover),
               trailing: IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -53,9 +52,8 @@ class ActivitiesList extends StatelessWidget {
                   color: color.primary,
                 ),
               ),
-              title:  Text(activity.nameActivity, style: textTitleStyle),
-              subtitle:
-                  Text(activity.nameDestination, style: textSubTitleStyle),
+              title: Text(activity.nameActivity, style: textTitleStyle),
+              subtitle: Text(activity.nameDestination, style: textSubTitleStyle),
             ),
           ),
         );

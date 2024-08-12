@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/features/destinations/cubit/destinations_cubit.dart';
 import 'package:guardowl/features/destinations/models/destinations_score_model.dart';
+import 'package:guardowl/utils/snackbar_alert.dart';
 
 class PhotoListItem extends StatelessWidget {
   final DestinationsScore destination;
@@ -50,6 +51,9 @@ class PhotoListItem extends StatelessWidget {
                     readDestinationCubit.removeFavorite(destination);
                   } else {
                     readDestinationCubit.addFavorite(destination);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      snackBarNewFavouriteItem(color: color.primary),
+                    );
                   }
                 },
                 icon: Icon(

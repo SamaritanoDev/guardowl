@@ -16,8 +16,7 @@ class ActivityDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final textSubTitleCard =
-        textTheme.titleSmall?.copyWith(color: color.secondary);
+    final textSubTitleCard = textTheme.titleSmall?.copyWith(color: color.secondary);
 
     final textTitleCard = textTheme.titleSmall?.copyWith(
       color: color.primary,
