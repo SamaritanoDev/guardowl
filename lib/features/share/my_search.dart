@@ -17,46 +17,8 @@ class MySearch extends StatefulWidget {
 class _MySearchState extends State<MySearch> {
   final TextEditingController _destinationSerachController = TextEditingController();
 
-  late GeminiApiService _geminiApiService;
-
-  @override
-  void initState() {
-    super.initState();
-    _geminiApiService = GeminiApiService(apiKey: valueApiKeyGemini);
-  }
-
   Future<void> _handleSearch(String query) async {
-    if (query.isNotEmpty) {
-      try {
-        final instruction = '$getJsonCard para el destino $query';
-
-        final response = await _geminiApiService.getResponse(instruction);
-
-        final cleanedResponse = _cleanResponse(response);
-
-        if (cleanedResponse.isEmpty) {
-          throw const FormatException('Response is empty');
-        }
-
-        final jsonResponse = jsonDecode(cleanedResponse) as Map<String, dynamic>;
-
-        final activities =
-            (jsonResponse["activities"] as List<dynamic>).map((item) => ActivityModel.fromJson(item)).toList();
-        context.read<ActivityCubit>().setActivities(activities);
-      } catch (e, st) {
-        print('Error fetching response from Gemini: $e\n st:\n $st');
-        context.read<ActivityCubit>().setError(e.toString());
-      }
-    }
-  }
-
-  String _cleanResponse(String response) {
-    final firstCorchete = response.indexOf('[');
-    final lastCorchete = response.lastIndexOf(']');
-    String recortado = response.substring(firstCorchete, lastCorchete + 1);
-
-    // Agregar las llaves al inicio y al final
-    return '{"activities":${recortado.trim()}}';
+    context.read<ActivityCubit>().handleSearch(query);
   }
 
   @override

@@ -71,6 +71,10 @@ class HomeView extends StatelessWidget {
                   return Center(
                     child: Text('Error: ${state.error}', style: textError),
                   );
+                } else if (state is ActivityLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 } else {
                   return const Center(
                     child: DestinationsList(),
