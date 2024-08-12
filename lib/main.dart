@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guardowl/config/config.dart';
+import 'package:guardowl/features/assistant/blocs/assistant_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/auth/auth_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/login/login_cubit.dart';
 import 'package:guardowl/features/authentication/blocs/sign_up/sign_up_cubit.dart';
@@ -42,12 +43,11 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => LogInCubit()),
         BlocProvider(create: (context) => SignUpCubit()),
         BlocProvider(create: (context) => DestinationCubit()),
-        BlocProvider(
-            create: (context) =>
-                LocationBloc()..add(const LocationRequested())),
+        BlocProvider(create: (context) => LocationBloc()..add(const LocationRequested())),
         BlocProvider(create: (context) => NavigationSearchBloc()),
         BlocProvider(create: (context) => ActivityCubit()),
         BlocProvider(create: (context) => SearchCubit()),
+        BlocProvider(create: (context) => AssistantCubit()),
       ],
       child: MaterialApp(
         initialRoute: '/login',
@@ -55,15 +55,32 @@ class MainApp extends StatelessWidget {
         title: 'GuardOwl',
         theme: brightness == Brightness.light ? theme.light() : theme.dark(),
         onGenerateRoute: (settings) {
-          final route = _Routes.values.firstWhere(
-            (r) => r.name == settings.name,
-            // Ruta no encontrada, podrían retornar una pantalla de error.
-            orElse: () => _Routes.error,
-          );
+          _Page page;
+
+          switch (settings.name) {
+            case '/login':
+              page = _Page(pageWidget: const AuthenticationView());
+              break;
+            case '/home':
+              page = _Page(pageWidget: const CustomNavigationBar());
+              break;
+            case '/favourites':
+              page = _Page(pageWidget: const FavouritesView());
+              break;
+            case '/route-assistant':
+              page = _Page(
+                  pageWidget: RouteAssistantScreen(
+                    destination: settings.arguments as String?,
+                  ),
+                  isLikeDialog: true);
+              break;
+            default:
+              page = _Page(pageWidget: const SizedBox()); // error page
+          }
 
           return MaterialPageRoute(
-            builder: (context) => route.page,
-            fullscreenDialog: route.isLikeDialog,
+            builder: (context) => page.pageWidget,
+            fullscreenDialog: page.isLikeDialog,
           );
         },
       ),
@@ -71,32 +88,12 @@ class MainApp extends StatelessWidget {
   }
 }
 
-enum _Routes { login, home, favourites, routeAssistant, error }
+class _Page {
+  _Page({
+    required this.pageWidget,
+    this.isLikeDialog = false,
+  });
 
-extension _RoutesInfo on _Routes {
-  String get name => routeInfo.name;
-  Widget get page => routeInfo.page;
-  // modificar segun sea necesario
-  bool get isLikeDialog => _Routes.routeAssistant == this;
-
-  ({String name, Widget page}) get routeInfo => switch (this) {
-        _Routes.login => (
-            name: '/login',
-            page: const AuthenticationView(),
-          ),
-        _Routes.home => (
-            name: '/home',
-            page: const CustomNavigationBar(),
-          ),
-        _Routes.favourites => (
-            name: '/favourites',
-            page: const FavouritesView(),
-          ),
-        _Routes.routeAssistant => (
-            name: '/route-assistant',
-            page: const RouteAssistantScreen(),
-          ),
-        // build error page
-        _Routes.error => (name: '/error-page', page: const SizedBox()),
-      };
+  final Widget pageWidget;
+  final bool isLikeDialog;
 }

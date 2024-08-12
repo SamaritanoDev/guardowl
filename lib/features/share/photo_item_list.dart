@@ -19,64 +19,72 @@ class PhotoListItem extends StatelessWidget {
     );
 
     final readDestinationCubit = context.read<DestinationCubit>();
-    final isFavorite =
-        context.watch<DestinationCubit>().state.favorites.contains(destination);
+    final isFavorite = context.watch<DestinationCubit>().state.favorites.contains(destination);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          Image.network(
-            destination.photoUrl,
-            width: 300,
-            height: 300,
-            fit: BoxFit.cover,
-            color: Colors.black.withOpacity(0.4),
-            colorBlendMode: BlendMode.darken,
-          ),
-          Positioned(
-            right: 5,
-            top: 5,
-            child: IconButton(
-              onPressed: () {
-                if (isFavorite) {
-                  readDestinationCubit.removeFavorite(destination);
-                } else {
-                  readDestinationCubit.addFavorite(destination);
-                }
-              },
-              icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
-                color: color.tertiary,
-                size: 30,
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/route-assistant',
+          arguments: destination.title,
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Image.network(
+              destination.photoUrl,
+              width: 300,
+              height: 300,
+              fit: BoxFit.cover,
+              color: Colors.black.withOpacity(0.4),
+              colorBlendMode: BlendMode.darken,
+            ),
+            Positioned(
+              right: 5,
+              top: 5,
+              child: IconButton(
+                onPressed: () {
+                  if (isFavorite) {
+                    readDestinationCubit.removeFavorite(destination);
+                  } else {
+                    readDestinationCubit.addFavorite(destination);
+                  }
+                },
+                icon: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
+                  color: color.tertiary,
+                  size: 30,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: 12,
-            bottom: 13,
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 170,
-                      child: Text(
-                        destination.title,
-                        style: textTitleCard,
-                        softWrap: true,
-                        overflow: TextOverflow.visible,
+            Positioned(
+              left: 12,
+              bottom: 13,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 170,
+                        child: Text(
+                          destination.title,
+                          style: textTitleCard,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    _BotomPhoto(destination),
-                  ],
-                ),
-              ],
+                      const SizedBox(height: 5),
+                      _BotomPhoto(destination),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -90,8 +98,7 @@ class _BotomPhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final color = Theme.of(context).colorScheme;
-    final textSubTitleCard =
-        textTheme.bodySmall?.copyWith(color: color.onPrimary);
+    final textSubTitleCard = textTheme.bodySmall?.copyWith(color: color.onPrimary);
 
     return Row(
       children: [
