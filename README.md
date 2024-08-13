@@ -14,7 +14,7 @@ To deploy this project, run in the root flutter project
   flutter run
 ```
 - Select a device for Android (this in order to see the map, since it is missing implementation in iOS).
-- Inicia sesión con una cuenta de Google.
+- Log in with a previously registered email and password.
 - Write a destination in Peru that you want to visit.
 - Wait for activity recommendation content to be generated with Gemini AI.
 - Go to the guardowl floating button to generate itinerary.
@@ -24,8 +24,9 @@ To deploy this project, run in the root flutter project
 ## Features
 
 - API Gemini
-- For iOS & Android
+- For Android
 - Framework Flutter
+- Firebase: Authentication & Firestore
 - Light/dark mode toggle
 
 ## Color Reference
