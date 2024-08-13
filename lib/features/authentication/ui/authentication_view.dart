@@ -29,8 +29,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
 
   @override
   Widget build(BuildContext context) {
-    const singInStyleButton =
-        ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
+    const singInStyleButton = ButtonStyle(minimumSize: WidgetStatePropertyAll(Size(300, 50)));
     final color = Theme.of(context).colorScheme;
     final logInCubit = context.read<LogInCubit>();
     final signUpCubit = context.read<SignUpCubit>();
@@ -67,19 +66,16 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                     height: 1.4,
                     child: Center(
                       child: HeaderAuthentication(
-                          titleAuthentication:
-                              isRegisterMode ? 'Sing In' : 'Sign Up',
-                          subTitleAuthentication: isRegisterMode
-                              ? 'Hi! Welcome back, you have been missed'
-                              : 'Create your new account'),
+                          titleAuthentication: isRegisterMode ? 'Sing In' : 'Sign Up',
+                          subTitleAuthentication:
+                              isRegisterMode ? 'Hi! Welcome back, you have been missed' : 'Create your new account'),
                     ),
                   ),
                   isRegisterMode ? const SingInView() : const RegisterView(),
                   const SizedBox(height: 20),
                   //button home
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: paddingAppBar),
+                    padding: const EdgeInsets.symmetric(horizontal: paddingAppBar),
                     child: FilledButton(
                       style: singInStyleButton,
                       onPressed: () {
@@ -104,13 +100,19 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                       _ButtonSocialNetwork(
                         iconGoogle,
                         onPressed: () {
-                          if (isRegisterMode) {
-                            print(
-                                "Button Google, isRegisterMode: $isRegisterMode");
-                            logInCubit.logInWithGoogle();
-                          } else {
-                            signUpCubit.signUpWithGoogle();
-                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            snackBarWhenFailure(
+                              snackBarFailureText: 'Let\'s try to Sign in usign email and password, please.',
+                              color: color.error,
+                            ),
+                          );
+                          // if (isRegisterMode) {
+                          //   print(
+                          //       "Button Google, isRegisterMode: $isRegisterMode");
+                          //   logInCubit.logInWithGoogle();
+                          // } else {
+                          //   signUpCubit.signUpWithGoogle();
+                          // }
                         },
                       ),
                       const SizedBox(width: 30),
@@ -129,9 +131,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
                   const SizedBox(height: 35),
                   LinkAccount(
                     routeName: isRegisterMode ? 'up' : 'in',
-                    questionText: isRegisterMode
-                        ? 'Don’t have an account?'
-                        : 'If you have an account?',
+                    questionText: isRegisterMode ? 'Don’t have an account?' : 'If you have an account?',
                     onpressed: toggleAuthMode,
                   ),
                   const SizedBox(height: 35),
