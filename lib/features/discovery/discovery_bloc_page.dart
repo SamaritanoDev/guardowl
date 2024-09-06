@@ -107,7 +107,7 @@ class _DiscoveryViewState extends State<DiscoveryView> {
                 ],
               ),
               const Spacer(),
-              const LengedIndicators(),
+              const LegendIndicators(),
             ],
           ),
         ],

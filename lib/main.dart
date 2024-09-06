@@ -43,14 +43,16 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => LogInCubit()),
         BlocProvider(create: (context) => SignUpCubit()),
         BlocProvider(create: (context) => DestinationCubit()),
-        BlocProvider(create: (context) => LocationBloc()..add(const LocationRequested())),
+        BlocProvider(
+            create: (context) =>
+                LocationBloc()..add(const LocationRequested())),
         BlocProvider(create: (context) => NavigationSearchBloc()),
         BlocProvider(create: (context) => ActivityCubit()),
         BlocProvider(create: (context) => SearchCubit()),
         BlocProvider(create: (context) => AssistantCubit()),
       ],
       child: MaterialApp(
-        initialRoute: '/login',
+        initialRoute: '/home',
         debugShowCheckedModeBanner: false,
         title: 'GuardOwl',
         theme: brightness == Brightness.light ? theme.light() : theme.dark(),

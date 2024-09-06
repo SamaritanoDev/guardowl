@@ -44,13 +44,13 @@ class SearchSelectingCard extends StatelessWidget {
       onTap: () {},
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.green,
+          color: color.secondary,
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(8),
         alignment: Alignment.center,
         child: Text(
-          '👇🏻 Seleccione un sitio',
+          '👇🏻 Select a location',
           style: TextStyle(
             color: color.onPrimary,
             fontSize: 14,
